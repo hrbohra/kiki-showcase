@@ -561,32 +561,51 @@
     <div style="position:relative; max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:48px;">
       <div data-rv="30" style="display:flex; flex-direction:column; gap:16px;">
         <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:2px; text-transform:uppercase; color:#FFE7A8;">Run it yourself</span>
-        <h2 style="margin:0; max-width:22ch; font:200 clamp(34px,3.8vw,52px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.5px; color:#F6F5F1;">It is a real build, not a prototype of one.</h2>
-        <p style="margin:0; max-width:62ch; font:300 17px/28px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Point a camera at the left code to open the build in Expo Go on your own iPhone — real gestures, real safe areas, real haptics. The right code opens the same app in a browser if you would rather just click through.</p>
+        <h2 style="margin:0; max-width:24ch; font:200 clamp(34px,3.8vw,52px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.5px; color:#F6F5F1;">It’s a real build. Try it three ways.</h2>
+        <p style="margin:0; max-width:64ch; font:300 17px/28px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Same app, three doors in — pick whichever matches where you are. The first two open in a browser with nothing to install; the last runs the actual native build from source.</p>
       </div>
 
-      <div class="qr-grid" style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px;">
-        <div data-rv="31" style="display:flex; gap:24px; padding:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.24); border-radius:24px; align-items:center; backdrop-filter:blur(10px);">
-          <span style="width:150px; height:150px; border-radius:16px; background:#F6F5F1; display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.28);">
-            <img id="qrExpo" src="assets/qr-expo.png" alt="Expo Go QR" style="width:150px; height:150px; display:block; object-fit:contain;">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+
+        <!-- 1 · On this computer (you're reading this on one) -->
+        <a data-rv="31" href="/try" style="display:flex; gap:22px; align-items:center; padding:24px 26px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:22px; backdrop-filter:blur(10px);">
+          <span style="width:54px; height:54px; border-radius:15px; background:rgba(79,191,166,0.13); display:flex; align-items:center; justify-content:center; flex:none;">
+            <svg width="26" height="26" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2" fill="none" stroke="#4FBFA6" stroke-width="1.7"></rect><line x1="8" y1="20.5" x2="16" y2="20.5" stroke="#4FBFA6" stroke-width="1.7" stroke-linecap="round"></line></svg>
           </span>
-          <span style="display:flex; flex-direction:column; gap:9px;">
-            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#E6CD8B;">On device</span>
-            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open in Expo Go</span>
-            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">Install Expo Go, scan, and the native build loads on your phone.</span>
-            <a id="expoLink" href="#" style="font:700 13.5px/1 -apple-system,sans-serif;">Open in Expo Go ›</a>
+          <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:5px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">On this computer</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open it in your browser</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The live app opens right here, inside an on-screen iPhone you click through with your mouse — every screen and animation, nothing to install. Easiest way to look right now.</span>
+          </span>
+          <span style="font:700 13.5px/1 -apple-system,sans-serif; color:#4FBFA6; flex:none;">Open ›</span>
+        </a>
+
+        <!-- 2 · On your phone (scan) -->
+        <div data-rv="32" style="display:flex; gap:24px; align-items:center; padding:24px 26px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.24); border-radius:22px; backdrop-filter:blur(10px);">
+          <span style="width:118px; height:118px; border-radius:14px; background:#F6F5F1; display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.28);">
+            <img src="assets/qr-try.png" alt="QR code to open the app on your phone" style="width:118px; height:118px; display:block; object-fit:contain;">
+          </span>
+          <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:5px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#E6CD8B;">On your phone</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Scan to open on your phone</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">Point your phone’s camera at the code — the same live app opens full-screen in your phone’s browser, edge to edge, exactly as it looks on iOS. No app to install.</span>
+            <a href="/try" style="font:700 13.5px/1 -apple-system,sans-serif; color:#E6CD8B;">…or open the link ›</a>
           </span>
         </div>
 
-        <div data-rv="32" style="display:flex; gap:24px; padding:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:24px; align-items:center; backdrop-filter:blur(10px);">
-          <span style="width:150px; height:150px; border-radius:16px; background:#F6F5F1; display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.28);">
-            <img id="qrWeb" src="assets/qr-web.png" alt="Web build QR" style="width:150px; height:150px; display:block; object-fit:contain;">
+        <!-- 3 · Engineers: run the native build from source (lowest) -->
+        <div data-rv="33" style="display:flex; gap:22px; align-items:flex-start; padding:24px 26px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+          <span style="width:54px; height:54px; border-radius:15px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex:none;">
+            <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 8 L20 12 L16 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><line x1="13.5" y1="6" x2="10.5" y2="18" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
           </span>
-          <span style="display:flex; flex-direction:column; gap:9px;">
-            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">In a browser</span>
-            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the web view</span>
-            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The same codebase running on the web, for a quick look with no install.</span>
-            <a id="webLink" href="/app/" style="font:700 13.5px/1 -apple-system,sans-serif; color:#4FBFA6;">Open the web app ›</a>
+          <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:9px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">For engineers · the real native app</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Run the native build from source</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The two options above run the app as a web page. To run the <em>actual native iOS app</em>: download the repo, start it with Expo on your computer, then scan the QR that Expo prints — the native build opens in the free Expo Go app on your phone. (A permanent App Store / TestFlight install is the only step that needs a paid Apple Developer account.)</span>
+            <span style="font:600 12.5px/1.7 ui-monospace,Menlo,monospace; color:#BFD6CE; background:rgba(0,0,0,0.28); border:1px solid rgba(255,255,255,0.10); border-radius:10px; padding:12px 14px; white-space:pre; overflow-x:auto;">git clone https://github.com/hrbohra/kiki-ios
+cd kiki-ios && npm install
+npx expo start        # then scan the QR with Expo Go</span>
+            <a href="https://github.com/hrbohra/kiki-ios" style="font:700 13.5px/1 -apple-system,sans-serif; color:#BFD6CE;">View the repo on GitHub ›</a>
           </span>
         </div>
       </div>
@@ -984,51 +1003,50 @@
     <div style="position:relative; display:flex; flex-direction:column; gap:34px;">
       <div data-rv="30" style="display:flex; flex-direction:column; gap:13px;">
         <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">Run it yourself</span>
-        <h2 style="margin:0; font:200 clamp(30px,8.6vw,42px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.1px; color:#F6F5F1;">It is a real build, not a prototype of one.</h2>
-        <p style="margin:0; font:300 15.5px/25px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">You are already on a phone, so skip the camera — tap through to Expo Go and the native build opens on this device.</p>
+        <h2 style="margin:0; font:200 clamp(30px,8.6vw,42px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.1px; color:#F6F5F1;">It’s a real build. Try it three ways.</h2>
+        <p style="margin:0; font:300 15.5px/25px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">You’re on a phone — the first option opens the app right here, full-screen. The others are for a computer, or for running the real native build from source.</p>
       </div>
-      <a id="mExpo" data-rv="31" href="#" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,231,168,0.42); border-radius:22px; backdrop-filter:blur(10px);">
+      <!-- 1 · On your phone (you're on one) -->
+      <a data-rv="31" href="/try" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,231,168,0.42); border-radius:22px; backdrop-filter:blur(10px);">
         <span style="width:46px; height:46px; border-radius:14px; background:rgba(230,205,139,0.14); display:flex; align-items:center; justify-content:center; flex:none;">
           <svg width="20" height="20" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3" fill="none" stroke="#E6CD8B" stroke-width="1.7"></rect><line x1="10.5" y1="19" x2="13.5" y2="19" stroke="#E6CD8B" stroke-width="1.7" stroke-linecap="round"></line></svg>
         </span>
         <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;">
-          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#E6CD8B;">On this device</span>
-          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open in Expo Go</span>
-          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">Install Expo Go first, then tap through.</span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#E6CD8B;">On your phone</span>
+          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the app full-screen</span>
+          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">Tap to open the live app in your browser, edge to edge — the real screens, gestures and animations. Nothing to install.</span>
         </span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#E6CD8B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
-      <a id="mWeb" data-rv="32" href="/app/" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:22px; backdrop-filter:blur(10px);">
+      <!-- 2 · On a computer -->
+      <a data-rv="32" href="/try" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:22px; backdrop-filter:blur(10px);">
         <span style="width:46px; height:46px; border-radius:14px; background:rgba(79,191,166,0.13); display:flex; align-items:center; justify-content:center; flex:none;">
-          <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#4FBFA6" stroke-width="1.7"></circle><ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="#4FBFA6" stroke-width="1.7"></ellipse><line x1="3.2" y1="12" x2="20.8" y2="12" stroke="#4FBFA6" stroke-width="1.7"></line></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="13" rx="2" fill="none" stroke="#4FBFA6" stroke-width="1.7"></rect><line x1="8" y1="20.5" x2="16" y2="20.5" stroke="#4FBFA6" stroke-width="1.7" stroke-linecap="round"></line></svg>
         </span>
         <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;">
-          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">In a browser</span>
-          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the web view</span>
-          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">Same codebase, no install.</span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">On a computer</span>
+          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open it in your browser</span>
+          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">On a laptop, this opens the app inside an on-screen iPhone you click through with a mouse — no install.</span>
         </span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#4FBFA6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
-      <a href="?view=desktop" data-rv="33" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+      <!-- 3 · Engineers: native build from source (lowest) -->
+      <a data-rv="33" href="https://github.com/hrbohra/kiki-ios" style="display:flex; align-items:flex-start; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
         <span style="width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex:none;">
-          <svg width="20" height="20" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="13" rx="2" fill="none" stroke="#BFD6CE" stroke-width="1.7"></rect><line x1="8" y1="20.5" x2="16" y2="20.5" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 8 L20 12 L16 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><line x1="13.5" y1="6" x2="10.5" y2="18" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
         </span>
-        <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;">
-          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">Bigger screen</span>
-          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">The desktop version</span>
-          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">Annotations flanking the device, all at once.</span>
+        <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:5px;">
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">For engineers · the real native app</span>
+          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Run the native build from source</span>
+          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">The two above run the app as a web page. For the actual native iOS app: download the repo, start it with Expo on a computer, then scan the QR it prints to open it in Expo Go on your phone. (Full details in the repo README.)</span>
         </span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#BFD6CE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
-      <div data-rv="34" style="display:flex; align-items:flex-start; gap:14px; padding:18px 20px; background:rgba(193,91,91,0.10); border:1px solid rgba(193,91,91,0.30); border-radius:18px;">
-        <span style="width:3px; align-self:stretch; border-radius:2px; background:#C15B5B; display:block; flex:none;"></span>
-        <span style="font:400 13px/20px -apple-system,sans-serif; color:#C6B7B7;">The web view is live. The Expo Go link is a placeholder until the publish link lands.</span>
-      </div>
-      <div data-rv="35" style="display:flex; flex-direction:column; gap:9px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
-        <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">Built for both</span>
-        <span style="font:600 16px/1.25 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">This is the phone version.</span>
-        <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#93A9A2; text-wrap:pretty;">The app runs full-bleed here because you are already holding the device. The desktop version puts every design decision on screen at once, on leader lines around the device. Worth a look on a larger screen.</span>
-      </div>
+      <a data-rv="35" href="?view=desktop" style="display:flex; flex-direction:column; gap:9px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+        <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">The design write-up</span>
+        <span style="font:600 16px/1.25 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Prefer the reasoning behind every screen?</span>
+        <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#93A9A2; text-wrap:pretty;">The desktop version puts every design decision on screen at once, on leader lines around the device. Tap to switch to it — best on a larger screen.</span>
+      </a>
       <div style="display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.10);">
         <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#2E4A43" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#5A4E2A" stroke-width="9"></circle></svg>
         <span style="font:400 12px/1.4 -apple-system,sans-serif; color:#5F7A72;">Kiki — native iOS build · design decisions, not a screenshot reel.</span>
