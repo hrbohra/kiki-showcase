@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kiki — live app</title>
+<meta name="description" content="The Kiki iOS app, running live — full-screen on a phone, in an iPhone frame on desktop.">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #0F1B17; -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+  #appframe { border: 0; display: block; background: #F5F5F4; }
+
+  /* ── DESKTOP: iPhone emulator body, centred and scaled to the viewport height ── */
+  #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+           background: radial-gradient(120% 90% at 50% 0%, #16302a 0%, #0F1B17 70%); }
+  #shell { position: relative; width: 410px; height: 868px; padding: 9px; background: #E7E6E2;
+           border-radius: 56px; transform-origin: center;
+           box-shadow: 0 40px 80px rgba(18,33,29,0.45), 0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(0,0,0,0.14) inset; }
+  .btn { position: absolute; background: #DAD9D5; display: block; }
+  .b-silent { left: -3px; top: 196px; width: 3px; height: 34px; border-radius: 2px 0 0 2px; }
+  .b-vup    { left: -3px; top: 268px; width: 3px; height: 62px; border-radius: 2px 0 0 2px; }
+  .b-vdn    { left: -3px; top: 346px; width: 3px; height: 62px; border-radius: 2px 0 0 2px; }
+  .b-side   { right: -3px; top: 290px; width: 3px; height: 96px; border-radius: 0 2px 2px 0; }
+  #rim { position: absolute; inset: 9px; border-radius: 47px; box-shadow: 0 0 0 4px #0A0A0A; z-index: 3; pointer-events: none; }
+  #screen { position: relative; z-index: 1; width: 392px; height: 850px; border-radius: 47px; overflow: hidden; background: #F5F5F4; }
+  #statusbar { position: absolute; left: 0; right: 0; top: 0; height: 44px; z-index: 8; display: flex;
+               align-items: center; justify-content: space-between; padding: 6px 34px 0; pointer-events: none; }
+  #statusbar .time { font: 600 15.5px/1 -apple-system,'SF Pro Text',Helvetica,sans-serif; color: #1A1A1A; }
+  #statusbar .meters { display: flex; align-items: center; gap: 5px; }
+  #statusbar .m-batt { width: 20px; height: 8px; background: #1A1A1A; border-radius: 2px; display: block; }
+  #statusbar .m-out  { width: 17px; height: 11px; border: 1.4px solid #1A1A1A; border-radius: 3px; display: block; }
+  #island { position: absolute; left: 50%; top: 11px; margin-left: -62px; width: 124px; height: 36px;
+            border-radius: 20px; background: #0A0A0A; z-index: 9; pointer-events: none; }
+  #home { position: absolute; left: 50%; transform: translateX(-50%); bottom: 9px; z-index: 9;
+          width: 140px; height: 5px; border-radius: 3px; background: #1A1A1A; opacity: 0.85; pointer-events: none; }
+  /* app sits below the status bar so its header clears the island */
+  #appframe.desk { position: absolute; left: 0; top: 44px; width: 392px; height: 806px; }
+
+  #hint { position: fixed; left: 0; right: 0; bottom: 14px; text-align: center; z-index: 5;
+          font: 400 12px/1.4 -apple-system,Helvetica,sans-serif; color: #5F7A72; pointer-events: none; }
+
+  /* ── MOBILE: the device IS the frame — app full-bleed ── */
+  #mobileFrame { display: none; }
+  @media (max-width: 767.98px) {
+    #stage { display: none; }
+    #mobileFrame { display: block; position: fixed; inset: 0; }
+    #appframe.mob { width: 100%; height: 100svh; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- DESKTOP -->
+  <div id="stage">
+    <div id="shell">
+      <span class="btn b-silent"></span><span class="btn b-vup"></span><span class="btn b-vdn"></span><span class="btn b-side"></span>
+      <span id="rim"></span>
+      <div id="screen">
+        <iframe id="appframe" class="desk" src="/try/app/" title="Kiki" allow="fullscreen"></iframe>
+        <div id="statusbar"><span class="time">9:41</span><span class="meters"><span class="m-out"></span><span class="m-batt"></span></span></div>
+        <span id="island"></span>
+        <span id="home"></span>
+      </div>
+    </div>
+    <div id="hint">The live Kiki app — tap through it. On a phone, this page opens full-screen.</div>
+  </div>
+
+  <!-- MOBILE (populated by script to avoid loading the app twice) -->
+  <div id="mobileFrame"></div>
+
+<script>
+  (function () {
+    var mq = window.matchMedia('(max-width: 767.98px)');
+    var frame = document.getElementById('appframe');
+    var stage = document.getElementById('stage');
+    var mobileFrame = document.getElementById('mobileFrame');
+
+    // Move the single iframe into whichever presentation is active, so the app loads once.
+    function place() {
+      if (mq.matches) {
+        frame.className = 'mob';
+        if (frame.parentElement !== mobileFrame) mobileFrame.appendChild(frame);
+      } else {
+        frame.className = 'desk';
+        var screen = document.getElementById('screen');
+        if (frame.parentElement !== screen) screen.insertBefore(frame, screen.firstChild);
+        fit();
+      }
+    }
+
+    // Scale the whole phone so the entire device is visible on any laptop height.
+    function fit() {
+      var shell = document.getElementById('shell');
+      if (!shell || mq.matches) return;
+      var scale = Math.min(1, (window.innerHeight - 28) / 868);
+      shell.style.transform = 'scale(' + scale + ')';
+    }
+
+    window.addEventListener('resize', function () { fit(); });
+    if (mq.addEventListener) mq.addEventListener('change', place); else mq.addListener(place);
+    place();
+  })();
+</script>
+</body>
+</html>
