@@ -36,8 +36,19 @@
   /* app sits below the status bar so its header clears the island */
   #appframe.desk { position: absolute; left: 0; top: 44px; width: 392px; height: 806px; }
 
-  #hint { position: fixed; left: 0; right: 0; bottom: 14px; text-align: center; z-index: 5;
-          font: 400 12px/1.4 -apple-system,Helvetica,sans-serif; color: #5F7A72; pointer-events: none; }
+  /* ── Subtle, desktop-only pointer to the wide-screen web layout (not the phone) ── */
+  #weblink { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 6;
+             max-width: 212px; display: flex; flex-direction: column; gap: 7px;
+             padding: 16px 17px; border-radius: 16px; text-decoration: none;
+             background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.11);
+             backdrop-filter: blur(9px); opacity: 0.6;
+             transition: opacity 0.22s ease, border-color 0.22s ease; }
+  #weblink:hover { opacity: 1; border-color: rgba(79,191,166,0.45); }
+  #weblink .k  { font: 700 9px/1 ui-monospace,Menlo,monospace; letter-spacing: 1.3px; text-transform: uppercase; color: #4FBFA6; }
+  #weblink .t  { font: 600 14px/1.25 -apple-system,sans-serif; letter-spacing: -0.2px; color: #F6F5F1; }
+  #weblink .d  { font: 400 11.5px/16px -apple-system,sans-serif; color: #93A9A2; }
+  #weblink .go { font: 700 11px/1 -apple-system,sans-serif; color: #4FBFA6; margin-top: 1px; }
+  @media (max-width: 980px) { #weblink { display: none; } }
 
   /* ── MOBILE: the device IS the frame — app full-bleed ── */
   #mobileFrame { display: none; }
@@ -62,7 +73,14 @@
         <span id="home"></span>
       </div>
     </div>
-    <div id="hint">The live Kiki app — tap through it. On a phone, this page opens full-screen.</div>
+
+    <!-- Non-invasive: point desktop viewers to the wide, mouse-first web layout -->
+    <a id="weblink" href="/app" title="Open the desktop web layout of Kiki">
+      <span class="k">On a big screen?</span>
+      <span class="t">Open the desktop web layout</span>
+      <span class="d">A wider, mouse-first version of Kiki, built for large displays — not this phone emulator.</span>
+      <span class="go">Open the web app ›</span>
+    </a>
   </div>
 
   <!-- MOBILE (populated by script to avoid loading the app twice) -->

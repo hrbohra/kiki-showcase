@@ -561,8 +561,8 @@
     <div style="position:relative; max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:48px;">
       <div data-rv="30" style="display:flex; flex-direction:column; gap:16px;">
         <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:2px; text-transform:uppercase; color:#FFE7A8;">Run it yourself</span>
-        <h2 style="margin:0; max-width:24ch; font:200 clamp(34px,3.8vw,52px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.5px; color:#F6F5F1;">It’s a real build. Try it three ways.</h2>
-        <p style="margin:0; max-width:64ch; font:300 17px/28px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Same app, three doors in — pick whichever matches where you are. The first two open in a browser with nothing to install; the last runs the actual native build from source.</p>
+        <h2 style="margin:0; max-width:24ch; font:200 clamp(34px,3.8vw,52px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.5px; color:#F6F5F1;">It’s a real build. Try it four ways.</h2>
+        <p style="margin:0; max-width:64ch; font:300 17px/28px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Two real builds, four doors in — pick whichever matches where you are. Three of them are the iOS app (in a browser, on your phone, or the native build from source); the fourth is its desktop web app, a separate build made for a big screen. The first three open with nothing to install.</p>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:16px;">
@@ -593,8 +593,21 @@
           </span>
         </div>
 
-        <!-- 3 · Engineers: run the native build from source (lowest) -->
-        <div data-rv="33" style="display:flex; gap:22px; align-items:flex-start; padding:24px 26px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+        <!-- 3 · On this computer · the desktop web app (a separate build from the iOS app) -->
+        <a data-rv="33" href="/app" style="display:flex; gap:22px; align-items:center; padding:24px 26px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:22px; backdrop-filter:blur(10px);">
+          <span style="width:54px; height:54px; border-radius:15px; background:rgba(79,191,166,0.13); display:flex; align-items:center; justify-content:center; flex:none;">
+            <svg width="26" height="26" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2" fill="none" stroke="#4FBFA6" stroke-width="1.7"></rect><line x1="2.5" y1="9" x2="21.5" y2="9" stroke="#4FBFA6" stroke-width="1.4"></line><circle cx="5" cy="6.6" r="0.7" fill="#4FBFA6"></circle></svg>
+          </span>
+          <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:5px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">On this computer · web app</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the desktop web app</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">A separate build from the iOS app — its web sibling, rebuilt as a wide, mouse-first layout with a full desktop nav and a bespoke map, tuned for a large screen instead of a phone frame. Opens right here, nothing to install.</span>
+          </span>
+          <span style="font:700 13.5px/1 -apple-system,sans-serif; color:#4FBFA6; flex:none;">Open the web app ›</span>
+        </a>
+
+        <!-- 4 · Engineers: run the native build from source (lowest) -->
+        <div data-rv="34" style="display:flex; gap:22px; align-items:flex-start; padding:24px 26px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
           <span style="width:54px; height:54px; border-radius:15px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex:none;">
             <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 8 L20 12 L16 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><line x1="13.5" y1="6" x2="10.5" y2="18" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
           </span>
@@ -602,6 +615,7 @@
             <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">For engineers · the real native app</span>
             <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Run the native build from source</span>
             <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The two options above run the app as a web page. To run the <em>actual native iOS app</em>: download the repo, start it with Expo on your computer, then scan the QR that Expo prints — the native build opens in the free Expo Go app on your phone. (A permanent App Store / TestFlight install is the only step that needs a paid Apple Developer account.)</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#B8CFC7; border-left:2px solid rgba(79,191,166,0.5); padding-left:13px;">This is the version to run if you want to judge the craft. The web builds show every screen and flow, but only the native build on a real phone carries the finer work: the <strong style="color:#D8E6E0; font-weight:600;">haptic taps</strong> as a match forms, the native spring animations and gesture physics, real momentum scrolling, and the true on-device typography and timing. It’s the difference between reading the app and feeling it.</span>
             <span style="font:600 12.5px/1.7 ui-monospace,Menlo,monospace; color:#BFD6CE; background:rgba(0,0,0,0.28); border:1px solid rgba(255,255,255,0.10); border-radius:10px; padding:12px 14px; white-space:pre; overflow-x:auto;">git clone https://github.com/hrbohra/kiki-ios
 cd kiki-ios && npm install
 npx expo start        # then scan the QR with Expo Go</span>
@@ -1003,8 +1017,8 @@ npx expo start        # then scan the QR with Expo Go</span>
     <div style="position:relative; display:flex; flex-direction:column; gap:34px;">
       <div data-rv="30" style="display:flex; flex-direction:column; gap:13px;">
         <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">Run it yourself</span>
-        <h2 style="margin:0; font:200 clamp(30px,8.6vw,42px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.1px; color:#F6F5F1;">It’s a real build. Try it three ways.</h2>
-        <p style="margin:0; font:300 15.5px/25px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">You’re on a phone — the first option opens the app right here, full-screen. The others are for a computer, or for running the real native build from source.</p>
+        <h2 style="margin:0; font:200 clamp(30px,8.6vw,42px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.1px; color:#F6F5F1;">It’s a real build. Try it four ways.</h2>
+        <p style="margin:0; font:300 15.5px/25px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">You’re on a phone — the first option opens the iOS app right here, full-screen. The rest are for a computer: the app in a browser, its separate desktop web app, or the real native build from source.</p>
       </div>
       <!-- 1 · On your phone (you're on one) -->
       <a data-rv="31" href="/try" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,231,168,0.42); border-radius:22px; backdrop-filter:blur(10px);">
@@ -1030,15 +1044,27 @@ npx expo start        # then scan the QR with Expo Go</span>
         </span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#4FBFA6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
-      <!-- 3 · Engineers: native build from source (lowest) -->
-      <a data-rv="33" href="https://github.com/hrbohra/kiki-ios" style="display:flex; align-items:flex-start; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+      <!-- 3 · On this computer · the desktop web app (a separate build) -->
+      <a data-rv="33" href="/app" style="display:flex; align-items:center; gap:15px; padding:20px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:22px; backdrop-filter:blur(10px);">
+        <span style="width:46px; height:46px; border-radius:14px; background:rgba(79,191,166,0.13); display:flex; align-items:center; justify-content:center; flex:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="13" rx="2" fill="none" stroke="#4FBFA6" stroke-width="1.7"></rect><line x1="2.5" y1="9" x2="21.5" y2="9" stroke="#4FBFA6" stroke-width="1.3"></line></svg>
+        </span>
+        <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;">
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">On a computer · web app</span>
+          <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the desktop web app</span>
+          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">A separate build from the iOS app — its web sibling, a wide mouse-first layout with a full desktop nav and bespoke map, tuned for large screens. Best opened on a computer.</span>
+        </span>
+        <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#4FBFA6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+      <!-- 4 · Engineers: native build from source (lowest) -->
+      <a data-rv="34" href="https://github.com/hrbohra/kiki-ios" style="display:flex; align-items:flex-start; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
         <span style="width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex:none;">
           <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 8 L20 12 L16 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><line x1="13.5" y1="6" x2="10.5" y2="18" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
         </span>
         <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:5px;">
           <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#8FA8A0;">For engineers · the real native app</span>
           <span style="font:600 17px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Run the native build from source</span>
-          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">The two above run the app as a web page. For the actual native iOS app: download the repo, start it with Expo on a computer, then scan the QR it prints to open it in Expo Go on your phone. (Full details in the repo README.)</span>
+          <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#93A9A2;">The two above run the app as a web page. For the actual native iOS app: download the repo, start it with Expo on a computer, then scan the QR it prints to open it in Expo Go on your phone. This is the only way to <em>feel</em> the finer work — haptic taps as a match forms, native spring animations, gesture physics and true on-device timing. (Full details in the repo README.)</span>
         </span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#BFD6CE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
