@@ -34,11 +34,19 @@
   .phase .pd { font: 400 12.5px/1 -apple-system, sans-serif; color: #5F7A72; }
   .phase-line { height: 1px; background: rgba(255,255,255,0.10); margin-top: 8px; }
 
-  .card { display: grid; grid-template-columns: 96px 1fr; gap: 4px 22px; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .card .when { font: 700 12px/1.5 ui-monospace, Menlo, monospace; color: #8FA8A0; padding-top: 3px; }
-  .card .when .yr { display: block; color: #5F7A72; font-size: 11px; }
-  .card .body { min-width: 0; }
-  .tagline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .card { display: grid; grid-template-columns: 1.08fr 1fr; gap: 34px; align-items: center; padding: 44px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .media { display: block; position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 22px 55px rgba(0,0,0,0.4); order: 1; }
+  .media img { width: 100%; display: block; aspect-ratio: 1100 / 719; object-fit: cover; object-position: top center; background: #0b1512; }
+  .media .peek { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; padding: 13px; opacity: 0; transition: opacity 0.2s ease; background: linear-gradient(to top, rgba(6,12,10,0.55), rgba(6,12,10,0) 46%); }
+  .media:hover .peek { opacity: 1; }
+  .media .peek span { font: 700 11px/1 -apple-system, sans-serif; color: #fff; background: rgba(23,165,137,0.92); padding: 8px 12px; border-radius: 9px; }
+  .card .body { min-width: 0; order: 2; }
+  .card.flip .media { order: 2; }
+  .card.flip .body { order: 1; }
+  .strip-wrap { grid-column: 1 / -1; order: 3; }
+  .card .when { font: 700 11.5px/1.4 ui-monospace, Menlo, monospace; color: #8FA8A0; margin-bottom: 9px; }
+  .card .when .yr { color: #5F7A72; }
+  .tagline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
   .tag { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
   .tag.ios { color: #4FBFA6; background: rgba(79,191,166,0.13); }
   .tag.web { color: #E6CD8B; background: rgba(230,205,139,0.13); }
@@ -50,22 +58,21 @@
   ul.dec li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 6px; background: #2E6A5C; }
   ul.dec li b { color: #D8E6E0; font-weight: 600; }
 
-  .thumbs { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 12px; scrollbar-width: thin; }
-  .thumbs img { height: 150px; width: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.10); display: block; flex: none; background: #0b1512; }
-  .thumbs.mob img { height: 210px; }
+  .strip-label { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: #5F7A72; margin: 26px 0 10px; }
+  .thumbs { display: flex; gap: 10px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: thin; }
+  .thumbs img { height: 172px; width: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.10); display: block; flex: none; background: #0b1512; }
 
-  .open { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 10px 15px; border-radius: 11px; border: 1px solid rgba(79,191,166,0.34); background: rgba(79,191,166,0.06); color: #4FBFA6; font: 700 13px/1 -apple-system, sans-serif; text-decoration: none; }
+  .open { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 11px 16px; border-radius: 11px; border: 1px solid rgba(79,191,166,0.34); background: rgba(79,191,166,0.06); color: #4FBFA6; font: 700 13px/1 -apple-system, sans-serif; text-decoration: none; }
   .open:hover { border-color: rgba(79,191,166,0.6); background: rgba(79,191,166,0.12); }
-  .open.muted { color: #8FA8A0; border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); }
-  .note { margin-top: 8px; font: 400 12px/17px -apple-system, sans-serif; color: #5F7A72; }
 
   footer { border-top: 1px solid rgba(255,255,255,0.10); padding: 30px 0 60px; margin-top: 30px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   footer span { font: 400 13px/1.4 -apple-system, sans-serif; color: #5F7A72; }
 
-  @media (max-width: 640px) {
-    .card { grid-template-columns: 1fr; gap: 4px; }
-    .card .when { padding-top: 0; color: #6E8880; }
-    .card .when .yr { display: inline; font-size: 12px; }
+  @media (max-width: 760px) {
+    .card { grid-template-columns: 1fr; gap: 18px; padding: 30px 0; }
+    .card .media, .card.flip .media { order: 0 !important; }
+    .card .body, .card.flip .body { order: 1 !important; }
+    .strip-wrap { order: 2; }
   }
 </style>
 </head>
@@ -97,7 +104,7 @@
   </footer>
 
 <script>
-const H = "/design/handoffs/", T = "/design/thumbs/";
+const H = "/design/handoffs/", T = "/design/thumbs/", HERO = "/design/heroes/";
 const ENTRIES = [
   { phase:"Concept", pd:"18 Aug", date:"18 Aug", yr:"2026", plat:"both", slug:"aug18-concept",
     title:"The first concept",
@@ -196,7 +203,7 @@ const ENTRIES = [
 function el(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
 const root = document.getElementById('root');
-let lastPhase = null;
+let lastPhase = null, idx = 0;
 for (const it of ENTRIES) {
   if (it.newPhase || it.phase !== lastPhase) {
     lastPhase = it.phase;
@@ -207,9 +214,19 @@ for (const it of ENTRIES) {
     root.appendChild(ph);
     root.appendChild(el('div','phase-line'));
   }
-  const card = el('div','card');
-  card.appendChild(el('div','when', it.date + ' <span class="yr">'+it.yr+'</span>'));
+  const card = el('div','card' + (idx % 2 ? ' flip' : '')); idx++;
+
+  // Media — the live design, as a clickable hero
+  const media = el('a','media');
+  media.href = H+it.slug+'/'; media.target='_blank'; media.rel='noopener';
+  const hero = el('img'); hero.loading='lazy'; hero.src = HERO+it.slug+'.jpg'; hero.alt = it.title+' — design handoff';
+  media.appendChild(hero);
+  media.appendChild(el('div','peek','<span>Open the live design ›</span>'));
+  card.appendChild(media);
+
+  // Body — the reasoning
   const b = el('div','body');
+  b.appendChild(el('div','when', it.date + ' <span class="yr">'+it.yr+'</span>'));
   const tl = el('div','tagline');
   tl.appendChild(el('span','tag '+it.plat, platLabel(it.plat)));
   b.appendChild(tl);
@@ -220,20 +237,24 @@ for (const it of ENTRIES) {
     for (const d of it.dec) ul.appendChild(el('li',null,d));
     b.appendChild(ul);
   }
+  const open = el('a','open', 'Open the live design ›');
+  open.href = H+it.slug+'/'; open.target='_blank'; open.rel='noopener';
+  b.appendChild(open);
+  card.appendChild(b);
+
+  // Screenshot strip (spans full width) where a clean set exists
   if (it.thumbs && it.thumbs.length) {
-    const strip = el('div','thumbs' + (it.plat==='ios'?' ':''));
+    const wrap = el('div','strip-wrap');
+    wrap.appendChild(el('div','strip-label', 'More screens from this handoff'));
+    const strip = el('div','thumbs');
     const dir = it.thumbSrc || it.slug;
     for (const t of it.thumbs) {
       const img = el('img'); img.loading='lazy'; img.src = T+dir+'/'+t; img.alt = it.title+' — screen';
       strip.appendChild(img);
     }
-    b.appendChild(strip);
+    wrap.appendChild(strip);
+    card.appendChild(wrap);
   }
-  const open = el('a','open', 'Open the live design ›');
-  open.href = H+it.slug+'/'; open.target='_blank'; open.rel='noopener';
-  b.appendChild(open);
-  if (!it.thumbs || !it.thumbs.length) b.appendChild(el('div','note','Interactive prototype — opens the real handoff.'));
-  card.appendChild(b);
   root.appendChild(card);
 }
 
