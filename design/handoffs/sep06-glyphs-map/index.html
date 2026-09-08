@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0F1B17; -webkit-font-smoothing: antialiased; }
+  a { color: #E6CD8B; text-decoration: none; }
+  a:hover { color: #F2E3BE; }
+  @keyframes gl-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+  @keyframes gl-halo { 0%, 100% { opacity: 0.30; transform: scale(1); } 50% { opacity: 0.05; transform: scale(1.55); } }
+  @keyframes gl-sweep { 0% { background-position: -60% 0; } 100% { background-position: 160% 0; } }
+  @keyframes gl-drift { 0% { transform: translate3d(-6%, 2%, 0); } 50% { transform: translate3d(8%, -3%, 0); } 100% { transform: translate3d(-6%, 2%, 0); } }
+  @keyframes gl-wash { 0% { opacity: 0; transform: scale(0.55); } 22% { opacity: 0.5; } 100% { opacity: 0; transform: scale(1.5); } }
+  @keyframes gl-dash { to { stroke-dashoffset: -44; } }
+  @keyframes gl-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+
+<div style="background:#0F1B17; font-family:-apple-system,'SF Pro Text','Helvetica Neue',Helvetica,sans-serif; color:#F3F2EE; padding:64px; display:flex; flex-direction:column; gap:64px;">
+
+  <!-- ── HEADER ── -->
+  <div style="display:flex; flex-direction:column; gap:18px; max-width:900px;">
+    <span style="display:flex; align-items:center; gap:10px; align-self:flex-start; padding:8px 15px; border:1px solid rgba(230,205,139,0.30); border-radius:999px; background:rgba(230,205,139,0.05);">
+      <svg width="19" height="19" viewBox="0 0 24 24"><g transform="translate(-10.506 -4.767) scale(0.4743)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#E6CD8B"></path></g></svg>
+      <span style="font:700 10px/1 ui-monospace,'SF Mono',Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#E6CD8B;">Loop glyphs · v1</span>
+    </span>
+    <h1 style="margin:0; font:200 clamp(34px,4vw,54px)/1.06 'Newsreader',Georgia,serif; letter-spacing:-1.6px; color:#F6F5F1;">A glyph set anchored to the real mark, and a map that feels alive without lying.</h1>
+    <p style="margin:0; font:300 18px/29px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Two things you asked for. Twenty-two custom glyphs on one 24×24 grid at one stroke weight, replacing the generic emoji that were carrying meaning; and a four-layer ambient treatment for the map, each layer implementable with a real service in production.</p>
+    <div style="display:flex; gap:14px; padding:16px 18px; background:rgba(193,91,91,0.10); border:1px solid rgba(193,91,91,0.30); border-radius:16px; max-width:760px;">
+      <span style="width:3px; align-self:stretch; border-radius:2px; background:#C15B5B; display:block; flex:none;"></span>
+      <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#C6B7B7;"><strong style="color:#E8D8D8;">The mark is your file, not my trace.</strong> I pulled the path straight out of the SVG you sent, stripped the tile, re-anchored the relative start to <span style="font:600 13px ui-monospace,Menlo,monospace;">M46 18</span>, measured its bounding box by rasterising it, and normalised it into the 24×24 grid at a 19.4px live area — <span style="font:600 13px ui-monospace,Menlo,monospace;">translate(-10.506 -4.767) scale(0.4743)</span>. Nothing is redrawn. Because the logo is a filled outline, the over/under crossings are already carved into its counters, so no casing is needed. Separately: the other twenty-one glyphs are line work, not illustrated emoji — painterly Apple-style art needs an illustrator.</span>
+    </div>
+  </div>
+
+  <!-- ── CONSTRUCTION ── -->
+  <div style="display:grid; grid-template-columns:minmax(0,420px) minmax(0,1fr); gap:56px; align-items:center; padding:36px 40px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10); border-radius:26px;">
+    <div style="position:relative; width:340px; height:340px; border-radius:20px; background:#F5F5F4; overflow:hidden;">
+      <svg width="340" height="340" viewBox="0 0 24 24">
+        <g stroke="#D8D8D2" stroke-width="0.06">
+          <line x1="2" y1="0" x2="2" y2="24"></line><line x1="6" y1="0" x2="6" y2="24"></line><line x1="12" y1="0" x2="12" y2="24"></line><line x1="18" y1="0" x2="18" y2="24"></line><line x1="22" y1="0" x2="22" y2="24"></line>
+          <line x1="0" y1="2" x2="24" y2="2"></line><line x1="0" y1="6" x2="24" y2="6"></line><line x1="0" y1="12" x2="24" y2="12"></line><line x1="0" y1="18" x2="24" y2="18"></line><line x1="0" y1="22" x2="24" y2="22"></line>
+        </g>
+        <rect x="2" y="2" width="20" height="20" rx="1" fill="none" stroke="#17A589" stroke-width="0.08" stroke-dasharray="0.5 0.4"></rect>
+        <g transform="translate(-10.506 -4.767) scale(0.4743)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#1A1A1A"></path></g>
+      </svg>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <span style="font:700 10px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">The rule</span>
+      <h2 style="margin:0; font:200 32px/1.14 'Newsreader',Georgia,serif; letter-spacing:-1px; color:#F6F5F1;">Four glyphs are the logo itself. The other eighteen are line work on its grid.</h2>
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 28px;">
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">24×24 grid, 20px live area.</strong> 2px trim on all sides so glyphs optically match SF Symbols beside them.</span>
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">1.9px stroke, round caps and joins.</strong> Same weight as the existing <span style="font:600 12px ui-monospace,Menlo,monospace;">TabIcons.tsx</span>, so nothing looks imported.</span>
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">The mark is used verbatim.</strong> <span style="font:600 12px ui-monospace,Menlo,monospace;">loop</span>, <span style="font:600 12px ui-monospace,Menlo,monospace;">vouch</span>, <span style="font:600 12px ui-monospace,Menlo,monospace;">mutual</span> and <span style="font:600 12px ui-monospace,Menlo,monospace;">invite</span> carry the real logo path — filled, never restroked, never redrawn.</span>
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">State rides in a corner badge.</strong> The mark fills its box, so a tick or node sits bottom-right on a surface-coloured disc rather than inside the knot. <em>Pass the surface colour in as a prop.</em></span>
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">Dashes mean weak.</strong> A dashed contour always reads “third degree / unverified”, matching the map's ring encoding.</span>
+        <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#A9BDB6;"><strong style="color:#F6F5F1;">One accent per glyph.</strong> Teal for trust, gold for standing, rust for cost. Never two in one mark.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── THE SET ── -->
+  <div style="display:flex; flex-direction:column; gap:24px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px;">
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <span style="font:700 10px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">The set · 22 glyphs</span>
+        <h2 style="margin:0; font:200 32px/1.1 'Newsreader',Georgia,serif; letter-spacing:-1px; color:#F6F5F1;">Trust, life facts, and the home.</h2>
+      </div>
+      <span style="font:400 13px/20px -apple-system,sans-serif; color:#7E958D; max-width:420px; text-align:right;">Shown at 24px on paper, which is how they ship. Each caption names the emoji it retires.</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(184px,1fr)); gap:16px;">
+
+      <!-- TRUST -->
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><g transform="translate(-10.506 -4.767) scale(0.4743)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#1A1A1A"></path></g></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">loop</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">The brand mark. Empty state, watermark, splash.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><g transform="translate(-8.405 -3.814) scale(0.3794)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#1A1A1A"></path></g><circle cx="18.1" cy="18.1" r="5.4" fill="#F5F5F4"></circle><circle cx="18.1" cy="18.1" r="4.2" fill="#17A589"></circle><path d="M16.1 18.2 L17.5 19.6 L20.2 16.5" fill="none" stroke="#F5F5F4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">vouch</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">The mark with a tick badge. Retires ✅ and the bare “✓”.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><g transform="translate(-8.405 -3.814) scale(0.3794)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#1A1A1A"></path></g><circle cx="18.1" cy="18.1" r="5.4" fill="#F5F5F4"></circle><circle cx="18.1" cy="18.1" r="4.2" fill="none" stroke="#17A589" stroke-width="1.7"></circle><circle cx="18.1" cy="18.1" r="1.7" fill="#17A589"></circle></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">mutual</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">The mark with a ring badge. Use on “a mutual” provenance chips.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><g transform="translate(-2.485 -0.723) scale(0.3605)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#1A1A1A"></path></g><path d="M1.3 12 H5.6" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></path><path d="M3.5 9.7 L6 12 L3.5 14.3" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">invite</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">An arrow into the mark — someone let you in.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.3" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="12" cy="12" r="2.3" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="19" cy="12" r="2.3" fill="none" stroke="#9BCFC3" stroke-width="1.9" stroke-dasharray="1.9 1.7"></circle><path d="M7.4 12 H9.6" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M14.4 12 H16.6" stroke="#9BCFC3" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">degrees</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">One, two, three steps — the third dashed. Reach pills.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M12 7.4 C10.4 6.1 8 5.7 5.6 5.9 v12.2 c2.4 -0.2 4.8 0.2 6.4 1.5" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path><path d="M12 7.4 C13.6 6.1 16 5.7 18.4 5.9 v12.2 c-2.4 -0.2 -4.8 0.2 -6.4 1.5" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">guest book</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Entries you owe and entries about you. Retires 📖.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M8.8 14.8 V12.6" stroke="#C9A227" stroke-width="1.9" stroke-linecap="round"></path><path d="M12 14.8 V10.4" stroke="#C9A227" stroke-width="1.9" stroke-linecap="round"></path><path d="M15.2 14.8 V8.4" stroke="#C9A227" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#A08A45;">Standing</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">standing</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Contribution, in gold. Me tab, tier pill. Retires 🏆.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="8.7" cy="12" r="1.05" fill="#17A589"></circle><circle cx="12" cy="12" r="1.05" fill="#17A589"></circle><circle cx="15.3" cy="12" r="1.05" fill="#17A589" opacity="0.4"></circle></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">compose</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">The intro being written. <strong style="color:#1A1A1A;">Retires ✨</strong> — the third dot fades, so it reads as thinking, not magic.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="8.6" cy="10" r="4.6" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="15.4" cy="10" r="4.6" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M4.4 19.2 C7 16.8 17 16.8 19.6 19.2" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#17A589;">Trust</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">shared origin</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Two people, one horizon. <strong style="color:#1A1A1A;">Retires 🌏</strong> on “Both from…”.</span>
+        </span>
+      </div>
+
+      <!-- LIFE FACTS -->
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M4.2 13.6 C6.9 11.2 9.3 11.2 12 12.8 C14.7 14.4 17.1 14.4 19.8 12" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Fact</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">hometown</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Where you moved from. Sits <em>beside</em> the flag, never instead of it.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M3.6 9.6 L12 6 L20.4 9.6 L12 13.2 z" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path><path d="M7.6 11.4 V15.4 C7.6 16.9 9.5 18 12 18 C14.5 18 16.4 16.9 16.4 15.4 V11.4" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Fact</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">studied</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">“Paris, 2017”. Retires 🎓.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><rect x="3.6" y="8.4" width="16.8" height="9.8" rx="2" fill="none" stroke="#1A1A1A" stroke-width="1.9"></rect><path d="M9 8.4 V6.9 A1.6 1.6 0 0 1 10.6 5.3 h2.8 A1.6 1.6 0 0 1 15 6.9 V8.4" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Fact</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">work</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">What you do. Retires 💻 and the job-title bullet.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="6" cy="17" r="1.8" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="12" cy="12.4" r="1.8" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="18" cy="7" r="1.8" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M7.5 15.8 L10.5 13.5" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M13.4 11.2 L16.6 8.2" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Fact</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">climb</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Bouldering at Blok. Retires 🧗.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="7.1" cy="9.4" r="2" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="12" cy="7.5" r="2" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><circle cx="16.9" cy="9.4" r="2" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M12 12.4 C15 12.4 17.2 14.2 17.2 16.2 C17.2 18 15.3 19 12 19 C8.7 19 6.8 18 6.8 16.2 C6.8 14.2 9 12.4 12 12.4 z" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Fact</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">pet</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Pet-friendly, or a pet you'd sit. Retires 🐕.</span>
+        </span>
+      </div>
+
+      <!-- HOME -->
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M4.4 11.2 L12 5 L19.6 11.2" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 11.4 V19.2 h11 V11.4" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">room</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Listing type badge. Retires 🏠.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="8.6" cy="9.4" r="3.9" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M11.2 12.1 L18.8 19.7" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M15.4 16.3 L17.6 14.1" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">keys</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Handover, confirmed stay. Retires 🔑.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M12 19.4 V11.6" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M12 11.6 C12 7.2 15.3 4.6 19.4 4.6 C19.4 9 16.1 11.6 12 11.6 z" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path><path d="M11.4 14.6 C9.6 13 7.2 12.6 4.6 13 C5.2 15.8 7.8 17.2 10.6 16.8" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">garden</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Amenity chip. Retires 🌿.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.4" fill="none" stroke="#1A1A1A" stroke-width="1.9"></circle><path d="M4.2 12 H19.8" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">transit</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">“Near tube”, abstracted — deliberately <em>not</em> the TfL roundel, which is trademarked.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M4.6 9.8 h3.2 L11.6 6.4 v11.2 L7.8 14.2 H4.6 z" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path><path d="M15.2 9.6 L19.6 14" stroke="#C15B5B" stroke-width="1.9" stroke-linecap="round"></path><path d="M19.6 9.6 L15.2 14" stroke="#C15B5B" stroke-width="1.9" stroke-linecap="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">quiet</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Amenity chip. Retires 🤫.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M3.6 16.4 h16.8" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M6.2 16.4 V19.4" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M17.8 16.4 V19.4" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><rect x="7.6" y="6.2" width="8.8" height="6.4" rx="1.4" fill="none" stroke="#1A1A1A" stroke-width="1.9"></rect><path d="M12 12.6 V16.4" stroke="#1A1A1A" stroke-width="1.9"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">desk</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">“WFH desk”. Retires 🖥️.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><rect x="4" y="5.6" width="16" height="14.4" rx="2.4" fill="none" stroke="#1A1A1A" stroke-width="1.9"></rect><path d="M4 10 H20" stroke="#1A1A1A" stroke-width="1.9"></path><path d="M8.4 3.6 V6.6" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><path d="M15.6 3.6 V6.6" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round"></path><circle cx="12" cy="15" r="1.5" fill="#17A589"></circle></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#626C75;">Home</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">dates</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Trip window. Retires 🏄 on trip rows.</span>
+        </span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:20px; background:#F5F5F4; border-radius:20px;">
+        <span style="display:flex; align-items:center; justify-content:space-between;">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 12.8 l2.4 -6.4 A2 2 0 0 1 8.3 5.1 h7.4 a2 2 0 0 1 1.9 1.3 L20 12.8 v4.4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linejoin="round"></path><path d="M4 12.8 h4 l1.6 2.6 h4.8 L16 12.8 h4" fill="none" stroke="#C15B5B" stroke-width="1.9" stroke-linejoin="round"></path></svg>
+          <span style="font:700 9px/1 ui-monospace,Menlo,monospace; letter-spacing:1px; text-transform:uppercase; color:#C15B5B;">Cost</span>
+        </span>
+        <span style="display:flex; flex-direction:column; gap:3px;">
+          <span style="font:700 14px/1.2 -apple-system,sans-serif; color:#1A1A1A;">request</span>
+          <span style="font:400 12px/17px -apple-system,sans-serif; color:#626C75;">Someone asking. The rust seam marks the ask, not a warning.</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── IN SITU ── -->
+  <div style="display:flex; flex-direction:column; gap:22px;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <span style="font:700 10px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">In situ</span>
+      <h2 style="margin:0; font:200 32px/1.1 'Newsreader',Georgia,serif; letter-spacing:-1px; color:#F6F5F1;">Flags keep their emoji. Everything carrying meaning does not.</h2>
+      <p style="margin:0; max-width:70ch; font:300 16.5px/26px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">You asked to keep the flags blended into the location text, and that is right — nobody should hand-draw 200 flags, and a real flag emoji reads warmer than a two-letter chip. The custom set takes over only where a glyph is doing semantic work.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:14px; padding:24px; background:#F5F5F4; border-radius:22px;">
+        <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#626C75;">Explore card · host line</span>
+        <span style="display:flex; align-items:center; gap:11px;">
+          <img src="assets/avatars/emma.jpg" alt="Emma" style="width:42px; height:42px; border-radius:21px; object-fit:cover; display:block; flex:none;">
+          <span style="min-width:0;">
+            <span style="display:block; font:700 16px/1.15 -apple-system,sans-serif; letter-spacing:-0.3px; color:#1A1A1A;">Emma</span>
+            <span style="display:block; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">🇳🇿 De Beauvoir, London</span>
+          </span>
+        </span>
+        <span style="height:1px; background:#E4E4E0; display:block;"></span>
+        <span style="display:flex; flex-wrap:wrap; gap:7px;">
+          <span style="display:flex; align-items:center; gap:6px; background:#E7F4F0; border:1px solid #CFE4DE; border-radius:999px; padding:5px 11px;"><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.3" fill="none" stroke="#0E4E42" stroke-width="2.4"></circle><circle cx="12" cy="12" r="2.3" fill="none" stroke="#0E4E42" stroke-width="2.4"></circle><path d="M7.4 12 H9.6" stroke="#0E4E42" stroke-width="2.4" stroke-linecap="round"></path></svg><span style="font:600 12px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps</span></span>
+          <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #ECECE8; border-radius:999px; padding:5px 11px;"><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.4" fill="none" stroke="#4B5563" stroke-width="2.2"></circle><path d="M4.2 12 H19.8" stroke="#4B5563" stroke-width="2.2" stroke-linecap="round"></path></svg><span style="font:600 12px/1 -apple-system,sans-serif; color:#4B5563;">Near tube</span></span>
+          <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #ECECE8; border-radius:999px; padding:5px 11px;"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M4.6 9.8 h3.2 L11.6 6.4 v11.2 L7.8 14.2 H4.6 z" fill="none" stroke="#4B5563" stroke-width="2.2" stroke-linejoin="round"></path><path d="M15.2 9.6 L19.6 14" stroke="#4B5563" stroke-width="2.2" stroke-linecap="round"></path><path d="M19.6 9.6 L15.2 14" stroke="#4B5563" stroke-width="2.2" stroke-linecap="round"></path></svg><span style="font:600 12px/1 -apple-system,sans-serif; color:#4B5563;">Quiet</span></span>
+          <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #ECECE8; border-radius:999px; padding:5px 11px;"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M3.6 16.4 h16.8" stroke="#4B5563" stroke-width="2.2" stroke-linecap="round"></path><rect x="7.6" y="6.2" width="8.8" height="6.4" rx="1.4" fill="none" stroke="#4B5563" stroke-width="2.2"></rect><path d="M12 12.6 V16.4" stroke="#4B5563" stroke-width="2.2"></path></svg><span style="font:600 12px/1 -apple-system,sans-serif; color:#4B5563;">WFH desk</span></span>
+        </span>
+        <span style="font:400 12px/17px -apple-system,sans-serif; color:#8A9099;">Flag stays inline with the place. Amenities and degrees switch to glyphs.</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; padding:24px; background:#F5F5F4; border-radius:22px;">
+        <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#626C75;">Trust page · the composing chip</span>
+        <span style="display:flex; align-items:center; justify-content:space-between; gap:14px;">
+          <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#2C6559;">The mutual friend</span>
+          <span style="display:flex; align-items:center; gap:7px; border:1px solid #CFE4DE; border-radius:999px; padding:5px 11px; background:linear-gradient(100deg,#fff 42%,#F2FBF8 50%,#fff 58%); background-size:280% 100%; animation:gl-sweep 5.2s ease-in-out infinite;">
+            <svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6" fill="none" stroke="#0E4E42" stroke-width="2.2"></circle><circle cx="8.7" cy="12" r="1.2" fill="#17A589"></circle><circle cx="12" cy="12" r="1.2" fill="#17A589"></circle><circle cx="15.3" cy="12" r="1.2" fill="#17A589" opacity="0.4"></circle></svg>
+            <span style="font:700 12px/1 -apple-system,sans-serif; color:#0E4E42;">Draft intro</span>
+          </span>
+        </span>
+        <span style="display:flex; align-items:center; gap:7px; align-self:flex-start; background:#fff; border-radius:999px; padding:7px 12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="8.6" cy="10" r="4.6" fill="none" stroke="#0E4E42" stroke-width="2.2"></circle><circle cx="15.4" cy="10" r="4.6" fill="none" stroke="#0E4E42" stroke-width="2.2"></circle><path d="M4.4 19.2 C7 16.8 17 16.8 19.6 19.2" fill="none" stroke="#17A589" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          <span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">Both from Mount Eden</span>
+        </span>
+        <span style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><svg width="14" height="14" viewBox="0 0 24 24"><g transform="translate(-8.195 -3.718) scale(0.37)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#0E4E42"></path></g><circle cx="18.4" cy="18.4" r="5.6" fill="#FFFFFF"></circle><circle cx="18.4" cy="18.4" r="4.3" fill="#17A589"></circle></svg><span style="font:700 11.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Bella</span><span style="font:600 10px/1 -apple-system,sans-serif; color:#2C6559;">a mutual</span></span>
+          <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><svg width="14" height="14" viewBox="0 0 24 24"><g transform="translate(-8.195 -3.718) scale(0.37)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#0E4E42"></path></g><circle cx="18.4" cy="18.4" r="5.6" fill="#FFFFFF"></circle><circle cx="18.4" cy="18.4" r="4.3" fill="#17A589"></circle><path d="M16.3 18.5 L17.8 20 L20.6 16.8" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:700 11.5px/1 -apple-system,sans-serif; color:#1A1A1A;">She hosted my friend R</span><span style="font:600 10px/1 -apple-system,sans-serif; color:#2C6559;">a vouch</span></span>
+        </span>
+        <span style="font:400 12px/17px -apple-system,sans-serif; color:#8A9099;">The ✨ becomes three thinking dots; the globe becomes two people under one horizon.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAP LAYER ── -->
+  <div style="display:flex; flex-direction:column; gap:22px;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <span style="font:700 10px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#A08A45;">Living map · four layers</span>
+      <h2 style="margin:0; font:200 32px/1.1 'Newsreader',Georgia,serif; letter-spacing:-1px; color:#F6F5F1;">Ambient motion that never invents data.</h2>
+      <p style="margin:0; max-width:74ch; font:300 16.5px/26px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">The rule that keeps this honest: motion may respond to real coordinates and real degrees, and nothing else. No moving traffic, no fake activity pings, no drawn chain between people whose locations the app does not know. Everything here runs live — watch for about ten seconds.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:minmax(0,440px) minmax(0,1fr); gap:44px; align-items:start;">
+      <div style="position:relative; width:100%; height:560px; border-radius:24px; overflow:hidden; background:#EAEEE9; box-shadow:0 22px 44px rgba(0,0,0,0.32);">
+        <img src="assets/map/london.jpg" alt="London" style="position:absolute; left:-90px; top:-70px; width:620px; height:700px; object-fit:cover; filter:saturate(0.58) contrast(0.95) brightness(1.05);">
+
+        <span style="position:absolute; left:-20%; top:-20%; width:140%; height:140%; background:radial-gradient(closest-side, rgba(20,32,29,0.20), rgba(20,32,29,0) 70%); display:block; pointer-events:none; animation:gl-drift 34s ease-in-out infinite;"></span>
+        <span style="position:absolute; inset:0; background:linear-gradient(104deg, rgba(255,255,255,0) 38%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0) 62%); background-size:260% 100%; mix-blend-mode:soft-light; display:block; pointer-events:none; animation:gl-sweep 11s linear infinite;"></span>
+        <span style="position:absolute; left:120px; top:404px; width:420px; height:420px; margin:-210px 0 0 -210px; border-radius:999px; border:1px solid rgba(23,165,137,0.55); background:radial-gradient(closest-side, rgba(23,165,137,0.16), rgba(23,165,137,0) 72%); display:block; pointer-events:none; animation:gl-wash 7.5s ease-out infinite;"></span>
+
+        <svg width="440" height="560" viewBox="0 0 440 560" style="position:absolute; left:0; top:0; pointer-events:none;">
+          <path d="M232 196 C 268 236, 262 292, 214 322" fill="none" stroke="#17A589" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="5 7" opacity="0.75" style="animation:gl-dash 2.4s linear infinite;"></path>
+          <path d="M214 322 C 176 350, 150 372, 128 400" fill="none" stroke="#4FBFA6" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="4 8" opacity="0.55" style="animation:gl-dash 3.1s linear infinite;"></path>
+        </svg>
+
+        <span style="position:absolute; left:232px; top:196px; margin:-27px 0 0 -27px; width:54px; height:54px; display:block; animation:gl-breathe 5.6s ease-in-out infinite;">
+          <span style="position:absolute; inset:-9px; border-radius:999px; background:#17A589; display:block; animation:gl-halo 5.6s ease-in-out infinite;"></span>
+          <img src="assets/avatars/emma.jpg" alt="Emma" style="position:relative; width:54px; height:54px; border-radius:27px; object-fit:cover; border:3px solid #17A589; box-sizing:border-box; display:block; box-shadow:0 6px 18px rgba(26,26,26,0.18);">
+        </span>
+        <span style="position:absolute; left:214px; top:322px; margin:-22px 0 0 -22px; width:44px; height:44px; display:block; animation:gl-breathe 5.6s ease-in-out 1.4s infinite;">
+          <img src="assets/avatars/priya.jpg" alt="Priya" style="width:44px; height:44px; border-radius:22px; object-fit:cover; border:2px solid #4FBFA6; box-sizing:border-box; display:block;">
+        </span>
+        <span style="position:absolute; left:128px; top:400px; margin:-22px 0 0 -22px; width:44px; height:44px; display:block; animation:gl-breathe 5.6s ease-in-out 2.8s infinite;">
+          <img src="assets/avatars/theo.jpg" alt="Theo" style="width:44px; height:44px; border-radius:22px; object-fit:cover; border:1.5px dashed #9BCFC3; box-sizing:border-box; display:block;">
+        </span>
+        <span style="position:absolute; left:120px; top:404px; margin:-26px 0 0 -26px; width:52px; height:52px; display:block;">
+          <span style="position:absolute; inset:-8px; border-radius:999px; background:#E6CD8B; display:block; animation:gl-halo 4.4s ease-in-out infinite;"></span>
+          <img src="assets/avatars/you.jpg" alt="You" style="position:relative; width:52px; height:52px; border-radius:26px; object-fit:cover; border:3px solid #fff; box-sizing:border-box; display:block; box-shadow:0 6px 18px rgba(26,26,26,0.2);">
+        </span>
+
+        <span style="position:absolute; left:14px; top:14px; background:rgba(255,255,255,0.9); backdrop-filter:blur(14px); border-radius:14px; padding:9px 13px; font:700 12.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">6 homes · 4 within two steps</span>
+        <span style="position:absolute; left:14px; bottom:10px; font:600 9px/1.6 -apple-system,sans-serif; color:#626C75; background:rgba(255,255,255,0.72); padding:0 5px; border-radius:4px;">© OpenStreetMap · CARTO</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="position:relative; padding:20px 22px 20px 25px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:20px; display:flex; flex-direction:column; gap:7px;">
+          <span style="position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:2px; background:#4FBFA6; display:block;"></span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#4FBFA6;">Layer 01 · light sweep · 11s</span>
+          <span style="font:600 16px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">Daylight crossing the city</span>
+          <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">A soft-light gradient band travelling across the basemap. Reads as weather rather than UI, and carries no meaning at all — which is why it is allowed to loop forever.</span>
+          <span style="font:400 12.5px/19px -apple-system,sans-serif; color:#7E958D;"><strong style="color:#C9DCD5;">Prod:</strong> Skia <span style="font:600 12px ui-monospace,Menlo,monospace;">LinearGradient</span> + <span style="font:600 12px ui-monospace,Menlo,monospace;">BlendMode.SoftLight</span> in a <span style="font:600 12px ui-monospace,Menlo,monospace;">&lt;Canvas&gt;</span> over the existing MapCanvas, driven by one Reanimated clock.</span>
+        </div>
+
+        <div style="position:relative; padding:20px 22px 20px 25px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:20px; display:flex; flex-direction:column; gap:7px;">
+          <span style="position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:2px; background:#4FBFA6; display:block;"></span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#4FBFA6;">Layer 02 · cloud drift · 34s</span>
+          <span style="font:600 16px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">One slow shadow</span>
+          <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">A single large radial darkening, drifting on a 34-second cycle. Long enough that you never catch it moving, short enough that the map is never static. Depth without parallax tricks.</span>
+          <span style="font:400 12.5px/19px -apple-system,sans-serif; color:#7E958D;"><strong style="color:#C9DCD5;">Prod:</strong> same Skia canvas, <span style="font:600 12px ui-monospace,Menlo,monospace;">RadialGradient</span> on a <span style="font:600 12px ui-monospace,Menlo,monospace;">withRepeat(withTiming(...))</span> translate. Or a MapLibre raster layer with animated <span style="font:600 12px ui-monospace,Menlo,monospace;">raster-opacity</span> if you migrate the basemap.</span>
+        </div>
+
+        <div style="position:relative; padding:20px 22px 20px 25px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.22); border-radius:20px; display:flex; flex-direction:column; gap:7px;">
+          <span style="position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:2px; background:#E6CD8B; display:block;"></span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#E6CD8B;">Layer 03 · reach wash · 7.5s</span>
+          <span style="font:600 16px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">Your reach, pulsing outward</span>
+          <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">A teal ring expanding from your own pin. This one <em>is</em> data — its radius is the bounding circle of everything within two steps of you, so it grows as your network does. The only layer tied to the graph.</span>
+          <span style="font:400 12.5px/19px -apple-system,sans-serif; color:#7E958D;"><strong style="color:#C9DCD5;">Prod:</strong> deck.gl <span style="font:600 12px ui-monospace,Menlo,monospace;">ScatterplotLayer</span> with animated <span style="font:600 12px ui-monospace,Menlo,monospace;">getRadius</span> transitions, or Skia <span style="font:600 12px ui-monospace,Menlo,monospace;">Circle</span> with a shared progress value. Radius from the same domain function that computes degrees — never a constant.</span>
+        </div>
+
+        <div style="position:relative; padding:20px 22px 20px 25px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:20px; display:flex; flex-direction:column; gap:7px;">
+          <span style="position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:2px; background:#4FBFA6; display:block;"></span>
+          <span style="font:700 9.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#4FBFA6;">Layer 04 · breathing pins + marching dashes</span>
+          <span style="font:600 16px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">Faces alive, links honest</span>
+          <span style="font:400 13.5px/21px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">Pins breathe on a 5.6s cycle, staggered so the map never pulses in unison; ring weight still encodes degrees, and your own pin carries the one gold halo. Dashed links march slowly — and only ever between two <em>listings</em>, both of which have real coordinates.</span>
+          <span style="font:400 12.5px/19px -apple-system,sans-serif; color:#7E958D;"><strong style="color:#C9DCD5;">Prod:</strong> Reanimated on the existing marker views; links as deck.gl <span style="font:600 12px ui-monospace,Menlo,monospace;">ArcLayer</span> or a MapLibre line layer with animated <span style="font:600 12px ui-monospace,Menlo,monospace;">line-dasharray</span>. Cap at ~12 animated markers and drop to static past that.</span>
+        </div>
+
+        <div style="display:flex; gap:14px; padding:18px 20px; background:rgba(193,91,91,0.10); border:1px solid rgba(193,91,91,0.30); border-radius:18px;">
+          <span style="width:3px; align-self:stretch; border-radius:2px; background:#C15B5B; display:block; flex:none;"></span>
+          <span style="font:400 13px/20px -apple-system,sans-serif; color:#C6B7B7;"><strong style="color:#E8D8D8;">Deliberately absent:</strong> moving vehicles, live “someone just joined” pings, heat maps of activity, and any line drawn between two people rather than two homes. Each would look great and imply data Kiki does not have.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:14px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.10);">
+    <svg width="20" height="20" viewBox="0 0 24 24"><g transform="translate(-10.506 -4.767) scale(0.4743)"><path d="M46 18c0 1-2 2-7.5 3.6-8.1 2.5-7 18.3 1.7 24.6 4.2 2.9 10.6 3.1 14.3.3 3.4-2.5 3.3-3.8-.4-4.8-3.8-.9-4.8-2.5-2.8-4.4 1.2-1.2 2.2-1.3 4.8-.5 1.9.6 5.3 1.6 7.7 2.2 3.2.8 4.2 1.5 4.2 3.2 0 1.8-.5 2-4.2 1.6-2.4-.3-3.5-.3-2.5-.1 2.6.6 2.1 1.8-2 5.3-8 6.5-15.1 6.3-23.3-.7-2.9-2.5-5.2-3.7-6.7-3.5-1.9.3-2.3-.1-2.3-2.2 0-3 .7-3.3 2.7-.9.9 1.2.8.7-.3-1.6-1.2-2.5-1.5-5.2-1.2-9.9.4-5.9.7-6.7 4.1-9.8 3.1-2.9 4.4-3.4 8.7-3.4 2.7 0 5 .5 5 1m16.1.7c3.6 2.1 5.9 6.9 5.9 12 0 6.5-.8 8.1-3.7 7.5-2.3-.4-2.5-.8-1.9-4.2 1.1-7-2.1-12-7.6-12-2.6 0-6.8 2.5-6.8 4.1 0 .5 1-.1 2.1-1.2 2-2 2.2-2 3.1-.5 1.4 2.6.1 8.1-2.7 11.5-1.4 1.6-4.6 3.9-7.2 5.1l-4.7 2.2-1.9-2.3-1.9-2.3 4.9-1.3c4.9-1.2 8.3-4.2 8.3-7.2 0-1.1-.4-.8-1.3.8-1.9 3.8-3.5 3.6-4.2-.3-1-4.9.6-8.7 4.5-11.4 4-2.7 10.9-2.9 15.1-.5" fill="#5A4E2A"></path></g></svg>
+    <span style="font:400 13px/1.4 -apple-system,sans-serif; color:#5F7A72;">Loop glyphs v1 · 22 marks, real logo path · living map, four layers, no invented data.</span>
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>

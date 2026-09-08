@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; }
+  doc-page:not(:defined) { visibility: visible; }
+  a { color: #0F8D74; }
+  a:hover { color: #17A589; }
+</style>
+
+</helmet>
+
+<doc-page margin="0.7in">
+  <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,sans-serif;color:#1A1A1A;font-size:10.5pt;line-height:1.6">
+
+    <h1 style="font-size:26pt;font-weight:800;letter-spacing:-.6px;line-height:1.1;margin:0 0 8px">Kiki Connect — Design Handoff</h1>
+    <div style="font-size:11pt;font-weight:600;color:#4B5563;margin-bottom:6px">Refinement of the Expo RN prototype. Every value below is implemented in the companion web prototype (<em>Kiki Connect.dc.html</em>), so the RN build has a running reference.</div>
+    <div style="font-size:9pt;font-weight:600;color:#8A9099;padding-bottom:14px;border-bottom:2px solid #1A1A1A">Light mode only · system font stack · no photography · token-driven · buildable in Expo SDK 52 / RN 0.76 on iOS and web</div>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 8px">1. The signature motif: the Loop</h2>
+    <p style="margin:0 0 10px">Two overlapping rings — the pretzel/knot mark reduced to its simplest legible form: two circles that share their middle. It is the one shape that means "two people, one overlap", which is the entire product.</p>
+    <div style="background:#E7F4F0;border-radius:14px;padding:14px 16px;margin:0 0 10px;break-inside:avoid">
+      <div style="font-weight:800;font-size:10pt;margin-bottom:6px">Where it appears, and at what strength</div>
+      <div style="font-size:10pt;line-height:1.65">Map surface — stroke <code>#17A589</code> at 10% opacity, 150×90, bottom-left, purely as texture.<br />Listing photo placeholder — stroke <code>#FFFFFF</code> at 35%, bleeding off the bottom-right corner, so every "photo" carries the mark.<br />Profile hero — stroke <code>#17A589</code> at 9%, 240 wide, bleeding off the top behind the avatar.<br />Trust banners (listing preview, guest-book quote card) — a 16px solid-stroke Loop as the leading glyph instead of an emoji.<br />Never at more than 18% opacity behind content, and never more than one instance per screen.</div>
+    </div>
+    <div style="font-size:9.5pt;color:#4B5563"><strong>Why:</strong> a motif that only ever appears as texture cannot compete with content, but it accumulates — by the fourth screen the shape reads as "Kiki" without a single logo lockup. <strong>Build:</strong> one <code>&lt;Svg&gt;</code> component, <code>&lt;Circle cx=38 cy=30 r=21 /&gt;</code> ×2 in a 100×60 viewBox, stroke only. Requires <code>react-native-svg</code>.</div>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 8px">2. Tokens</h2>
+    <p style="margin:0 0 12px;font-size:10pt;color:#4B5563">Replace <code>theme/tokens.ts</code> with the values below. Everything from the current file is kept; additions are marked <strong style="color:#0F8D74">new</strong>.</p>
+
+    <h3 style="font-size:11pt;font-weight:800;margin:18px 0 6px">2a. Colour</h3>
+    <div style="border-top:1px solid #1A1A1A">
+      <sc-for list="{{ colours }}" as="c" hint-placeholder-count="14">
+        <div style="display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #ECECE8;break-inside:avoid">
+          <code style="width:104px;flex:none;font-size:9.5pt;font-weight:700">{{ c.name }}</code>
+          <code style="width:150px;flex:none;font-size:9.5pt;color:#4B5563">{{ c.value }}</code>
+          <div style="flex:1;font-size:9.5pt;color:#4B5563">{{ c.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size:9.5pt;color:#4B5563;margin-top:10px"><strong>Why the additions:</strong> the trust ramp lets a pin, a bar and a badge all say "how close is this person" in one shared visual language; the photo tints replace flat colour blocks with a light source, which is what made the old cards read cold.</div>
+
+    <h3 style="font-size:11pt;font-weight:800;margin:20px 0 6px">2b. Radius, spacing, elevation</h3>
+    <div style="border-top:1px solid #1A1A1A">
+      <sc-for list="{{ scales }}" as="s" hint-placeholder-count="8">
+        <div style="display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #ECECE8;break-inside:avoid">
+          <code style="width:104px;flex:none;font-size:9.5pt;font-weight:700">{{ s.name }}</code>
+          <code style="width:150px;flex:none;font-size:9.5pt;color:#4B5563">{{ s.value }}</code>
+          <div style="flex:1;font-size:9.5pt;color:#4B5563">{{ s.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="font-size:11pt;font-weight:800;margin:20px 0 6px">2c. Type</h3>
+    <p style="margin:0 0 8px;font-size:10pt;color:#4B5563">Keep the system stack (SF Pro on iOS). The scale gains one display size and tightens tracking on the large end; nothing else changes.</p>
+    <div style="border-top:1px solid #1A1A1A">
+      <sc-for list="{{ type }}" as="t" hint-placeholder-count="8">
+        <div style="display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #ECECE8;break-inside:avoid">
+          <code style="width:104px;flex:none;font-size:9.5pt;font-weight:700">{{ t.name }}</code>
+          <code style="width:150px;flex:none;font-size:9.5pt;color:#4B5563">{{ t.value }}</code>
+          <div style="flex:1;font-size:9.5pt;color:#4B5563">{{ t.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 10px;break-before:page">3. Component specs</h2>
+    <sc-for list="{{ components }}" as="c" hint-placeholder-count="6">
+      <div style="margin:0 0 18px;break-inside:avoid">
+        <div style="display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid #1A1A1A;padding-bottom:5px;margin-bottom:8px">
+          <div style="font-size:12pt;font-weight:800">{{ c.name }}</div>
+          <div style="font-size:9pt;font-weight:600;color:#8A9099">{{ c.file }}</div>
+        </div>
+        <div style="font-size:10pt;line-height:1.6;margin-bottom:8px">{{ c.spec }}</div>
+        <div style="border-left:2px solid #E7F4F0;padding-left:12px">
+          <sc-for list="{{ c.states }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;gap:10px;padding:3px 0;font-size:9.5pt">
+              <div style="width:88px;flex:none;font-weight:800;color:#0F8D74">{{ s.name }}</div>
+              <div style="flex:1;color:#4B5563">{{ s.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:9.5pt;color:#4B5563;margin-top:8px"><strong>Why:</strong> {{ c.why }}</div>
+      </div>
+    </sc-for>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 10px;break-before:page">4. Screen-by-screen</h2>
+    <sc-for list="{{ screens }}" as="s" hint-placeholder-count="8">
+      <div style="margin:0 0 16px;break-inside:avoid">
+        <div style="font-size:12pt;font-weight:800;margin-bottom:5px">{{ s.name }}</div>
+        <div style="font-size:10pt;line-height:1.6">{{ s.change }}</div>
+        <div style="font-size:9.5pt;color:#4B5563;margin-top:6px"><strong>Why:</strong> {{ s.why }}</div>
+      </div>
+    </sc-for>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 10px">5. Motion</h2>
+    <p style="margin:0 0 10px;font-size:10pt">One gesture, used only on trust reveals, so motion always means the same thing: <em>something just became knowable about a person.</em></p>
+    <div style="border-top:1px solid #1A1A1A">
+      <sc-for list="{{ motion }}" as="m" hint-placeholder-count="4">
+        <div style="display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #ECECE8;break-inside:avoid">
+          <div style="width:150px;flex:none;font-size:9.5pt;font-weight:700">{{ m.name }}</div>
+          <div style="flex:1;font-size:9.5pt;color:#4B5563">{{ m.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size:9.5pt;color:#4B5563;margin-top:10px">All of it is <code>Animated</code> + <code>LayoutAnimation</code> except the graph edge draw, which needs an animated <code>strokeDashoffset</code> on <code>react-native-svg</code>. <strong>Fallback if you'd rather not:</strong> fade and scale the three nodes in sequence (0 / 90 / 180ms) and leave the edges static — the sequencing carries most of the feeling.</div>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 10px">6. Constraints, flagged</h2>
+    <div style="border-top:1px solid #1A1A1A">
+      <sc-for list="{{ flags }}" as="f" hint-placeholder-count="4">
+        <div style="display:flex;gap:12px;align-items:baseline;padding:7px 0;border-bottom:1px solid #ECECE8;break-inside:avoid">
+          <div style="width:150px;flex:none;font-size:9.5pt;font-weight:700">{{ f.name }}</div>
+          <div style="flex:1;font-size:9.5pt;color:#4B5563">{{ f.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h2 style="font-size:15pt;font-weight:800;letter-spacing:-.3px;margin:26px 0 10px">7. Order of work</h2>
+    <div style="font-size:10pt;line-height:1.7">
+      <div><strong>1.</strong> Tokens (§2) — one file, unblocks everything else.</div>
+      <div><strong>2.</strong> Avatar + Loop svg — they appear on every screen, so they set the perceived quality ceiling.</div>
+      <div><strong>3.</strong> ListingCard + MapCanvas — the first screen anyone sees in the demo.</div>
+      <div><strong>4.</strong> GraphView + ConnectionPath — the emotional centrepiece; give it the time left over.</div>
+      <div><strong>5.</strong> Guest book, Community, Messages — restyle only; the layouts hold.</div>
+    </div>
+    <div style="margin-top:22px;padding-top:12px;border-top:2px solid #1A1A1A;font-size:9pt;color:#8A9099">Synthetic data throughout. Not affiliated with Kiki.</div>
+  </div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      colours: [
+        { name: 'brand', value: '#17A589', note: 'Unchanged. Buttons, active tab, trust text, sent bubbles.' },
+        { name: 'brandDark', value: '#0F8D74', note: 'Unchanged. Text on brandTint — 4.8:1 on #E7F4F0, so trust copy stays AA.' },
+        { name: 'brandTint', value: '#E7F4F0', note: 'Unchanged. Fill behind every trust element; now also the guest-book quote card.' },
+        { name: 'bg', value: '#F7F7F5', note: 'Unchanged.' },
+        { name: 'surface', value: '#FFFFFF', note: 'Unchanged.' },
+        { name: 'ink / inkSoft / inkFaint', value: '#1A1A1A / #4B5563 / #8A9099', note: 'Unchanged.' },
+        { name: 'hairline', value: '#ECECE8', note: 'Unchanged. Now on every card as a 1px border, not just dividers.' },
+        { name: 'hairlineSoft', value: '#F0F0EC — new', note: 'Row dividers inside a card, so internal rules sit below the card edge.' },
+        { name: 'trust1 / 2 / 3', value: '#17A589 / #4FBFA6 / #9BCFC3 — new', note: 'Degree ramp: 1st, 2nd, 3rd+. Pin dots, graph edges, meter fills.' },
+        { name: 'mapLand / mapWater / mapRoad', value: '#EAEEE9 / #D6E3E8 / #FFFFFF', note: 'Unchanged.' },
+        { name: 'heart', value: '#E5567A', note: 'Unchanged. Filled save state only.' },
+        { name: 'tier.*', value: '#8A9099 · #17A589 · #3B7DD8 · #C98A2B', note: 'Newcomer · Trusted · Pillar · Legend. Unchanged.' },
+        { name: 'sentiment', value: 'pos #0F8D74 · mixed #8A9099 · neg #C15B5B — new', note: 'Per-review chips. Negative is a muted brick, never alarm red.' },
+        { name: 'photoTint(hex)', value: 'linear-gradient 150°, lighten(hex,30%) → hex — new', note: 'The listing image placeholder. Function, not a constant: each listing keeps its own hue.' },
+        { name: 'avatarTint(hex)', value: 'linear-gradient 145°, lighten(hex,38%) → hex — new', note: 'Every avatar disc. Same function, tighter lightening.' },
+      ],
+      scales: [
+        { name: 'radius', value: 'sm 10 · md 14 · lg 18 · xl 22 · pill 999', note: 'xl 22 is new and becomes the default card radius; lg 18 drops to inner blocks.' },
+        { name: 'radius.hero', value: '24 — new', note: 'Profile hero card only, so the top of the screen reads softest.' },
+        { name: 'space', value: 'xs 4 · sm 8 · md 12 · lg 16 · xl 24 · xxl 32', note: 'Unchanged. Screen inset is 14, card padding 16.' },
+        { name: 'shadow.card', value: '#1A1A1A · 0.05 · r14 · (0,4) · elev 2', note: 'Softened from 0.06/r12. Paired with the hairline border, which now does the edge work.' },
+        { name: 'shadow.raised', value: '#1A1A1A · 0.12 · r30 · (0,10) · elev 6 — new', note: 'Map preview card and selected pin only — the two things that float.' },
+        { name: 'shadow.brand', value: 'rgba(23,165,137,.28) · r16 · (0,6) · elev 4 — new', note: 'Primary CTA. A teal shadow, not a grey one, so the button feels lit.' },
+      ],
+      type: [
+        { name: 'display', value: '29 / 800 / -0.7 — new', note: 'Screen titles: Explore, Community, Kiki Trips, Messages, Me.' },
+        { name: 'h1', value: '27 / 800 / -0.6', note: 'In-screen headlines ("2 people connect you to Emma"). Was 30.' },
+        { name: 'h2', value: '22 / 800 / -0.5', note: 'Profile name. Was -0.3.' },
+        { name: 'h3', value: '17 / 800', note: 'Card titles. Weight up from 700 — cards now compete with a bolder hero.' },
+        { name: 'title', value: '18 / 800 / -0.2 — new', note: 'Listing name on a card.' },
+        { name: 'body', value: '14–15 / 500 / 1.45', note: 'Line height is now specified; it was the main reason review text felt dense.' },
+        { name: 'caption', value: '13 / 600', note: 'Unchanged. Areas, timestamps, helper text.' },
+        { name: 'micro', value: '11 / 800 — new', note: 'Pills, tier labels, tab labels. Small but heavy, never small and light.' },
+        { name: 'button', value: '16 / 700', note: 'Unchanged.' },
+      ],
+      components: [
+        {
+          name: 'Avatar', file: 'ui/Avatar.tsx',
+          spec: 'Disc filled with avatarTint(member.colour) at 145°, white 800-weight initial centred, optical size from 32 (review row) / 38 (chain) / 46 (card, inbox) / 48 (preview) / 64 (Me) / 92 (profile hero). Flag badge: a white disc pinned to the bottom-right at 40% of the avatar size, min 17, flag emoji at 0.62× that, shadow #000 0.15 r3 (0,1). Optional white ring = 2.5–3px solid #FFFFFF border, used only when avatars overlap.',
+          states: [
+            { name: 'default', value: 'gradient fill, no border' },
+            { name: 'in a chain', value: '3px #FFFFFF border, −10 marginRight so discs overlap left-to-right' },
+            { name: 'graph node', value: '3px #FFFFFF border + shadow.card; host node 58px, others 48px' },
+            { name: 'pressed', value: 'opacity 0.9 (whole row, not the avatar alone)' },
+          ],
+          why: 'A single flat colour reads like a missing image; a two-stop gradient at a consistent angle reads like a deliberate portrait treatment, and it costs one component change.',
+        },
+        {
+          name: 'TrustPill', file: 'ui/TrustPill.tsx',
+          spec: 'Three tones, all radius pill, paddingV 6 paddingH 12, micro type. tint = #E7F4F0 bg / #0F8D74 text (degree, "in common"). outline = 1px #17A589 border / #0F8D74 text / transparent bg (trust signals, past match). solid = #17A589 bg / #FFFFFF text (Confirmed only). Counted signals render as "felt safe ·1" with a hair space before the middot.',
+          states: [
+            { name: 'default', value: 'as above' },
+            { name: 'pressed', value: 'tint → #D9EDE7; outline → #F2F9F7 fill; solid → #0F8D74' },
+            { name: 'disabled', value: 'text #8A9099, border #ECECE8, no press feedback' },
+          ],
+          why: 'Three tones map to three meanings — status, evidence, confirmation — so a user learns the vocabulary once.',
+        },
+        {
+          name: 'Chip', file: 'ui/Chip.tsx',
+          spec: 'Filter chip: paddingV 8 paddingH 15, radius pill, 13/700. Inactive #FFFFFF bg, 1px #ECECE8, #4B5563 text. Active #17A589 bg, #17A589 border, #FFFFFF text. Row scrolls horizontally with 8 gap and 16 inset, no scrollbar. Read-only tag chips (profile, listing) use #F7F7F5 bg with the same border and never take a press state.',
+          states: [
+            { name: 'inactive', value: 'white / hairline / inkSoft' },
+            { name: 'active', value: 'brand fill, white text' },
+            { name: 'pressed', value: 'scale 0.97, 120ms spring' },
+            { name: 'disabled', value: '#F7F7F5 bg, #ECECE8 border, #8A9099 text' },
+          ],
+          why: 'Filled-teal-when-on is already Kiki\'s convention; the only change is giving the inactive chip a white surface so the row reads as controls rather than labels.',
+        },
+        {
+          name: 'TierBadge', file: 'ui/TierBadge.tsx',
+          spec: 'Replace the emoji with a 7px dot in the tier colour, then micro-type "Pillar · #1" in the same colour, inside a 1px border of that colour, radius pill, paddingV 6 paddingH 12. In dense lists (leaderboard) drop the border and keep dot + label.',
+          states: [
+            { name: 'default', value: 'bordered, dot + name + optional · #rank' },
+            { name: 'inline', value: 'borderless, dot + name, 11/800' },
+            { name: 'own tier', value: 'same, plus "top N%" in place of the rank on the Me screen' },
+          ],
+          why: 'Four different emoji at 4 different visual weights made the badge cluster noisy; one dot in four colours carries the same information and lets the tier colour do the talking.',
+        },
+        {
+          name: 'SentimentMeter / ThemeBar', file: 'ui/Bars.tsx',
+          spec: 'Track height 8 (themes) / 9 (sentiment), radius pill, track #F0F0EC on white or #ECECE8 on tinted. Fill radius pill. Sentiment fill width = (avgScore + 1) / 2, colour #17A589, with the verdict word to the right in 12/800 #0F8D74. Theme bar width = hits / maxHits; safety and warmth fill #17A589, all other themes #8FC7B8; label row above the bar, 13/700 #4B5563 left, count "3 of 4" 13/700 #8A9099 right.',
+          states: [
+            { name: 'positive', value: 'fill #17A589' },
+            { name: 'mixed', value: 'fill #8A9099, verdict "Mixed"' },
+            { name: 'negative', value: 'fill #C15B5B, verdict "Negative"' },
+            { name: 'empty', value: 'no meter; "No stays yet — you would be their first." in 13/600 #8A9099' },
+            { name: 'loading', value: 'track only, 60% opacity, no fill animation' },
+          ],
+          why: 'Two-tone theme bars stop the dashboard reading as five equal statistics and quietly rank warmth and safety, which are the two a nervous host is actually scanning for.',
+        },
+        {
+          name: 'ConnectionPath', file: 'ui/ConnectionPath.tsx',
+          spec: 'Vertical chain inside one card, 16 padding. Each hop: 36px avatar in a left rail, a 2px #CDE6DF connector running from the avatar to the next, 22 bottom gap. Right column: name 15/800, role 13/600 #8A9099 ("Where the chain starts" / "Vouched for by Amy" / "The host"). A hop carrying a vouch note gets a #E7F4F0 bubble, radius 14, 11×13 padding, 13/600 #0F8D74, text in curly quotes. Last hop draws no connector.',
+          states: [
+            { name: 'with note', value: 'tinted bubble under the role line' },
+            { name: 'without note', value: 'role line only; no empty bubble' },
+            { name: 'unreachable', value: 'chain hidden; show overlaps and "No vouch chain yet — you\'d be the first link."' },
+          ],
+          why: 'The note is the only sentence in the app written by a real person about a real person, so it gets the one tinted surface in the list.',
+        },
+        {
+          name: 'GraphView', file: 'ui/GraphView.tsx',
+          spec: '330×180 inside a card, 216 tall. Nodes laid on an alternating baseline (y 104 / 58) with x spread evenly from 38 to 292; host node 58px, others 48px, each with a 3px white ring, shadow.card, and an 11/800 #4B5563 name beneath. Edges: quadratic curves lifted 26px above the midpoint, stroke trust1, width 2.6, round caps. Faint branch stubs from the middle node: three 1.6px #DCE5E1 lines ending in 4px dots, no labels.',
+          states: [
+            { name: 'enter', value: 'edges draw over 900ms, nodes pop in at 0 / 90 / 180ms' },
+            { name: 'direct (1 hop)', value: 'two nodes, one edge, no stubs' },
+            { name: 'long (4+ hops)', value: 'node size steps down to 42px; names truncate to first name only' },
+            { name: 'unreachable', value: 'card replaced by the overlaps list' },
+          ],
+          why: 'Curved edges and an alternating baseline turn a diagram into a route; the branch stubs imply a wider network without asking anyone to read it.',
+        },
+        {
+          name: 'MapCanvas + pins', file: 'ui/MapCanvas.tsx',
+          spec: 'Land #EAEEE9. Water: one 280px circle #D6E3E8 bleeding off the bottom-right. Roads: three white bars (14 / 10 / 12 px) rotated −8° / 6° / 9°, 90% opacity, crossing the full canvas. Loop watermark bottom-left at 10%. Pin: white pill, radius pill, 7×12 padding, price in 13/800 ink, preceded by an 8px dot coloured trust1/2/3 by degree; shadow #1A1A1A 0.16 r10 (0,3).',
+          states: [
+            { name: 'default', value: 'as above, z 2' },
+            { name: 'selected', value: 'padding 10×15, 1.5px #17A589 ring, shadow.brand-tinted r20, z 3, 140ms spring' },
+            { name: 'filtered out', value: 'removed, not dimmed — the count in the toggle carries the change' },
+            { name: 'empty', value: 'map holds, centre hint: "No homes match these filters yet."' },
+          ],
+          why: 'Warmth here comes from an off-white land tone, curved white roads and one water body rather than from texture noise, which is what makes most product maps look cheap.',
+        },
+        {
+          name: 'ListingCard', file: 'ui/ListingPreview.tsx (new sibling)',
+          spec: 'White, radius xl 22, 1px hairline, shadow.card. Header row: 46px avatar with flag, title 18/800, area 13/600 #8A9099, heart button 32×32 on the right. Image block: 172 tall, radius lg 18, 14 side inset, photoTint fill, Loop watermark bleeding bottom-right, two white 94%-opacity pills top-left ("Room" 12/700 #4B5563, "£44 / night" 12/800 ink), tag line bottom-left in 12/700 white with a 0 1 4 rgba(31,41,43,.45) text shadow. Trust strip: #E7F4F0, radius 14, 10×12 padding, 24px mutual avatar + "Vouched for by Bella" 13/700 #0F8D74 + outline degree pill right. Overlap line last: ✨ + 13/600 #4B5563.',
+          states: [
+            { name: 'default', value: 'as above' },
+            { name: 'pressed', value: 'opacity 0.96, scale 0.995' },
+            { name: 'saved', value: 'heart filled #E5567A, stroke #E5567A' },
+            { name: 'no mutual', value: 'strip reads "You know Danica directly" with the host\'s own avatar' },
+            { name: 'no overlap', value: 'overlap line omitted; card ends at the trust strip' },
+          ],
+          why: 'The trust strip sits between the home and the price on every card, so the reason to trust is never something you scroll to find.',
+        },
+        {
+          name: 'ListingPreview (map card)', file: 'ui/ListingPreview.tsx',
+          spec: 'Floats 64px over the map bottom, 12 side inset, radius 22, shadow.raised. Row: 48 avatar, title 17/800, "area · £44 / night" 13/600 #8A9099, tint degree pill right. Then the trust banner: #E7F4F0, radius 14, 16px Loop glyph + the overlap sentence and the mutual\'s name in 13/600 #0F8D74. Full-width CTA "See how you\'re connected", brand fill, radius 14, 13 padding.',
+          states: [
+            { name: 'hidden', value: 'centre hint pill instead: "Tap a home to see how you\'re connected"' },
+            { name: 'entering', value: 'rise 10px + fade, 260ms ease-out' },
+            { name: 'pressed', value: 'card opacity 0.96; CTA → #0F8D74' },
+          ],
+          why: 'The CTA names the payoff instead of the object ("See how you\'re connected", not "View listing") — it is the sentence that makes the map feel like Kiki and not a rentals app.',
+        },
+        {
+          name: 'Tab bar', file: 'App.tsx',
+          spec: 'Five tabs, white, 1px #ECECE8 top border, 9 top / 22 bottom padding. Inline SVG line icons at 22px, 1.9 stroke, round caps — magnifier, two figures, calendar, speech bubble, bust. Label 10/700 under each, 4 gap. Active #17A589, inactive #8A9099, icon inherits via currentColor.',
+          states: [
+            { name: 'active', value: 'icon + label brand' },
+            { name: 'inactive', value: 'icon + label inkFaint' },
+            { name: 'pressed', value: 'opacity 0.6, no ripple' },
+            { name: 'badge', value: '16px #E5567A disc, white 10/800 count, offset (10,−4) from the icon' },
+          ],
+          why: 'Emoji tab icons are the single loudest tell that a build is a prototype; five one-stroke glyphs cost about 40 lines and lift the whole app.',
+        },
+        {
+          name: 'Primary CTA / message bubbles / input', file: 'shared',
+          spec: 'CTA: brand fill, radius 16, 16 padding, 16/700 white, shadow.brand, full width with 14 side inset. Bubbles: max 80% width, 11×14 padding, 14/500 at 1.45; yours brand fill / white text / radius 18 18 6 18 right-aligned; theirs white / ink / radius 18 18 18 6 left-aligned with shadow.card. Input bar: white pill, 1px hairline, 13×16 padding, 14/500, plus a 44px brand send disc with a white up-arrow.',
+          states: [
+            { name: 'CTA pressed', value: 'bg #0F8D74, shadow drops to r8' },
+            { name: 'CTA disabled', value: '#ECECE8 fill, #8A9099 text, no shadow' },
+            { name: 'input empty', value: 'send disc at 40% opacity, press disabled' },
+            { name: 'sending', value: 'bubble enters at 0.9 scale + fade, 160ms' },
+          ],
+          why: '44px send target and 80% bubble width keep the thread thumb-friendly at 390 without any layout maths.',
+        },
+      ],
+      screens: [
+        { name: '1. Explore', change: 'Title 29/800 with a Homes | Map segmented toggle on the same line; search pill and a Filters button below; chip row unchanged in behaviour. Homes is the default view and shows the new ListingCard sorted by closest connection, not by price. Map keeps the bespoke canvas with the new warm surface and trust-coloured pins.', why: 'Sorting by degree makes the first card on the screen the most trustworthy home, which is the product\'s whole claim; price sorting made it a rentals feed.' },
+        { name: '2. Listing preview', change: 'Restyled per the component spec: trust banner with the Loop glyph, degree pill on the row, and the "See how you\'re connected" CTA replacing a generic view action.', why: 'The card should read as an invitation from a person, so the person\'s name appears before the price does.' },
+        { name: '3. Host profile', change: 'Hero card, radius 24, with the Loop bleeding behind a 92px avatar; name 26/800; one subtitle line (listing · area); tier badge and degree pill on one row; tags below as read-only chips. Then exactly two cards — "How you\'re connected" (overlapping avatar chain + one summary sentence + the overlap line under a hairline) and "Guest book" (sentiment meter + up to three trust pills) — then the Message CTA.', why: 'Hero, two doors, one action: cutting the profile to that rhythm is what fixes the hierarchy complaint, and the avatar chain previews the graph so the tap feels predictable.' },
+        { name: '4. Connection', change: 'Headline "2 people connect you to Emma" at 27/800 with a teal check line beneath, then the GraphView card, then ConnectionPath with the vouch note, then "What you have in common" as icon rows, an honest footnote, and the CTA.', why: 'The screen answers in three descending scales — sentence, picture, evidence — so the emotional read lands before the detail does.' },
+        { name: '5. Guest book', change: 'Stat trio as three equal tiles (reviews / % positive / trust signals). Theme bars in a card. Trust signals and the pull quote move into one #E7F4F0 card with a Loop watermark — white pills on tint, quote at 16/600 ink. Individual reviews follow as cards with a per-review sentiment chip. Footnote states that the numbers are computed from the text.', why: 'One tinted card gives the dashboard a warm centre of gravity, so the surrounding numbers read as evidence for the quote rather than as analytics.' },
+        { name: '6. Community', change: 'Two cards, one row style. "People like you": 42px avatar, name, top shared trait truncated to one line, tint "N in common" pill. "Top contributors": rank number (gold for 1–3), 38px avatar, name, inline tier badge, score right-aligned with a "points" caption. Rows separated by #F0F0EC, no card-per-row.', why: 'Unifying the two row styles makes the leaderboard feel like the same club as the similarity list, and the rank colour is the only reward signal needed.' },
+        { name: '7. Messages + thread', change: 'Inbox rows: avatar with flag, name plus degree pill on one line, last message truncated. Thread header is a sticky white card carrying avatar, name, "2nd degree · via Bella" in #0F8D74, and the tier badge; a centred tinted overlap banner opens the conversation; bubbles and input per spec.', why: 'The trust context belongs in a card you can glance at mid-conversation, not in a nav bar title that gets ignored.' },
+        { name: '8. Trips + Me', change: 'Trips: "Kiki Trips" title, Dates away / Matches tabs, trip cards with a 52px neutral icon tile, dates in inkSoft, solid Confirmed pill, brand "Add a new trip". Me: identity card, a three-tile standing block (points / rank / people like you) with one line explaining decay, and "What you\'re matched on" as icon rows.', why: 'Both screens reuse the tile and row patterns defined elsewhere, so they stay consistent at near-zero cost.' },
+      ],
+      motion: [
+        { name: 'Pin select', value: 'pin scales up via padding + ring, 140ms spring; preview card rises 10px and fades in over 260ms ease-out.' },
+        { name: 'Graph reveal', value: 'edges draw in over 900ms ease-out (strokeDashoffset 320 → 0); nodes pop 0.9 → 1 with fade, staggered 90ms.' },
+        { name: 'Trust signal', value: 'pills fade + rise 6px, staggered 40ms, on first appearance of the guest-book card only.' },
+        { name: 'Chip toggle', value: 'scale 0.97 on press, 120ms; list reflow via LayoutAnimation.easeInEaseOut.' },
+        { name: 'Never', value: 'no motion on scroll, no parallax, no looping animation anywhere.' },
+      ],
+      flags: [
+        { name: 'react-native-svg', value: 'Required for the Loop motif, the graph edges and the tab icons. Fallback: two absolutely-positioned bordered circles for the Loop, straight rotated Views for edges, and keeping emoji tabs — noticeably worse, but it ships.' },
+        { name: 'Gradients', value: 'avatarTint and photoTint need expo-linear-gradient. Fallback: flat colour plus a 12%-white overlay View at 145°, which gets most of the depth.' },
+        { name: 'Fonts', value: 'No custom typeface. System stack only, refined scale — nothing to license or bundle.' },
+        { name: 'Photography', value: 'None. All imagery is tinted gradient + Loop watermark, all people are gradient monograms with flag badges.' },
+        { name: 'Contrast', value: '#0F8D74 on #E7F4F0 is 4.8:1 and #4B5563 on #FFFFFF is 7.6:1, both AA. Never set body copy in #8A9099 below 13px; it is for captions on white only.' },
+        { name: 'Touch targets', value: 'Every tappable element is ≥44px tall including its padding: chips 34 + 10 hit slop, heart 32 + 12, send disc 44, tab items 52.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

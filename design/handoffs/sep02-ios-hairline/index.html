@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  body { margin: 0; background: #EBEBE7; -webkit-font-smoothing: antialiased; }
+  a { color: #0E4E42; text-decoration: none; }
+  a:hover { color: #17A589; }
+</style>
+</helmet>
+
+<section id="turn1" style="display:flex; flex-direction:column; gap:44px; padding:64px; font-family:-apple-system,'SF Pro Text','Helvetica Neue',Helvetica,sans-serif;">
+
+  <div id="1a" style="display:flex; flex-direction:column; gap:16px; max-width:860px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font:700 11px/1 ui-monospace,'SF Mono',Menlo,monospace; letter-spacing:1px; color:#0E4E42; background:#E7F4F0; border:1px solid #CFE4DE; border-radius:999px; padding:6px 10px;">1a</span>
+      <span style="font:700 11px/1 ui-monospace,'SF Mono',Menlo,monospace; letter-spacing:1px; color:#626C75; text-transform:uppercase;">Hairline polish · same visual language</span>
+    </div>
+    <h1 style="margin:0; font:700 40px/1.05 -apple-system,'SF Pro Display','Helvetica Neue',sans-serif; letter-spacing:-1.2px; color:#1A1A1A;">Kiki iOS, tightened</h1>
+    <p style="margin:0; font:400 17px/26px -apple-system,'SF Pro Text',sans-serif; color:#4B5563; text-wrap:pretty;">Twelve screens rebuilt from <span style="font:600 15px ui-monospace,Menlo,monospace;">src/screens/*</span> and <span style="font:600 15px ui-monospace,Menlo,monospace;">theme/tokens.ts</span> — same palette, same type scale, same components. Only the defects move. Fixes applied everywhere:</p>
+    <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 32px;">
+      <div style="font:400 14px/21px -apple-system,sans-serif; color:#4B5563;"><strong style="color:#1A1A1A;">Weights 800 → 700.</strong> SF at 800 is Heavy; iOS titles are Bold. Sizes and tracking unchanged.</div>
+      <div style="font:400 14px/21px -apple-system,sans-serif; color:#4B5563;"><strong style="color:#1A1A1A;">Emoji kept, placed properly.</strong> Facts, trips and flags keep their glyphs; flags merge into the location text instead of floating on the avatar as a badge.</div>
+      <div style="font:400 14px/21px -apple-system,sans-serif; color:#4B5563;"><strong style="color:#1A1A1A;">Bottom inset respected.</strong> Every scroll view clears the 83px tab bar plus 24 — nothing ends under the home indicator.</div>
+      <div style="font:400 14px/21px -apple-system,sans-serif; color:#4B5563;"><strong style="color:#1A1A1A;">Teal spent, not sprayed.</strong> The <span style="font:600 13px ui-monospace,Menlo,monospace;">shadow.brand</span> glow comes off CTAs; mint stays for trust, not decoration.</div>
+    </div>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:56px 44px; align-items:flex-start;">
+
+    <!-- 1 · ONBOARD STEP 1 -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Onboarding · 1 Your invite</div>
+      <div data-screen-label="Onboard 1" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:06</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; padding:8px 16px 0;">
+          <span style="display:flex; align-items:center; gap:5px;">
+            <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg>
+            <span style="font:700 16px/1 -apple-system,sans-serif; letter-spacing:-0.2px; color:#1A1A1A;">Kiki</span>
+          </span>
+          <span style="flex:1; display:flex; align-items:center;">
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">1</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">2</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">3</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">4</span>
+          </span>
+        </div>
+        <div style="padding:10px 16px 0; font:700 13px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Your invite</div>
+        <div style="padding:16px;">
+          <div style="background:#fff; border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:14px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="font:700 11.5px/1 -apple-system,sans-serif; letter-spacing:0.8px; text-transform:uppercase; color:#626C75;">Your invite</div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <span style="position:relative; width:60px; height:60px; flex:none;">
+                <img src="assets/avatars/bella.jpg" alt="Bella" style="width:60px; height:60px; border-radius:30px; object-fit:cover; display:block;">
+                <span style="position:absolute; left:-2px; bottom:-2px; width:22px; height:22px; border-radius:11px; background:#17A589; display:flex; align-items:center; justify-content:center;"><svg width="13" height="8" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#fff" stroke-width="10"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#fff" stroke-width="10"></circle></svg></span>
+              </span>
+              <span style="flex:1;">
+                <span style="display:block; font:700 24px/30px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">Bella let you in.</span>
+                <span style="display:block; margin-top:2px; font:400 13.5px/1.3 -apple-system,sans-serif; color:#626C75;">Sent 4 days ago</span>
+              </span>
+            </div>
+            <p style="margin:0; font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">Kiki has no waitlist and no application. The only way in is that someone already here put their name next to yours — and that name stays attached.</p>
+            <div style="background:#E7F4F0; border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:6px;">
+              <span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">What Bella wrote</span>
+              <span style="font:italic 400 15px/22px -apple-system,sans-serif; color:#0E4E42;">“Known her since Auckland. She looked after my flat for a fortnight and I would hand her the keys again tomorrow.”</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; border-top:1px solid #F0F0EC; padding-top:14px;">
+              <span style="font:400 12.5px/1 -apple-system,sans-serif; color:#626C75;">Invite code</span>
+              <span style="background:#F7F7F5; border:1px solid #ECECE8; border-radius:8px; padding:6px 10px; font:700 12.5px/1 ui-monospace,Menlo,monospace; letter-spacing:0.4px; color:#4B5563;">KIKI·BELLA·3F2A</span>
+            </div>
+            <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">The code is just plumbing. The person is the invite.</span>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:12px 16px 30px; display:flex; align-items:center; gap:12px;">
+          <span style="flex:1; background:#17A589; border-radius:14px; padding:14px 0; text-align:center; font:700 15px/1 -apple-system,sans-serif; color:#fff;">Accept the invite</span>
+          <span style="padding:13px 6px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Skip</span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· Flag stays, blended into the line it belongs to — 🇬🇧 sits with the name or place, never floating on the avatar as a separate badge.</span>
+        <span>· Footer CTA loses the teal glow; “Skip” sits in the footer only while a step remains.</span>
+      </div>
+    </div>
+
+    <!-- 2 · ONBOARD STEP 2 (the bug) -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#C15B5B; text-transform:uppercase;">Onboarding · 2 What you bring — bug fixed</div>
+      <div data-screen-label="Onboard 2" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:06</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; padding:8px 16px 0;">
+          <span style="display:flex; align-items:center; gap:5px;">
+            <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg>
+            <span style="font:700 16px/1 -apple-system,sans-serif; letter-spacing:-0.2px; color:#1A1A1A;">Kiki</span>
+          </span>
+          <span style="flex:1; display:flex; align-items:center;">
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">1</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">2</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">3</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">4</span>
+          </span>
+        </div>
+        <div style="padding:10px 16px 0; font:700 13px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">What you bring</div>
+        <div style="padding:16px;">
+          <div style="background:#fff; border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:14px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="font:700 24px/30px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">What you bring</span>
+            <p style="margin:0; font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">These are the facts we match you on. Share only what you want strangers to find you by — you can change any of it later, and we always label what we worked out ourselves.</p>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px 16px; background:#E7F4F0; border:1px solid #17A589;">
+                <span style="font:400 22px/1; flex:none;">🌏</span>
+                <span style="flex:1;">
+                  <span style="display:block; font:700 15px/1.3 -apple-system,sans-serif; color:#0E4E42;">Mount Eden</span>
+                  <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">Where you moved from</span>
+                </span>
+                <span style="width:22px; height:22px; border-radius:11px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="11" height="9" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px 16px; background:#E7F4F0; border:1px solid #17A589;">
+                <span style="font:400 22px/1; flex:none;">🎓</span>
+                <span style="flex:1;">
+                  <span style="display:block; font:700 15px/1.3 -apple-system,sans-serif; color:#0E4E42;">Paris, 2017</span>
+                  <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">Where you studied</span>
+                </span>
+                <span style="width:22px; height:22px; border-radius:11px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="11" height="9" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px 16px; background:#E7F4F0; border:1px solid #17A589;">
+                <span style="font:400 22px/1; flex:none;">🧗</span>
+                <span style="flex:1;">
+                  <span style="display:block; font:700 15px/1.3 -apple-system,sans-serif; color:#0E4E42;">Blok Shoreditch</span>
+                  <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">Where you climb</span>
+                </span>
+                <span style="width:22px; height:22px; border-radius:11px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="11" height="9" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px 16px; background:#fff; border:1px solid #ECECE8;">
+                <span style="font:400 22px/1; flex:none;">💻</span>
+                <span style="flex:1;">
+                  <span style="display:block; font:700 15px/1.3 -apple-system,sans-serif; color:#1A1A1A;">Product design</span>
+                  <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">What you do</span>
+                </span>
+                <span style="width:22px; height:22px; border-radius:11px; border:1px solid #ECECE8; display:block; flex:none;"></span>
+              </div>
+            </div>
+            <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">3 shared. A shared fact isn’t a safety signal — it’s just something to open with.</span>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:12px 16px 30px; display:flex; align-items:center; gap:12px;">
+          <span style="border:1px solid #ECECE8; border-radius:14px; padding:13px 18px; font:600 14.5px/1 -apple-system,sans-serif; color:#4B5563;">Back</span>
+          <span style="flex:1; background:#17A589; border-radius:14px; padding:14px 0; text-align:center; font:700 15px/1 -apple-system,sans-serif; color:#fff;">Looks right</span>
+          <span style="padding:13px 6px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Skip</span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· <strong>The real bug.</strong> In <span style="font:600 12px ui-monospace,Menlo,monospace;">OnboardScreen.tsx</span> the fact list sits in a bare <span style="font:600 12px ui-monospace,Menlo,monospace;">&lt;View&gt;</span> whose only style is <span style="font:600 12px ui-monospace,Menlo,monospace;">gap: 10</span>, inside a card with <span style="font:600 12px ui-monospace,Menlo,monospace;">alignItems:'flex-start'</span>, so the wrapper shrink-wraps and every label collapses. Add <span style="font:600 12px ui-monospace,Menlo,monospace;">alignSelf:'stretch'</span> and the labels and sublabels come back.</span>
+        <span>· Fact emoji kept at 22px on a fixed-width column, so the labels and sublabels align down the list.</span>
+      </div>
+    </div>
+
+    <!-- 3 · ONBOARD STEP 3 -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Onboarding · 3 What this costs you</div>
+      <div data-screen-label="Onboard 3" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:06</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; padding:8px 16px 0;">
+          <span style="display:flex; align-items:center; gap:5px;">
+            <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg>
+            <span style="font:700 16px/1 -apple-system,sans-serif; letter-spacing:-0.2px; color:#1A1A1A;">Kiki</span>
+          </span>
+          <span style="flex:1; display:flex; align-items:center;">
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">1</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">2</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">3</span>
+            <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">4</span>
+          </span>
+        </div>
+        <div style="padding:10px 16px 0; font:700 13px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">What this costs you</div>
+        <div style="padding:16px;">
+          <div style="background:#fff; border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:14px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="font:700 24px/30px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">What this costs you</span>
+            <p style="margin:0; font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">Three things are true from the moment you join. None of them are in a terms page.</p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">Bella’s name is on yours. If you damage someone’s flat, the person who let you in wears part of that. She can also see that you joined.</span>
+              </div>
+              <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">You start with nothing. No stays, no guest book, no one who can speak for you. Hosts will see that, and some will say no. That’s the system working.</span>
+              </div>
+              <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">What you write about people stays attached to your name. There are no anonymous reviews here.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:12px 16px 30px; display:flex; align-items:center; gap:12px;">
+          <span style="border:1px solid #ECECE8; border-radius:14px; padding:13px 18px; font:600 14.5px/1 -apple-system,sans-serif; color:#4B5563;">Back</span>
+          <span style="flex:1; background:#17A589; border-radius:14px; padding:14px 0; text-align:center; font:700 15px/1 -apple-system,sans-serif; color:#fff;">I understand</span>
+          <span style="padding:13px 6px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Skip</span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">· The strongest screen in the flow. Untouched except weights and the caveat strip pulled to a true 3px.</div>
+    </div>
+
+    <!-- 4 · ONBOARD STEP 4 -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Onboarding · 4 Done</div>
+      <div data-screen-label="Onboard 4" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; padding:8px 16px 0;">
+          <span style="display:flex; align-items:center; gap:5px;">
+            <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg>
+            <span style="font:700 16px/1 -apple-system,sans-serif; letter-spacing:-0.2px; color:#1A1A1A;">Kiki</span>
+          </span>
+          <span style="flex:1; display:flex; align-items:center;">
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">1</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">2</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">3</span>
+            <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+            <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">4</span>
+          </span>
+        </div>
+        <div style="padding:10px 16px 0; font:700 13px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Done</div>
+        <div style="padding:16px;">
+          <div style="background:#fff; border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:14px; align-items:flex-start; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="width:44px; height:44px; border-radius:22px; background:#E7F4F0; display:flex; align-items:center; justify-content:center;"><svg width="22" height="14" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg></span>
+            <span style="font:700 24px/30px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">You’re in.</span>
+            <p style="margin:0; font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">You’re one step from Bella and two steps from eleven other people. That’s your whole network today — and it’s enough to start.</p>
+            <div style="align-self:stretch; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:baseline; gap:12px;"><span style="width:24px; font:700 20px/1 -apple-system,sans-serif; color:#1A1A1A;">1</span><span style="flex:1; font:400 14.5px/21px -apple-system,sans-serif; color:#4B5563;">person can vouch for you today — Bella</span></div>
+              <div style="display:flex; align-items:baseline; gap:12px;"><span style="width:24px; font:700 20px/1 -apple-system,sans-serif; color:#1A1A1A;">6</span><span style="flex:1; font:400 14.5px/21px -apple-system,sans-serif; color:#4B5563;">homes are within two steps of you</span></div>
+              <div style="display:flex; align-items:baseline; gap:12px;"><span style="width:24px; font:700 20px/1 -apple-system,sans-serif; color:#1A1A1A;">0</span><span style="flex:1; font:400 14.5px/21px -apple-system,sans-serif; color:#4B5563;">stays behind you, which every host will see</span></div>
+            </div>
+            <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">The fastest way to change the last number is to host before you travel.</span>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:12px 16px 30px; display:flex; align-items:center; gap:12px;">
+          <span style="border:1px solid #ECECE8; border-radius:14px; padding:13px 18px; font:600 14.5px/1 -apple-system,sans-serif; color:#4B5563;">Back</span>
+          <span style="flex:1; background:#17A589; border-radius:14px; padding:14px 0; text-align:center; font:700 15px/1 -apple-system,sans-serif; color:#fff;">Start exploring</span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">· “Skip” removed on the last step — there is nothing left to skip past “Start exploring”.</div>
+    </div>
+
+    <!-- 5 · EXPLORE HOMES -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Explore · Homes</div>
+      <div data-screen-label="Explore" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="padding:14px 16px 10px; display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span>
+            <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
+              <span style="background:#fff; border-radius:999px; padding:6px 16px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A; box-shadow:0 2px 6px rgba(26,26,26,0.06);">Homes</span>
+              <span style="border-radius:999px; padding:6px 16px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Map</span>
+            </span>
+          </div>
+          <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">Sorted by how close they are to you, never by price.</span>
+        </div>
+        <div style="padding:0 16px; display:flex; flex-direction:column; gap:14px;">
+          <div style="background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="position:relative; height:168px;">
+              <img src="assets/listings/danica.jpg" alt="" style="width:100%; height:168px; object-fit:cover; display:block;">
+              <span style="position:absolute; left:0; right:0; bottom:0; height:88px; background:linear-gradient(to top, rgba(16,22,20,0.62), rgba(16,22,20,0)); display:block;"></span>
+              <span style="position:absolute; top:12px; left:12px; background:rgba(255,255,255,0.94); border-radius:999px; padding:4px 10px; font:700 11.5px/1.3 -apple-system,sans-serif; color:#1A1A1A;">Room</span>
+              <span style="position:absolute; bottom:12px; right:12px; background:rgba(255,255,255,0.96); border-radius:999px; padding:5px 11px; font:700 14px/1.3 -apple-system,sans-serif; color:#1A1A1A;">£41<span style="font:400 12px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+              <span style="position:absolute; bottom:12px; left:12px; display:flex; align-items:center; gap:10px;">
+                <span style="position:relative; width:40px; height:40px; display:block;">
+                  <img src="assets/avatars/danica.jpg" alt="Danica" style="width:40px; height:40px; border-radius:20px; object-fit:cover; border:2.5px solid #fff; box-sizing:border-box; display:block;">
+                </span>
+                <span>
+                  <span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#fff;">Danica</span>
+                  <span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:rgba(255,255,255,0.92);">🇦🇺 Tooting, London</span>
+                </span>
+              </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:14px;">
+              <span style="border:1px solid #17A589; background:#E7F4F0; border-radius:999px; padding:5px 11px; font:600 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">One step from you</span>
+              <span style="flex:1; font:400 12.5px/1 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Quiet · Garden · Pet-friendly</span>
+            </div>
+          </div>
+          <div style="background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="position:relative; height:168px;">
+              <img src="assets/listings/emma.jpg" alt="" style="width:100%; height:168px; object-fit:cover; display:block;">
+              <span style="position:absolute; left:0; right:0; bottom:0; height:88px; background:linear-gradient(to top, rgba(16,22,20,0.62), rgba(16,22,20,0)); display:block;"></span>
+              <span style="position:absolute; top:12px; left:12px; background:rgba(255,255,255,0.94); border-radius:999px; padding:4px 10px; font:700 11.5px/1.3 -apple-system,sans-serif; color:#1A1A1A;">Room</span>
+              <span style="position:absolute; bottom:12px; right:12px; background:rgba(255,255,255,0.96); border-radius:999px; padding:5px 11px; font:700 14px/1.3 -apple-system,sans-serif; color:#1A1A1A;">£44<span style="font:400 12px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+              <span style="position:absolute; bottom:12px; left:12px; display:flex; align-items:center; gap:10px;">
+                <span style="position:relative; width:40px; height:40px; display:block;">
+                  <img src="assets/avatars/emma.jpg" alt="Emma" style="width:40px; height:40px; border-radius:20px; object-fit:cover; border:2.5px solid #fff; box-sizing:border-box; display:block;">
+                </span>
+                <span>
+                  <span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#fff;">Emma</span>
+                  <span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:rgba(255,255,255,0.92);">🇳🇿 De Beauvoir, London</span>
+                </span>
+              </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:14px;">
+              <span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:5px 11px; font:600 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span>
+              <span style="flex:1; font:400 12.5px/1 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Near tube · Quiet · WFH desk</span>
+            </div>
+          </div>
+          <div style="background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="position:relative; height:168px;">
+              <img src="assets/listings/katelin.jpg" alt="" style="width:100%; height:168px; object-fit:cover; display:block;">
+              <span style="position:absolute; left:0; right:0; bottom:0; height:88px; background:linear-gradient(to top, rgba(16,22,20,0.62), rgba(16,22,20,0)); display:block;"></span>
+              <span style="position:absolute; top:12px; left:12px; background:rgba(255,255,255,0.94); border-radius:999px; padding:4px 10px; font:700 11.5px/1.3 -apple-system,sans-serif; color:#1A1A1A;">Room</span>
+              <span style="position:absolute; bottom:12px; right:12px; background:rgba(255,255,255,0.96); border-radius:999px; padding:5px 11px; font:700 14px/1.3 -apple-system,sans-serif; color:#1A1A1A;">£38<span style="font:400 12px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+              <span style="position:absolute; bottom:12px; left:12px; display:flex; align-items:center; gap:10px;">
+                <span style="position:relative; width:40px; height:40px; display:block;">
+                  <img src="assets/avatars/katelin.jpg" alt="Katelin" style="width:40px; height:40px; border-radius:20px; object-fit:cover; border:2.5px solid #fff; box-sizing:border-box; display:block;">
+                </span>
+                <span>
+                  <span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#fff;">Katelin</span>
+                  <span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:rgba(255,255,255,0.92);">🇦🇺 Finsbury Park, London</span>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:83px; background:rgba(255,255,255,0.96); border-top:1px solid #ECECE8; display:flex; align-items:flex-start; padding-top:9px;">
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#17A589;">Explore</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#626C75" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#626C75" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Trips</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Messages</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Me</span></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· The translucent black name chip becomes a bottom scrim — the host reads as part of the photo, not a sticker on it.</span>
+        <span>· Faint Loop watermark on the photo removed; it fought the price pill.</span>
+        <span>· Flag moves off the avatar ring and into the place line: 🇳🇿 De Beauvoir, London.</span>
+      </div>
+    </div>
+
+    <!-- 6 · EMMA TRUST -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Person · Emma · Trust</div>
+      <div data-screen-label="Emma Trust" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:08</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:0 12px 8px;">
+          <span style="width:36px; height:36px; display:flex; align-items:center; justify-content:center;"><svg width="11" height="19" viewBox="0 0 12 20"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Emma</span>
+          <span style="width:36px; height:36px; display:block;"></span>
+        </div>
+        <div style="padding:0 16px; display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:24px; padding:16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="position:relative; width:72px; height:72px; flex:none;">
+              <img src="assets/avatars/emma.jpg" alt="Emma" style="width:72px; height:72px; border-radius:36px; object-fit:cover; display:block;">
+            </span>
+            <span style="flex:1; display:flex; flex-direction:column; gap:4px;">
+              <span style="font:700 22px/1.1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.4px; color:#1A1A1A;">Emma</span>
+              <span style="font:400 14px/1.3 -apple-system,sans-serif; color:#626C75;">🇳🇿 De Beauvoir, London</span>
+              <span style="display:flex; align-items:center; gap:10px; margin-top:2px;">
+                <span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:5px 11px; font:600 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span>
+                <span style="font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">£44<span style="font:400 13px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+              </span>
+            </span>
+          </div>
+          <div style="background:#17A589; border-radius:14px; padding:13px 0; text-align:center; font:700 15.5px/1 -apple-system,sans-serif; color:#fff;">Message Emma</div>
+          <div style="display:flex; background:#ECECE8; border-radius:14px; padding:3px;">
+            <span style="flex:1; text-align:center; background:#fff; border-radius:10px; padding:9px 0; font:700 14px/1 -apple-system,sans-serif; color:#1A1A1A; box-shadow:0 2px 6px rgba(26,26,26,0.06);">Trust</span>
+            <span style="flex:1; text-align:center; padding:9px 0; font:600 14px/1 -apple-system,sans-serif; color:#626C75;">Profile</span>
+            <span style="flex:1; text-align:center; padding:9px 0; font:600 14px/1 -apple-system,sans-serif; color:#626C75;">Room</span>
+          </div>
+          <div style="display:flex; align-self:flex-start; background:#E7F4F0; border-radius:999px; padding:3px;">
+            <span style="background:#fff; border-radius:999px; padding:7px 16px; font:700 13px/1 -apple-system,sans-serif; color:#0E4E42; box-shadow:0 2px 6px rgba(26,26,26,0.05);">As a host</span>
+            <span style="padding:7px 16px; font:600 13px/1 -apple-system,sans-serif; color:#2C6559;">As a guest</span>
+          </div>
+          <div style="background:#E7F4F0; border:1px solid #CFE4DE; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#2C6559;">The mutual friend</span>
+              <span style="background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:4px 10px; font:700 11.5px/1 -apple-system,sans-serif; color:#0E4E42;">✨ Draft intro</span>
+            </div>
+            <span style="align-self:flex-start; background:#fff; border-radius:999px; padding:7px 12px; font:700 13.5px/1 -apple-system,sans-serif; color:#0E4E42;">🌏 Both from Mount Eden</span>
+            <p style="margin:0; font:400 16px/24px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends — Bella and Sophie — who can vouch for Emma in person. Bella put it simply: “She hosted my friend Rachel for a fortnight and looked after the flat incredibly well.”</p>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Mount Eden</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">their words</span></span>
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Paris, 2017</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">their words</span></span>
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">bouldering at Blok Sho…</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">their words</span></span>
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Bella</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">a mutual</span></span>
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Sophie</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">a mutual</span></span>
+              <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">She hosted my friend R</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">a vouch</span></span>
+            </div>
+            <span style="height:1px; background:#CFE4DE; display:block;"></span>
+            <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.3px; text-transform:uppercase; color:#2C6559;">What this answers</span>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <span style="display:flex; align-items:center; gap:10px;"><span style="width:20px; height:20px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Who they are</span></span>
+              <span style="display:flex; align-items:center; gap:10px;"><span style="width:20px; height:20px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">How they treat a home</span></span>
+              <span style="display:flex; align-items:center; gap:10px;"><span style="width:20px; height:20px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Someone accountable</span></span>
+              <span style="display:flex; align-items:center; gap:10px;"><span style="width:20px; height:20px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Shared ground</span></span>
+            </div>
+          </div>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· ✨ kept on “Draft intro”, and the sheen animation in <a href="#2a">2a</a> is tuned to match it rather than replace it.</span>
+        <span>· Spotlight pill keeps its globe. Ticks stay drawn rather than typed “✓”, so they line up with the text baseline.</span>
+      </div>
+    </div>
+
+    <!-- 7 · REQUESTS -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Requests · host inbox</div>
+      <div data-screen-label="Requests" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="padding:16px 16px 0; display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Requests</span>
+            <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">People asking to stay in your place. 2 need a reply.</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Needs your reply</span>
+            <div style="position:relative; background:#fff; border-radius:22px; padding:16px 16px 16px 18px; display:flex; flex-direction:column; gap:10px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589; display:block;"></span>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="position:relative; width:40px; height:40px; flex:none;">
+                  <img src="assets/avatars/emma.jpg" alt="Emma" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block;">
+                </span>
+                <span style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                  <span style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Emma</span>
+                    <span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:3px 9px; font:600 11.5px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span>
+                  </span>
+                  <span style="font:400 13px/1.3 -apple-system,sans-serif; color:#4B5563;">14 Sep – 21 Sep · 7 nights</span>
+                </span>
+                <span style="background:#E7F4F0; border-radius:999px; padding:6px 11px; font:700 11.5px/1 -apple-system,sans-serif; color:#0E4E42; flex:none;">Needs reply</span>
+              </div>
+              <span style="font:500 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">Bella vouches for her. Two routes, both people you can call.</span>
+              <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font:400 12.5px/1 -apple-system,sans-serif; color:#626C75;">Asked 2 days ago</span><span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">Read their trust page ›</span></span>
+            </div>
+            <div style="position:relative; background:#fff; border-radius:22px; padding:16px 16px 16px 18px; display:flex; flex-direction:column; gap:10px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589; display:block;"></span>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="position:relative; width:40px; height:40px; flex:none;">
+                  <img src="assets/avatars/priya.jpg" alt="Priya" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block;">
+                </span>
+                <span style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                  <span style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Priya</span>
+                    <span style="background:#F7F7F5; border:1px solid #F7F7F5; border-radius:999px; padding:3px 9px; font:600 11.5px/1 -apple-system,sans-serif; color:#626C75;">Three steps away</span>
+                  </span>
+                  <span style="font:400 13px/1.3 -apple-system,sans-serif; color:#4B5563;">2 Oct – 5 Oct · 3 nights</span>
+                </span>
+                <span style="background:#E7F4F0; border-radius:999px; padding:6px 11px; font:700 11.5px/1 -apple-system,sans-serif; color:#0E4E42; flex:none;">Needs reply</span>
+              </div>
+              <span style="font:500 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">Nobody you know has met her. Katelin invited her in.</span>
+              <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font:400 12.5px/1 -apple-system,sans-serif; color:#626C75;">Asked yesterday</span><span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">Read their trust page ›</span></span>
+            </div>
+          </div>
+          <div style="position:relative; background:#fff; border-radius:22px; padding:18px 18px 18px 21px; display:flex; flex-direction:column; gap:8px; overflow:hidden; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+            <span style="font:700 13.5px/1 -apple-system,sans-serif; color:#C15B5B;">No timers here</span>
+            <span style="font:400 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">Kiki doesn’t count down on a request or rank you for replying fast. Read the page, ask the mutual, and answer when you actually know.</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Waiting on them</span>
+            <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:10px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="position:relative; width:40px; height:40px; flex:none;">
+                  <img src="assets/avatars/danica.jpg" alt="Danica" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block;">
+                </span>
+                <span style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                  <span style="display:flex; align-items:center; gap:8px;">
+                    <span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Danica</span>
+                    <span style="border:1px solid #17A589; background:#E7F4F0; border-radius:999px; padding:3px 9px; font:600 11.5px/1 -apple-system,sans-serif; color:#0E4E42;">One step from you</span>
+                  </span>
+                  <span style="font:400 13px/1.3 -apple-system,sans-serif; color:#4B5563;">2 Oct – 5 Oct · 3 nights</span>
+                </span>
+                <span style="background:#F7F7F5; border-radius:999px; padding:6px 11px; font:700 11.5px/1 -apple-system,sans-serif; color:#626C75; flex:none;">Waiting</span>
+              </div>
+              <span style="font:500 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">You said yes. Danica is confirming her flights.</span>
+              <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font:400 12.5px/1 -apple-system,sans-serif; color:#626C75;">You replied 3 days ago</span><span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">Read their trust page ›</span></span>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:83px; background:rgba(255,255,255,0.96); border-top:1px solid #ECECE8; display:flex; align-items:flex-start; padding-top:9px;">
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="#626C75" stroke-width="1.9"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Explore</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#17A589;">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#626C75" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#626C75" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Trips</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Messages</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Me</span></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· “Asked 2 days ago” and the trust-page link share one baseline row instead of drifting apart.</span>
+        <span>· Third-degree pill drops the mint tint, so mint only ever means “someone can vouch”.</span>
+      </div>
+    </div>
+
+    <!-- 8 · TRIPS -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Trips</div>
+      <div data-screen-label="Trips" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="padding:16px 16px 0; display:flex; flex-direction:column; gap:20px;">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Trips</span>
+            <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">Out for offers, coming up, and the entries you owe.</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Out for offers</span>
+              <span style="background:#E7F4F0; border-radius:999px; padding:6px 12px; font:700 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">+ Plan a trip</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:22px; padding:16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <span style="width:40px; height:40px; border-radius:12px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:400 21px/1; flex:none;">🏖️</span>
+              <span style="flex:1;">
+                <span style="display:block; font:700 16.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Italy bday trip</span>
+                <span style="display:block; margin-top:2px; font:400 13px/1.3 -apple-system,sans-serif; color:#626C75;">07 – 20 Jun · 13 nights · £40/night</span>
+              </span>
+              <span style="background:#E7F4F0; border-radius:14px; padding:6px 12px; min-width:54px; text-align:center; flex:none;">
+                <span style="display:block; font:700 17px/1.1 -apple-system,sans-serif; color:#0E4E42;">2</span>
+                <span style="display:block; font:600 10px/1.2 -apple-system,sans-serif; color:#2C6559;">offers</span>
+              </span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Coming up</span>
+            <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:22px; padding:16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <span style="position:relative; width:44px; height:44px; flex:none;">
+                <img src="assets/avatars/emma.jpg" alt="Emma" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1;">
+                <span style="display:block; font:700 15.5px/1.25 -apple-system,sans-serif; color:#1A1A1A;">🇳🇿 Emma’s place · De Beauvoir</span>
+                <span style="display:block; margin-top:2px; font:400 13px/1.3 -apple-system,sans-serif; color:#626C75;">12–15 Sep · through Bella</span>
+              </span>
+              <span style="background:#E7F4F0; border-radius:999px; padding:6px 11px; font:700 11.5px/1 -apple-system,sans-serif; color:#0E4E42; flex:none;">Confirmed</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Been and gone</span>
+            <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:22px; padding:16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+              <span style="position:relative; width:44px; height:44px; flex:none;">
+                <img src="assets/avatars/danica.jpg" alt="Danica" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1;">
+                <span style="display:block; font:700 15.5px/1.25 -apple-system,sans-serif; color:#1A1A1A;">🇦🇺 Danica’s place · Tooting</span>
+                <span style="display:block; margin-top:2px; font:400 13px/1.3 -apple-system,sans-serif; color:#626C75;">April · you left it spotless</span>
+              </span>
+              <span style="background:#17A589; border-radius:999px; padding:7px 14px; font:700 12.5px/1 -apple-system,sans-serif; color:#fff; flex:none;">Write it</span>
+            </div>
+            <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75; padding:0 4px;">You owe Danica a guest-book entry. It’s how the next host knows you.</span>
+          </div>
+          <div style="background:#E7F4F0; border:1px solid #CFE4DE; border-radius:22px; padding:18px; display:flex; flex-direction:column; gap:8px;">
+            <span style="font:700 15.5px/1.2 -apple-system,sans-serif; color:#0E4E42;">Two trips for the price of one</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#2C6559;">A stay doesn’t have to be chained to a single host. Post the dates, take partial offers from people you’re connected to, and stitch a trip together from the network.</span>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:83px; background:rgba(255,255,255,0.96); border-top:1px solid #ECECE8; display:flex; align-items:flex-start; padding-top:9px;">
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="#626C75" stroke-width="1.9"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Explore</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#17A589" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#17A589" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#17A589;">Trips</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Messages</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Me</span></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· “Kiki Trips” → “Trips”. Every other tab title is the plain noun.</span>
+        <span>· Trip emoji kept, sized to the mint tile so it reads as an icon rather than stray text.</span>
+      </div>
+    </div>
+
+    <!-- 9 · TRIP OFFERS -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Trip offers · Italy bday trip</div>
+      <div data-screen-label="Trip offers" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 12px 8px;">
+          <span style="width:36px; height:36px; display:flex; align-items:center; justify-content:center;"><svg width="11" height="19" viewBox="0 0 12 20"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Italy bday trip</span>
+          <span style="width:36px; height:36px; display:block;"></span>
+        </div>
+        <div style="padding:0 16px; display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:22px; padding:16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="width:44px; height:44px; border-radius:13px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:400 23px/1; flex:none;">🏖️</span>
+            <span style="flex:1;">
+              <span style="display:block; font:700 18px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Italy bday trip</span>
+              <span style="display:block; margin-top:2px; font:400 13px/1.3 -apple-system,sans-serif; color:#626C75;">07 – 20 Jun · 13 nights · £40/night</span>
+            </span>
+          </div>
+          <span style="font:600 13px/1 -apple-system,sans-serif; color:#4B5563; padding:0 4px;">2 offers · nobody has to cover the whole trip</span>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="width:40px; height:40px; border-radius:20px; background:linear-gradient(135deg,#9DB4E8,#5F7FC9); display:flex; align-items:center; justify-content:center; font:700 16px/1 -apple-system,sans-serif; color:#fff; flex:none;">S</span>
+              <span style="flex:1;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Sam Gowen</span>
+                  <span style="font:400 15px/1; flex:none;">🇳🇿</span>
+                  <span style="background:#17A589; border-radius:999px; padding:2px 8px; font:700 10.5px/1.5 -apple-system,sans-serif; color:#fff;">New</span>
+                </span>
+                <span style="display:block; margin-top:2px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">Sent 1 day ago · 3 Kiki matches</span>
+              </span>
+            </div>
+            <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px;">
+              <span style="font:700 11px/1.5 -apple-system,sans-serif; letter-spacing:0.3px; text-transform:uppercase; color:#626C75;">Age</span><span style="font:500 13.5px/1.4 -apple-system,sans-serif; color:#4B5563;">Male, 26</span>
+              <span style="font:700 11px/1.5 -apple-system,sans-serif; letter-spacing:0.3px; text-transform:uppercase; color:#626C75;">Work</span><span style="font:500 13.5px/1.4 -apple-system,sans-serif; color:#4B5563;">Founding Operations @Kiki</span>
+              <span style="font:700 11px/1.5 -apple-system,sans-serif; letter-spacing:0.3px; text-transform:uppercase; color:#626C75;">From</span><span style="font:500 13.5px/1.4 -apple-system,sans-serif; color:#4B5563;">Grew up in Auckland</span>
+            </div>
+            <div style="background:#F7F7F5; border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <span style="display:flex; align-items:baseline; justify-content:space-between;"><span style="font:700 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">12 of your 13 nights</span><span style="font:700 16px/1 -apple-system,sans-serif; color:#0E4E42;">£480.00</span></span>
+              <span style="height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:92%; border-radius:4px; background:#17A589;"></span></span>
+              <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font:600 12px/1 -apple-system,sans-serif; color:#626C75;">Requested 08 – 20 Jun</span><span style="font:600 12px/1 -apple-system,sans-serif; color:#626C75;">£40 / night</span></span>
+            </div>
+            <div style="background:#E7F4F0; border-radius:14px; padding:12px;">
+              <span style="font:500 13.5px/20px -apple-system,sans-serif; color:#0E4E42;">Based on similar Kiki’s right now, 12 of 13 nights is more than most people are getting for this seasonality!</span>
+            </div>
+            <span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">See the whole request ›</span>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="width:40px; height:40px; border-radius:20px; background:linear-gradient(135deg,#E9A6BE,#D2789A); display:flex; align-items:center; justify-content:center; font:700 16px/1 -apple-system,sans-serif; color:#fff; flex:none;">S</span>
+              <span style="flex:1;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Sara Foster</span>
+                  <span style="font:400 15px/1; flex:none;">🇦🇺</span>
+                  <span style="background:#17A589; border-radius:999px; padding:2px 8px; font:700 10.5px/1.5 -apple-system,sans-serif; color:#fff;">New</span>
+                </span>
+                <span style="display:block; margin-top:2px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">Sent 4 days ago · 1 Kiki match</span>
+              </span>
+            </div>
+            <div style="background:#F7F7F5; border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <span style="display:flex; align-items:baseline; justify-content:space-between;"><span style="font:700 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">8 of your 13 nights</span><span style="font:700 16px/1 -apple-system,sans-serif; color:#0E4E42;">£320.00</span></span>
+              <span style="height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:61%; border-radius:4px; background:#17A589;"></span></span>
+            </div>
+          </div>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· The dossier bullets (“· Male, 26”) become a labelled meta grid — same words, read as a profile rather than a file. Flag blends in beside the name.</span>
+        <span>· “See the whole request” now clears the home indicator instead of sitting under it.</span>
+      </div>
+    </div>
+
+    <!-- 10 · ME -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Me · standing</div>
+      <div data-screen-label="Me" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:08</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="padding:16px 16px 0; display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <span style="position:relative; width:64px; height:64px; flex:none;">
+              <img src="assets/avatars/you.jpg" alt="You" style="width:64px; height:64px; border-radius:32px; object-fit:cover; display:block;">
+            </span>
+            <span style="flex:1; display:flex; flex-direction:column; gap:4px;">
+              <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">You</span>
+              <span style="font:400 13.5px/1.35 -apple-system,sans-serif; color:#626C75;">Standing, what you’ve done, and how you got in.</span>
+            </span>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:6px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Your standing</span>
+              <span style="display:flex; align-items:center; gap:6px; border:1px solid #ECECE8; border-radius:999px; padding:5px 11px;"><span style="width:7px; height:7px; border-radius:4px; background:#8A9099; display:block;"></span><span style="font:700 12.5px/1 -apple-system,sans-serif; color:#4B5563;">Newcomer · #9</span></span>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:8px;">
+              <span style="flex:1; background:#F7F7F5; border-radius:14px; padding:12px 0; text-align:center;"><span style="display:block; font:700 20px/1.1 -apple-system,sans-serif; color:#1A1A1A;">2</span><span style="display:block; margin-top:2px; font:600 11.5px/1 -apple-system,sans-serif; color:#626C75;">points</span></span>
+              <span style="flex:1; background:#F7F7F5; border-radius:14px; padding:12px 0; text-align:center;"><span style="display:block; font:700 20px/1.1 -apple-system,sans-serif; color:#1A1A1A;">#9</span><span style="display:block; margin-top:2px; font:600 11.5px/1 -apple-system,sans-serif; color:#626C75;">of 12</span></span>
+              <span style="flex:1; background:#F7F7F5; border-radius:14px; padding:12px 0; text-align:center;"><span style="display:block; font:700 20px/1.1 -apple-system,sans-serif; color:#1A1A1A;">6</span><span style="display:block; margin-top:2px; font:600 11.5px/1 -apple-system,sans-serif; color:#626C75;">like you</span></span>
+            </div>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">What you’ve done</span>
+            <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Hosted</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block;"></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">0</span></span>
+            <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Vouched</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:67%; border-radius:4px; background:#17A589;"></span></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">4</span></span>
+            <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Referred</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:33%; border-radius:4px; background:#17A589;"></span></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">2</span></span>
+            <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Showed up</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:50%; border-radius:4px; background:#17A589;"></span></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">3</span></span>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:6px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">How you got in</span>
+              <span style="font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">Replay ›</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:6px;">
+              <span style="position:relative; width:40px; height:40px; flex:none;">
+                <img src="assets/avatars/bella.jpg" alt="Bella" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1;">
+                <span style="display:block; font:700 15.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">🇬🇧 Bella invited you</span>
+                <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">4 days ago · KIKI·BELLA·3F2A</span>
+              </span>
+            </div>
+            <span style="background:#E7F4F0; border-radius:14px; padding:12px; margin-top:10px; font:italic 400 14.5px/21px -apple-system,sans-serif; color:#0E4E42;">“Known her since Auckland. She looked after my flat for a fortnight and I would hand her the keys again tomorrow.”</span>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:6px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">What other people can see</span>
+            <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">Every fact, and how it was established. Nothing is inferred silently.</span>
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:6px;">
+              <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🌏 Mount Eden</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+              <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🎓 Paris, 2017</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:83px; background:rgba(255,255,255,0.96); border-top:1px solid #ECECE8; display:flex; align-items:flex-start; padding-top:9px;">
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="#626C75" stroke-width="1.9"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Explore</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#626C75" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#626C75" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Trips</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Messages</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="#17A589" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#17A589;">Me</span></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· Trait emoji kept in front of each fact; the provenance chip still carries how it was established.</span>
+        <span>· Tier badge becomes a hairline pill with a tier dot rather than a filled block.</span>
+      </div>
+    </div>
+
+    <!-- 11 · MESSAGES -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Messages · inbox</div>
+      <div data-screen-label="Messages" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 30px 4px;">
+          <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+          <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+        </div>
+        <div style="padding:16px 16px 0; display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Messages</span>
+            <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">Threads that exist because a mutual vouched.</span>
+          </div>
+          <div style="background:#fff; border-radius:22px; padding:0 16px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 0;">
+              <span style="position:relative; width:46px; height:46px; flex:none;">
+                <img src="assets/avatars/emma.jpg" alt="Emma" style="width:46px; height:46px; border-radius:23px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1; display:flex; flex-direction:column; gap:3px; min-width:0;">
+                <span style="display:flex; align-items:center; gap:8px;"><span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Emma</span><span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:2px 9px; font:600 11px/1.3 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span></span>
+                <span style="font:400 13.5px/1.3 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">No way! Small world. Those dates work — happy to hold them for you.</span>
+              </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 0; border-top:1px solid #F0F0EC;">
+              <span style="position:relative; width:46px; height:46px; flex:none;">
+                <img src="assets/avatars/katelin.jpg" alt="Katelin" style="width:46px; height:46px; border-radius:23px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1; display:flex; flex-direction:column; gap:3px; min-width:0;">
+                <span style="display:flex; align-items:center; gap:8px;"><span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Katelin</span><span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:2px 9px; font:600 11px/1.3 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span></span>
+                <span style="font:400 13.5px/1.3 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Amy’s the best! Yes the Finsbury Park room is free those nights.</span>
+              </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 0; border-top:1px solid #F0F0EC;">
+              <span style="position:relative; width:46px; height:46px; flex:none;">
+                <img src="assets/avatars/danica.jpg" alt="Danica" style="width:46px; height:46px; border-radius:23px; object-fit:cover; display:block;">
+              </span>
+              <span style="flex:1; display:flex; flex-direction:column; gap:3px; min-width:0;">
+                <span style="display:flex; align-items:center; gap:8px;"><span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Danica</span><span style="border:1px solid #17A589; background:#E7F4F0; border-radius:999px; padding:2px 9px; font:600 11px/1.3 -apple-system,sans-serif; color:#0E4E42;">One step from you</span></span>
+                <span style="font:400 13.5px/1.3 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">You: Anytime! The garden was a dream for working.</span>
+              </span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; padding:0 4px;">
+            <span style="flex:none; margin-top:2px;"><svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#9BCFC3" stroke-width="8"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#9BCFC3" stroke-width="8"></circle></svg></span>
+            <span style="font:400 13px/19px -apple-system,sans-serif; color:#626C75;">Three threads, three mutuals. A thread opens here when someone you both know says yes — there is nothing else to fill this page with.</span>
+          </div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:83px; background:rgba(255,255,255,0.96); border-top:1px solid #ECECE8; display:flex; align-items:flex-start; padding-top:9px;">
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="#626C75" stroke-width="1.9"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Explore</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#626C75" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#626C75" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Trips</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#17A589" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#17A589;">Messages</span></span>
+          <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Me</span></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· The grey void under three rows now carries one quiet line that restates the rule of the network. No new feature, no filler card.</span>
+      </div>
+    </div>
+
+    <!-- 12 · THREAD -->
+    <div style="display:flex; flex-direction:column; gap:14px; width:390px;">
+      <div style="font:700 11px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; color:#626C75; text-transform:uppercase;">Thread · Emma</div>
+      <div data-screen-label="Thread" style="position:relative; width:390px; height:844px; background:#F5F5F4; border-radius:40px; overflow:hidden; border:1px solid #E0E0DB; box-shadow:0 18px 44px rgba(26,26,26,0.10);">
+        <div style="background:#fff; border-bottom:1px solid #ECECE8; padding:0 12px 10px;">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; height:52px; padding:0 18px 4px;">
+            <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:08</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; padding-top:4px;">
+            <span style="width:30px; height:34px; display:flex; align-items:center; justify-content:center;"><svg width="11" height="19" viewBox="0 0 12 20"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="position:relative; width:34px; height:34px; flex:none;">
+              <img src="assets/avatars/emma.jpg" alt="Emma" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block;">
+            </span>
+            <span style="flex:1;">
+              <span style="display:block; font:700 16px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Emma</span>
+              <span style="display:block; font:600 12px/1.3 -apple-system,sans-serif; color:#2C6559;">Two steps from you</span>
+            </span>
+          </div>
+        </div>
+        <div style="padding:16px; display:flex; flex-direction:column; gap:8px;">
+          <span style="align-self:center; background:#E7F4F0; border-radius:999px; padding:6px 14px; margin-bottom:6px; font:600 12px/1.3 -apple-system,sans-serif; color:#0E4E42; text-align:center;">This thread opened because you share a mutual with Emma.</span>
+          <span style="display:flex; justify-content:flex-end;"><span style="max-width:78%; background:#17A589; border-radius:20px 20px 6px 20px; padding:10px 14px; font:500 15px/21px -apple-system,sans-serif; color:#fff;">Hi Emma! Bella pointed me your way — your De Beauvoir room looks lovely.</span></span>
+          <span style="display:flex; justify-content:flex-start;"><span style="max-width:78%; background:#fff; border-radius:20px 20px 20px 6px; padding:10px 14px; font:500 15px/21px -apple-system,sans-serif; color:#1A1A1A; box-shadow:0 4px 14px rgba(26,26,26,0.05);">Oh amazing, any friend of Bella’s! When are you thinking?</span></span>
+          <span style="display:flex; justify-content:flex-end;"><span style="max-width:78%; background:#17A589; border-radius:20px 20px 6px 20px; padding:10px 14px; font:500 15px/21px -apple-system,sans-serif; color:#fff;">The 12th–15th. Also spotted we both did the Paris exchange in 2017.</span></span>
+          <span style="display:flex; justify-content:flex-start;"><span style="max-width:78%; background:#fff; border-radius:20px 20px 20px 6px; padding:10px 14px; font:500 15px/21px -apple-system,sans-serif; color:#1A1A1A; box-shadow:0 4px 14px rgba(26,26,26,0.05);">No way! Small world. Those dates work — happy to hold them for you.</span></span>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:8px 12px 30px; display:flex; align-items:flex-end; gap:10px;">
+          <span style="flex:1; background:#F7F7F5; border-radius:18px; padding:11px 14px; font:400 15px/20px -apple-system,sans-serif; color:#626C75;">Message Emma…</span>
+          <span style="width:42px; height:42px; border-radius:21px; background:#ECECE8; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="17" height="17" viewBox="0 0 18 18"><path d="M9 15.5 V3.2" fill="none" stroke="#8A9099" stroke-width="2" stroke-linecap="round"></path><path d="M3.6 8.4 L9 2.8 L14.4 8.4" fill="none" stroke="#8A9099" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        </div>
+        <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85;"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; font:400 13px/19px -apple-system,sans-serif; color:#4B5563;">
+        <span>· The typed “↑” glyph becomes a drawn arrow; the disabled send goes neutral grey instead of a washed-out teal that looked broken.</span>
+        <span>· Send arrow is drawn rather than a typed “↑” glyph, so it centres in the button.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

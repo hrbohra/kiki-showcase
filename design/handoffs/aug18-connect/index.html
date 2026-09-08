@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; background: #EDEDE8; }
+  a { color: #17A589; text-decoration: none; }
+  a:hover { color: #0F8D74; }
+  *::-webkit-scrollbar { width: 0; height: 0; }
+  @keyframes kk-draw { from { stroke-dashoffset: 320; } to { stroke-dashoffset: 0; } }
+  @keyframes kk-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes kk-pop { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;gap:40px;padding:40px 24px 64px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,sans-serif;background:#EDEDE8">
+
+  <div style="width:390px;height:844px;flex:none;background:#F7F7F5;border-radius:46px;box-shadow:0 30px 70px rgba(26,26,26,.20),0 0 0 10px #1F2123;overflow:hidden;display:flex;flex-direction:column;position:relative">
+
+    <div style="height:46px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 6px;font-size:13px;font-weight:700;color:#1A1A1A">
+      <div>9:41</div>
+      <div style="display:flex;align-items:center;gap:5px">
+        <div style="width:15px;height:8px;border-radius:2px;background:#1A1A1A"></div>
+        <div style="width:22px;height:10px;border:1.5px solid #1A1A1A;border-radius:3px;padding:1.5px;display:flex"><div style="flex:1;background:#1A1A1A;border-radius:1px"></div></div>
+      </div>
+    </div>
+
+    <div ref="{{ scroller }}" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+      <sc-if value="{{ isExplore }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:6px 16px 10px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:29px;font-weight:800;letter-spacing:-.7px;color:#1A1A1A">Explore</div>
+            <div style="display:flex;background:#ECECE8;border-radius:999px;padding:3px;gap:2px">
+              <div onClick="{{ setList }}" style="padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:{{ listBtn.bg }};color:{{ listBtn.fg }}">Homes</div>
+              <div onClick="{{ setMap }}" style="padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:{{ mapBtn.bg }};color:{{ mapBtn.fg }}">Map</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1;display:flex;align-items:center;gap:9px;background:#FFFFFF;border:1px solid #ECECE8;border-radius:999px;padding:11px 16px;box-shadow:0 2px 8px rgba(26,26,26,.04)">
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#8A9099" stroke-width="2"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="18" y2="18" stroke-linecap="round"></line></svg>
+              <div style="font-size:13.5px;font-weight:500;color:#8A9099;white-space:nowrap">Search dates or duration</div>
+            </div>
+            <div onClick="{{ toggleConnected }}" style="padding:11px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid {{ connectedBtn.bd }};background:{{ connectedBtn.bg }};color:{{ connectedBtn.fg }}">Filters</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:2px 16px 14px">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+            <div onClick="{{ c.on }}" style="flex:none;padding:8px 15px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ isMapView }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;height:470px;background:#EAEEE9;overflow:hidden">
+            <div style="position:absolute;right:-70px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:#D6E3E8"></div>
+            <div style="position:absolute;left:-40px;top:150px;width:480px;height:14px;background:#FFFFFF;transform:rotate(-8deg);opacity:.9"></div>
+            <div style="position:absolute;left:-40px;top:330px;width:480px;height:10px;background:#FFFFFF;transform:rotate(6deg);opacity:.9"></div>
+            <div style="position:absolute;left:150px;top:-40px;width:12px;height:560px;background:#FFFFFF;transform:rotate(9deg);opacity:.9"></div>
+            <svg width="150" height="90" viewBox="0 0 100 60" fill="none" stroke="#17A589" stroke-width="2" style="position:absolute;left:20px;bottom:24px;opacity:.10">
+              <circle cx="38" cy="30" r="21"></circle><circle cx="62" cy="30" r="21"></circle>
+            </svg>
+            <sc-for list="{{ pins }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ p.on }}" style="position:absolute;left:{{ p.x }};top:{{ p.y }};transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;padding:{{ p.pad }};border-radius:999px;background:#FFFFFF;cursor:pointer;font-size:13px;font-weight:800;color:#1A1A1A;box-shadow:{{ p.shadow }};border:1.5px solid {{ p.ring }};z-index:{{ p.z }}">
+                <div style="width:8px;height:8px;border-radius:50%;background:{{ p.dot }}"></div>{{ p.price }}
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ hasPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:-64px 12px 16px;position:relative;z-index:5;background:#FFFFFF;border-radius:22px;border:1px solid #ECECE8;box-shadow:0 10px 30px rgba(26,26,26,.12);padding:14px;animation:kk-rise 260ms ease-out both">
+              <div onClick="{{ preview.open }}" style="display:flex;gap:12px;align-items:center;cursor:pointer">
+                <div style="position:relative;flex:none">
+                  <div style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:18px;font-weight:800;background:{{ preview.grad }}">{{ preview.initial }}</div>
+                  <div style="position:absolute;right:-3px;bottom:-3px;font-size:13px;background:#FFFFFF;border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.15)">{{ preview.flag }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:17px;font-weight:800;color:#1A1A1A">{{ preview.title }}</div>
+                  <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:2px">{{ preview.area }} · {{ preview.price }} / night</div>
+                </div>
+                <div style="padding:6px 11px;border-radius:999px;background:#E7F4F0;color:#0F8D74;font-size:12px;font-weight:800;white-space:nowrap">{{ preview.degree }}</div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start;margin-top:12px;padding:11px 12px;background:#E7F4F0;border-radius:14px">
+                <svg width="16" height="16" viewBox="0 0 100 60" fill="none" stroke="#17A589" stroke-width="6" style="flex:none;margin-top:1px"><circle cx="38" cy="30" r="21"></circle><circle cx="62" cy="30" r="21"></circle></svg>
+                <div style="font-size:13px;font-weight:600;color:#0F8D74;line-height:1.4">{{ preview.trustLine }}</div>
+              </div>
+              <div onClick="{{ preview.open }}" style="margin-top:12px;text-align:center;background:#17A589;color:#FFFFFF;font-size:15px;font-weight:700;padding:13px;border-radius:14px;cursor:pointer">See how you're connected</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noPreview }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;justify-content:center;margin:-52px 0 20px;position:relative;z-index:5">
+              <div style="background:#FFFFFF;border-radius:999px;padding:11px 20px;font-size:13px;font-weight:600;color:#4B5563;box-shadow:0 4px 14px rgba(26,26,26,.10)">Tap a home to see how you're connected</div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ isListView }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:16px;padding:0 14px 24px">
+            <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.open }}" style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);overflow:hidden;cursor:pointer">
+                <div style="display:flex;align-items:center;gap:11px;padding:13px 14px 11px">
+                  <div style="position:relative;flex:none">
+                    <div style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:17px;font-weight:800;background:{{ c.grad }}">{{ c.initial }}</div>
+                    <div style="position:absolute;right:-3px;bottom:-3px;font-size:12px;background:#FFFFFF;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.15)">{{ c.flag }}</div>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-.2px">{{ c.title }}</div>
+                    <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:1px">{{ c.area }}</div>
+                  </div>
+                  <div onClick="{{ c.like }}" style="flex:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="{{ c.heartFill }}" stroke="{{ c.heartStroke }}" stroke-width="1.8"><path d="M12 20.5 3.8 12.6a5 5 0 0 1 7.1-7l1.1 1.1 1.1-1.1a5 5 0 1 1 7.1 7Z"></path></svg>
+                  </div>
+                </div>
+                <div style="margin:0 14px;height:172px;border-radius:16px;position:relative;overflow:hidden;background:{{ c.photo }}">
+                  <svg width="200" height="120" viewBox="0 0 100 60" fill="none" stroke="#FFFFFF" stroke-width="1.4" style="position:absolute;right:-24px;bottom:-18px;opacity:.35"><circle cx="38" cy="30" r="21"></circle><circle cx="62" cy="30" r="21"></circle></svg>
+                  <div style="position:absolute;left:10px;top:10px;display:flex;gap:6px">
+                    <div style="background:rgba(255,255,255,.94);border-radius:999px;padding:6px 11px;font-size:12px;font-weight:700;color:#4B5563">{{ c.kind }}</div>
+                    <div style="background:rgba(255,255,255,.94);border-radius:999px;padding:6px 11px;font-size:12px;font-weight:800;color:#1A1A1A">{{ c.price }} / night</div>
+                  </div>
+                  <div style="position:absolute;left:12px;bottom:11px;font-size:12px;font-weight:700;color:#FFFFFF;text-shadow:0 1px 4px rgba(31,41,43,.45)">{{ c.tagLine }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:9px;margin:11px 14px 13px;padding:10px 12px;background:#E7F4F0;border-radius:14px">
+                  <div style="width:24px;height:24px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:11px;font-weight:800;background:{{ c.viaGrad }}">{{ c.viaInitial }}</div>
+                  <div style="flex:1;font-size:13px;font-weight:700;color:#0F8D74;line-height:1.35">{{ c.vouch }}</div>
+                  <div style="flex:none;padding:5px 10px;border-radius:999px;border:1px solid #17A589;color:#0F8D74;font-size:11px;font-weight:800;white-space:nowrap">{{ c.degree }}</div>
+                </div>
+                <sc-if value="{{ c.hasOverlap }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;gap:7px;padding:0 16px 14px;font-size:13px;font-weight:600;color:#4B5563;line-height:1.4">
+                    <div>✨</div><div>{{ c.overlap }}</div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noCards }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:48px 24px;color:#8A9099;font-size:14px;font-weight:600">No homes match these filters yet. Try clearing a tag.</div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ back }}" style="display:flex;align-items:center;gap:5px;padding:4px 16px 8px;color:#17A589;font-size:15px;font-weight:700;cursor:pointer">
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#17A589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,1 1.5,6.5 7,12"></polyline></svg>Back
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:24px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:24px 18px 20px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden">
+            <svg width="240" height="144" viewBox="0 0 100 60" fill="none" stroke="#17A589" stroke-width="1.2" style="position:absolute;top:-46px;left:50%;margin-left:-120px;opacity:.09"><circle cx="38" cy="30" r="21"></circle><circle cx="62" cy="30" r="21"></circle></svg>
+            <div style="position:relative">
+              <div style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:34px;font-weight:800;box-shadow:0 6px 18px rgba(26,26,26,.14);background:{{ host.grad }}">{{ host.initial }}</div>
+              <div style="position:absolute;right:0;bottom:2px;font-size:18px;background:#FFFFFF;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.16)">{{ host.flag }}</div>
+            </div>
+            <div style="font-size:26px;font-weight:800;letter-spacing:-.5px;color:#1A1A1A;margin-top:12px">{{ host.name }}</div>
+            <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:3px">{{ host.subtitle }}</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid {{ host.tierColor }}">
+                <div style="width:7px;height:7px;border-radius:50%;background:{{ host.tierColor }}"></div>
+                <div style="font-size:12px;font-weight:800;color:{{ host.tierColor }}">{{ host.tierLabel }}</div>
+              </div>
+              <div style="padding:6px 12px;border-radius:999px;background:#E7F4F0;color:#0F8D74;font-size:12px;font-weight:800">{{ host.degree }}</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:14px">
+              <sc-for list="{{ host.tags }}" as="t" hint-placeholder-count="4">
+                <div style="padding:7px 13px;border-radius:999px;background:#F7F7F5;border:1px solid #ECECE8;font-size:12px;font-weight:700;color:#4B5563">{{ t }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div onClick="{{ goConnection }}" style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px;cursor:pointer">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:17px;font-weight:800;color:#1A1A1A">How you're connected</div>
+              <div style="font-size:13px;font-weight:700;color:#17A589">View graph ›</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:-8px;margin:14px 0 12px">
+              <sc-for list="{{ host.chain }}" as="p" hint-placeholder-count="3">
+                <div style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:14px;font-weight:800;border:2.5px solid #FFFFFF;margin-right:-10px;background:{{ p.grad }}">{{ p.initial }}</div>
+              </sc-for>
+              <div style="margin-left:18px;font-size:14px;font-weight:600;color:#4B5563;line-height:1.35">{{ host.connSummary }}</div>
+            </div>
+            <div style="display:flex;gap:7px;padding-top:12px;border-top:1px solid #ECECE8;font-size:13px;font-weight:600;color:#4B5563;line-height:1.4">
+              <div>✨</div><div>{{ host.overlap }}</div>
+            </div>
+          </div>
+
+          <div onClick="{{ goGuestBook }}" style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px;cursor:pointer">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:17px;font-weight:800;color:#1A1A1A">Guest book</div>
+              <div style="font-size:13px;font-weight:700;color:#17A589">{{ host.reviewLabel }} ›</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+              <div style="flex:1;height:9px;border-radius:999px;background:#ECECE8;overflow:hidden">
+                <div style="height:100%;border-radius:999px;background:#17A589;width:{{ host.meterPct }}"></div>
+              </div>
+              <div style="font-size:12px;font-weight:800;color:#0F8D74">{{ host.sentiment }}</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:14px">
+              <sc-for list="{{ host.signals }}" as="s" hint-placeholder-count="3">
+                <div style="padding:6px 12px;border-radius:999px;border:1px solid #17A589;color:#0F8D74;font-size:12px;font-weight:700">{{ s }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div onClick="{{ goThread }}" style="background:#17A589;color:#FFFFFF;text-align:center;font-size:16px;font-weight:700;padding:16px;border-radius:16px;cursor:pointer;box-shadow:0 6px 16px rgba(23,165,137,.28)">Message {{ host.name }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isConnection }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ back }}" style="display:flex;align-items:center;gap:5px;padding:4px 16px 8px;color:#17A589;font-size:15px;font-weight:700;cursor:pointer">
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#17A589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,1 1.5,6.5 7,12"></polyline></svg>Back
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="padding:4px 4px 0">
+            <div style="font-size:27px;font-weight:800;letter-spacing:-.6px;color:#1A1A1A;line-height:1.15">{{ conn.headline }}</div>
+            <div style="display:flex;align-items:center;gap:7px;margin-top:8px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#17A589" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,12.5 9.5,18 20,6.5"></polyline></svg>
+              <div style="font-size:13px;font-weight:700;color:#0F8D74">Verified through mutual friends</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:8px 8px 14px;position:relative;height:216px">
+            <svg width="330" height="180" viewBox="0 0 330 180" fill="none" style="position:absolute;left:12px;top:14px">
+              <sc-for list="{{ conn.stubs }}" as="s" hint-placeholder-count="3">
+                <path d="{{ s.d }}" stroke="#DCE5E1" stroke-width="1.6" stroke-linecap="round"></path>
+              </sc-for>
+              <sc-for list="{{ conn.edges }}" as="e" hint-placeholder-count="2">
+                <path d="{{ e.d }}" stroke="#17A589" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="320" style="animation:kk-draw 900ms ease-out both"></path>
+              </sc-for>
+              <sc-for list="{{ conn.stubDots }}" as="s" hint-placeholder-count="3">
+                <circle cx="{{ s.x }}" cy="{{ s.y }}" r="4" fill="#DCE5E1"></circle>
+              </sc-for>
+            </svg>
+            <sc-for list="{{ conn.nodes }}" as="n" hint-placeholder-count="3">
+              <div style="position:absolute;left:{{ n.left }};top:{{ n.top }};display:flex;flex-direction:column;align-items:center;gap:5px;animation:kk-pop 400ms ease-out both">
+                <div style="width:{{ n.size }};height:{{ n.size }};border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-weight:800;font-size:{{ n.font }};border:3px solid #FFFFFF;box-shadow:0 3px 10px rgba(26,26,26,.14);background:{{ n.grad }}">{{ n.initial }}</div>
+                <div style="font-size:11px;font-weight:800;color:#4B5563;white-space:nowrap">{{ n.name }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:18px 16px">
+            <sc-for list="{{ conn.hops }}" as="h" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                  <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:14px;font-weight:800;background:{{ h.grad }}">{{ h.initial }}</div>
+                  <div style="width:2px;flex:1;background:#CDE6DF;height:{{ h.lineH }}"></div>
+                </div>
+                <div style="flex:1;padding-bottom:{{ h.gap }}">
+                  <div style="font-size:15px;font-weight:800;color:#1A1A1A;padding-top:7px">{{ h.name }}</div>
+                  <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:2px">{{ h.role }}</div>
+                  <sc-if value="{{ h.hasNote }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top:10px;background:#E7F4F0;border-radius:14px;padding:11px 13px;font-size:13px;font-weight:600;color:#0F8D74;line-height:1.45">“{{ h.note }}”</div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A;margin-bottom:12px">What you have in common</div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <sc-for list="{{ conn.overlaps }}" as="o" hint-placeholder-count="3">
+                <div style="display:flex;gap:11px;align-items:flex-start">
+                  <div style="width:28px;height:28px;flex:none;border-radius:50%;background:#E7F4F0;display:flex;align-items:center;justify-content:center;font-size:13px">{{ o.icon }}</div>
+                  <div style="flex:1;font-size:14px;font-weight:600;color:#4B5563;line-height:1.4;padding-top:4px">{{ o.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:#8A9099;line-height:1.5;padding:0 4px">{{ conn.footnote }}</div>
+          <div onClick="{{ goThread }}" style="background:#17A589;color:#FFFFFF;text-align:center;font-size:16px;font-weight:700;padding:16px;border-radius:16px;cursor:pointer;box-shadow:0 6px 16px rgba(23,165,137,.28)">Message {{ conn.hostName }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isGuestBook }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ back }}" style="display:flex;align-items:center;gap:5px;padding:4px 16px 8px;color:#17A589;font-size:15px;font-weight:700;cursor:pointer">
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#17A589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,1 1.5,6.5 7,12"></polyline></svg>Back
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="padding:4px 4px 0">
+            <div style="font-size:27px;font-weight:800;letter-spacing:-.6px;color:#1A1A1A">What guests say</div>
+            <div style="font-size:14px;font-weight:600;color:#8A9099;margin-top:4px">{{ gb.subtitle }}</div>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <sc-for list="{{ gb.stats }}" as="s" hint-placeholder-count="3">
+              <div style="flex:1;background:#FFFFFF;border:1px solid #ECECE8;border-radius:18px;padding:14px 10px;text-align:center;box-shadow:0 4px 14px rgba(26,26,26,.05)">
+                <div style="font-size:24px;font-weight:800;color:{{ s.color }};letter-spacing:-.5px">{{ s.value }}</div>
+                <div style="font-size:11px;font-weight:700;color:#8A9099;margin-top:4px;line-height:1.3">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A">What comes up most</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+              <sc-for list="{{ gb.themes }}" as="t" hint-placeholder-count="4">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#4B5563;margin-bottom:6px">
+                    <div>{{ t.name }}</div><div style="color:#8A9099">{{ t.hits }}</div>
+                  </div>
+                  <div style="height:8px;border-radius:999px;background:#F0F0EC;overflow:hidden">
+                    <div style="height:100%;border-radius:999px;background:{{ t.color }};width:{{ t.pct }}"></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#E7F4F0;border-radius:22px;padding:18px 16px;position:relative;overflow:hidden">
+            <svg width="170" height="102" viewBox="0 0 100 60" fill="none" stroke="#17A589" stroke-width="1.6" style="position:absolute;right:-30px;top:-16px;opacity:.18"><circle cx="38" cy="30" r="21"></circle><circle cx="62" cy="30" r="21"></circle></svg>
+            <div style="font-size:12px;font-weight:800;color:#0F8D74;letter-spacing:.4px;text-transform:uppercase">Trust signals detected</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px">
+              <sc-for list="{{ gb.signals }}" as="s" hint-placeholder-count="3">
+                <div style="padding:7px 13px;border-radius:999px;background:#FFFFFF;font-size:12px;font-weight:700;color:#0F8D74">{{ s }}</div>
+              </sc-for>
+            </div>
+            <div style="font-size:16px;font-weight:600;color:#1A1A1A;line-height:1.5;margin-top:16px;position:relative">“{{ gb.quote }}”</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ gb.reviews }}" as="r" hint-placeholder-count="4">
+              <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:20px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:15px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:12px;font-weight:800;background:{{ r.grad }}">{{ r.initial }}</div>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:800;color:#1A1A1A">{{ r.author }}</div>
+                    <div style="font-size:11px;font-weight:600;color:#8A9099">{{ r.when }}</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:{{ r.tint }}">
+                    <div style="width:6px;height:6px;border-radius:50%;background:{{ r.dot }}"></div>
+                    <div style="font-size:11px;font-weight:800;color:{{ r.dot }}">{{ r.sentiment }}</div>
+                  </div>
+                </div>
+                <div style="font-size:14px;font-weight:500;color:#4B5563;line-height:1.5;margin-top:10px">{{ r.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:#8A9099;line-height:1.5;padding:0 4px">Sentiment, themes and trust signals are computed on-device from the review text — a lexicon pass with negation handling, not a rating field.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCommunity }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:6px 16px 14px">
+          <div style="font-size:29px;font-weight:800;letter-spacing:-.7px;color:#1A1A1A">Community</div>
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A">People like you</div>
+            <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:3px">Matched on where you're from, where you studied and what you do</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:12px">
+              <sc-for list="{{ similar }}" as="p" hint-placeholder-count="5">
+                <div onClick="{{ p.open }}" style="display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid #F0F0EC;cursor:pointer">
+                  <div style="position:relative;flex:none">
+                    <div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:16px;font-weight:800;background:{{ p.grad }}">{{ p.initial }}</div>
+                    <div style="position:absolute;right:-2px;bottom:-2px;font-size:11px;background:#FFFFFF;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center">{{ p.flag }}</div>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:15px;font-weight:800;color:#1A1A1A">{{ p.name }}</div>
+                    <div style="font-size:12px;font-weight:600;color:#8A9099;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.top }}</div>
+                  </div>
+                  <div style="flex:none;padding:6px 11px;border-radius:999px;background:#E7F4F0;color:#0F8D74;font-size:11px;font-weight:800">{{ p.count }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A">Top contributors</div>
+            <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:3px">Hosting, vouching and showing up — weighted, and fading with time</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:12px">
+              <sc-for list="{{ leaders }}" as="m" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid #F0F0EC">
+                  <div style="width:22px;text-align:center;font-size:13px;font-weight:800;color:{{ m.rankColor }}">{{ m.rank }}</div>
+                  <div style="width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:15px;font-weight:800;background:{{ m.grad }}">{{ m.initial }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:15px;font-weight:800;color:#1A1A1A">{{ m.name }}</div>
+                    <div style="display:flex;align-items:center;gap:5px;margin-top:3px">
+                      <div style="width:6px;height:6px;border-radius:50%;background:{{ m.tierColor }}"></div>
+                      <div style="font-size:11px;font-weight:800;color:{{ m.tierColor }}">{{ m.tier }}</div>
+                    </div>
+                  </div>
+                  <div style="flex:none;text-align:right">
+                    <div style="font-size:15px;font-weight:800;color:#1A1A1A">{{ m.score }}</div>
+                    <div style="font-size:10px;font-weight:700;color:#8A9099">points</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTrips }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:6px 16px 14px">
+          <div style="font-size:29px;font-weight:800;letter-spacing:-.7px;color:#1A1A1A">Kiki Trips</div>
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:20px;padding:0 4px;border-bottom:1px solid #ECECE8">
+            <div style="padding-bottom:10px;border-bottom:2px solid #1A1A1A;font-size:15px;font-weight:800;color:#1A1A1A">Dates away</div>
+            <div style="padding-bottom:10px;font-size:15px;font-weight:700;color:#8A9099">Matches</div>
+          </div>
+          <sc-for list="{{ trips }}" as="t" hint-placeholder-count="2">
+            <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:20px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:14px;display:flex;align-items:center;gap:13px">
+              <div style="width:52px;height:52px;flex:none;border-radius:16px;background:#F0F0EC;display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A9099" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="4"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="16" y1="3" x2="16" y2="7"></line></svg>
+              </div>
+              <div style="flex:1">
+                <div style="font-size:16px;font-weight:800;color:#1A1A1A">{{ t.name }}</div>
+                <div style="font-size:13px;font-weight:600;color:#8A9099;margin-top:3px">{{ t.detail }}</div>
+                <div style="font-size:13px;font-weight:600;color:#4B5563;margin-top:2px">{{ t.dates }}</div>
+              </div>
+              <sc-if value="{{ t.confirmed }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:6px 12px;border-radius:999px;background:#17A589;color:#FFFFFF;font-size:11px;font-weight:800">Confirmed</div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <div style="background:#17A589;color:#FFFFFF;text-align:center;font-size:16px;font-weight:700;padding:15px;border-radius:16px;cursor:pointer">Add a new trip</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMessages }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:6px 16px 14px">
+          <div style="font-size:29px;font-weight:800;letter-spacing:-.7px;color:#1A1A1A">Messages</div>
+        </div>
+        <div style="padding:0 14px 24px">
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:4px 16px">
+            <sc-for list="{{ inbox }}" as="t" hint-placeholder-count="3">
+              <div onClick="{{ t.open }}" style="display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid #F0F0EC;cursor:pointer">
+                <div style="position:relative;flex:none">
+                  <div style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:17px;font-weight:800;background:{{ t.grad }}">{{ t.initial }}</div>
+                  <div style="position:absolute;right:-2px;bottom:-2px;font-size:12px;background:#FFFFFF;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center">{{ t.flag }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:7px">
+                    <div style="font-size:15px;font-weight:800;color:#1A1A1A">{{ t.name }}</div>
+                    <div style="padding:3px 8px;border-radius:999px;background:#E7F4F0;color:#0F8D74;font-size:10px;font-weight:800">{{ t.degree }}</div>
+                  </div>
+                  <div style="font-size:13px;font-weight:500;color:#8A9099;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.last }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isThread }}" hint-placeholder-val="{{ false }}">
+        <div style="position:sticky;top:0;z-index:4;background:#F7F7F5;padding:0 14px 10px">
+          <div onClick="{{ back }}" style="display:flex;align-items:center;gap:5px;padding:4px 2px 10px;color:#17A589;font-size:15px;font-weight:700;cursor:pointer">
+            <svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="#17A589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,1 1.5,6.5 7,12"></polyline></svg>Back
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:20px;padding:12px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 4px 14px rgba(26,26,26,.05)">
+            <div style="width:40px;height:40px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:15px;font-weight:800;background:{{ thread.grad }}">{{ thread.initial }}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:800;color:#1A1A1A">{{ thread.name }}</div>
+              <div style="font-size:12px;font-weight:600;color:#0F8D74;margin-top:2px">{{ thread.context }}</div>
+            </div>
+            <div style="padding:5px 10px;border-radius:999px;border:1px solid {{ thread.tierColor }};color:{{ thread.tierColor }};font-size:11px;font-weight:800">{{ thread.tier }}</div>
+          </div>
+        </div>
+        <div style="padding:6px 16px 20px;display:flex;flex-direction:column;gap:10px">
+          <sc-if value="{{ thread.hasOverlap }}" hint-placeholder-val="{{ true }}">
+            <div style="align-self:center;display:flex;gap:7px;background:#E7F4F0;border-radius:14px;padding:10px 14px;font-size:12px;font-weight:700;color:#0F8D74;text-align:center;line-height:1.4;margin-bottom:4px">
+              <div>✨</div><div>{{ thread.overlap }}</div>
+            </div>
+          </sc-if>
+          <sc-for list="{{ thread.bubbles }}" as="b" hint-placeholder-count="4">
+            <div style="max-width:80%;align-self:{{ b.align }};background:{{ b.bg }};color:{{ b.fg }};font-size:14px;font-weight:500;line-height:1.45;padding:11px 14px;border-radius:{{ b.radius }};box-shadow:0 2px 8px rgba(26,26,26,.05)">{{ b.text }}</div>
+          </sc-for>
+        </div>
+        <div style="position:sticky;bottom:0;background:#F7F7F5;padding:8px 14px 14px;display:flex;gap:9px;align-items:center">
+          <input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onKey }}" placeholder="Message" style="flex:1;border:1px solid #ECECE8;background:#FFFFFF;border-radius:999px;padding:13px 16px;font-size:14px;font-family:inherit;font-weight:500;color:#1A1A1A;outline:none" />
+          <div onClick="{{ send }}" style="width:44px;height:44px;flex:none;border-radius:50%;background:#17A589;display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5,12 12,5 19,12"></polyline></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMe }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:6px 16px 14px">
+          <div style="font-size:29px;font-weight:800;letter-spacing:-.7px;color:#1A1A1A">Me</div>
+        </div>
+        <div style="padding:0 14px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:20px 16px;display:flex;align-items:center;gap:14px">
+            <div style="width:64px;height:64px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:24px;font-weight:800;background:{{ me.grad }}">{{ me.initial }}</div>
+            <div style="flex:1">
+              <div style="font-size:20px;font-weight:800;color:#1A1A1A">{{ me.name }}</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                <div style="width:7px;height:7px;border-radius:50%;background:{{ me.tierColor }}"></div>
+                <div style="font-size:13px;font-weight:800;color:{{ me.tierColor }}">{{ me.tierLabel }}</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A">Your standing</div>
+            <div style="display:flex;gap:10px;margin-top:14px">
+              <sc-for list="{{ me.stats }}" as="s" hint-placeholder-count="3">
+                <div style="flex:1;background:#F7F7F5;border-radius:16px;padding:13px 8px;text-align:center">
+                  <div style="font-size:20px;font-weight:800;color:#1A1A1A">{{ s.value }}</div>
+                  <div style="font-size:11px;font-weight:700;color:#8A9099;margin-top:3px">{{ s.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;font-weight:600;color:#8A9099;line-height:1.5;margin-top:14px">Host, vouch or show up and your score climbs. It decays gently, so standing reflects who you are now.</div>
+          </div>
+          <div style="background:#FFFFFF;border:1px solid #ECECE8;border-radius:22px;box-shadow:0 4px 14px rgba(26,26,26,.05);padding:16px">
+            <div style="font-size:17px;font-weight:800;color:#1A1A1A">What you're matched on</div>
+            <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px">
+              <sc-for list="{{ me.traits }}" as="t" hint-placeholder-count="3">
+                <div style="display:flex;gap:11px;align-items:center">
+                  <div style="width:28px;height:28px;flex:none;border-radius:50%;background:#E7F4F0;display:flex;align-items:center;justify-content:center;font-size:13px">{{ t.icon }}</div>
+                  <div style="flex:1;font-size:14px;font-weight:600;color:#4B5563;line-height:1.4">{{ t.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div style="flex:none;display:flex;background:#FFFFFF;border-top:1px solid #ECECE8;padding:9px 4px 22px">
+      <div onClick="{{ goCommunity }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ tabColor.community }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"></circle><circle cx="17" cy="9.5" r="2.4"></circle><path d="M3.5 19c.4-3 2.7-4.6 5.5-4.6s5.1 1.6 5.5 4.6"></path><path d="M16.5 14.2c2.2.2 3.7 1.7 4 4.8"></path></svg>
+        <div style="font-size:10px;font-weight:700">Community</div>
+      </div>
+      <div onClick="{{ goExplore }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ tabColor.explore }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><line x1="15.5" y1="15.5" x2="20.5" y2="20.5"></line></svg>
+        <div style="font-size:10px;font-weight:700">Explore</div>
+      </div>
+      <div onClick="{{ goTrips }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ tabColor.trips }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="4"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="16" y1="3" x2="16" y2="7"></line></svg>
+        <div style="font-size:10px;font-weight:700">Trips</div>
+      </div>
+      <div onClick="{{ goMessages }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ tabColor.messages }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12c0 4.1-3.8 7.4-8.5 7.4-1 0-2-.15-2.9-.42L4 20.5l1.6-3.4C4.6 15.7 3.5 14 3.5 12c0-4.1 3.8-7.4 8.5-7.4s8.5 3.3 8.5 7.4Z"></path></svg>
+        <div style="font-size:10px;font-weight:700">Messages</div>
+      </div>
+      <div onClick="{{ goMe }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ tabColor.me }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.6"></circle><path d="M4.8 20c.5-3.7 3.4-5.7 7.2-5.7s6.7 2 7.2 5.7"></path></svg>
+        <div style="font-size:10px;font-weight:700">Me/Home</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:250px;padding-top:12px;color:#4B5563">
+    <div style="font-size:20px;font-weight:800;color:#1A1A1A;letter-spacing:-.3px">Kiki Connect</div>
+    <div style="font-size:13px;font-weight:600;line-height:1.6;margin-top:10px">Every number on screen is computed live from one synthetic world: BFS over the vouch graph, a lexicon sentiment pass with negation handling, and recency-decayed contribution scoring.</div>
+    <div style="font-size:13px;font-weight:600;line-height:1.6;margin-top:14px">Tap a pin or a home, then follow the chain: profile → how you're connected → guest book → message.</div>
+    <div style="font-size:12px;font-weight:600;color:#8A9099;line-height:1.6;margin-top:16px">Synthetic data only. Not affiliated with Kiki.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:940},&quot;sortBy&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Closest connection&quot;,&quot;Price&quot;,&quot;Most reviewed&quot;],&quot;default&quot;:&quot;Closest connection&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Explore&quot;},&quot;showTagFilters&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Explore&quot;}}">
+class Component extends DCLogic {
+  static W = (() => {
+    const teal = '#17A589';
+    const NOW = 400, VIEWER = 'you';
+    const members = [
+      { id:'you', name:'You', country:'NZ', c:teal, traits:[
+        {kind:'origin',key:'origin:nz:mount-eden',label:'New Zealand (Mount Eden)'},
+        {kind:'education',key:'uni:paris:2017',label:'Paris, 2017'},
+        {kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
+      { id:'emma', name:'Emma', country:'NZ', c:'#C98A6B', traits:[
+        {kind:'origin',key:'origin:nz:mount-eden',label:'New Zealand (Mount Eden)'},
+        {kind:'education',key:'uni:paris:2017',label:'Paris, 2017'},
+        {kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
+      { id:'bella', name:'Bella', country:'GB', c:'#5B7DB1', traits:[{kind:'origin',key:'origin:gb:london',label:'London'}]},
+      { id:'sophie', name:'Sophie', country:'AU', c:'#B15B93', traits:[{kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
+      { id:'amy', name:'Amy', country:'AU', c:'#C15B5B', traits:[{kind:'origin',key:'origin:au:sydney',label:'Sydney'}]},
+      { id:'katelin', name:'Katelin', country:'AU', c:'#7BAE8E', traits:[
+        {kind:'origin',key:'origin:au:bondi',label:'Bondi'},{kind:'education',key:'uni:paris:2017',label:'Paris, 2017'}]},
+      { id:'ollie', name:'Ollie', country:'NZ', c:'#4E7C8A', traits:[]},
+      { id:'danica', name:'Danica', country:'AU', c:'#A6863F', traits:[{kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
+      { id:'nate', name:'Nate', country:'NZ', c:'#5E8C61', traits:[
+        {kind:'origin',key:'origin:nz:mount-eden',label:'New Zealand (Mount Eden)'},{kind:'work',key:'work:design',label:'design'}]},
+      { id:'priya', name:'Priya', country:'GB', c:'#9B6BB1', traits:[
+        {kind:'education',key:'uni:paris:2017',label:'Paris, 2017'},{kind:'work',key:'work:design',label:'design'}]},
+      { id:'theo', name:'Theo', country:'GB', c:'#B1885B', traits:[{kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
+      { id:'lena', name:'Lena', country:'AU', c:'#5BA0B1', traits:[{kind:'origin',key:'origin:au:bondi',label:'Bondi'}]},
+    ];
+    const vouches = [
+      {from:'you',to:'bella'},
+      {from:'bella',to:'emma',note:'Bella hosted Emma’s friend Rachel and said she looked after the flat incredibly well'},
+      {from:'you',to:'sophie'},{from:'sophie',to:'emma'},{from:'you',to:'amy'},
+      {from:'amy',to:'katelin',note:'Amy stayed with Katelin last summer'},
+      {from:'katelin',to:'ollie'},
+      {from:'you',to:'danica',note:'You matched with Danica in April'},
+      {from:'sophie',to:'theo'},{from:'theo',to:'lena'},{from:'bella',to:'nate'},
+      {from:'nate',to:'priya'},{from:'emma',to:'priya'},{from:'amy',to:'lena'},
+    ];
+    const listings = [
+      {id:'l-emma',hostId:'emma',title:'Emma’s Room',area:'De Beauvoir, London',price:44,kind:'Room',lat:51.5385,lng:-0.0785,photo:'#CBD5CE',tags:['Near tube','Quiet','WFH desk','Female-only']},
+      {id:'l-katelin',hostId:'katelin',title:'Katelin’s Room',area:'Finsbury Park, London',price:38,kind:'Room',lat:51.5646,lng:-0.1066,photo:'#D6CFC4',tags:['Near tube','Balcony','Long stays']},
+      {id:'l-danica',hostId:'danica',title:'Danica’s Room',area:'Tooting, London',price:41,kind:'Room',lat:51.4271,lng:-0.168,photo:'#CFC9D6',tags:['Quiet','Garden','Pet-friendly']},
+      {id:'l-ollie',hostId:'ollie',title:'Ollie’s Studio',area:'Peckham, London',price:52,kind:'Whole place',lat:51.4739,lng:-0.0693,photo:'#C4D0D6',tags:['Central','Ensuite','WFH desk']},
+      {id:'l-nate',hostId:'nate',title:'Nate’s Flat',area:'Hackney, London',price:49,kind:'Whole place',lat:51.5450,lng:-0.0553,photo:'#CED6C4',tags:['Balcony','WFH desk','Long stays']},
+      {id:'l-priya',hostId:'priya',title:'Priya’s Room',area:'Bermondsey, London',price:46,kind:'Room',lat:51.4979,lng:-0.0637,photo:'#D6C4CE',tags:['Near tube','Central','Female-only']},
+    ];
+    const TAGS = ['Near tube','Quiet','Pet-friendly','Ensuite','Balcony','Central','Garden','WFH desk','Female-only','Long stays'];
+    const reviews = [
+      {id:'r1',hostId:'emma',authorId:'bella',day:360,text:'Emma was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.'},
+      {id:'r2',hostId:'emma',authorId:'sophie',day:320,text:'Such a warm, thoughtful host. Great communication and a really central location. Felt like a friend by the end.'},
+      {id:'r3',hostId:'emma',authorId:'amy',day:280,text:'Clean, comfortable and easy from start to finish. She looked after everything. A real gem.'},
+      {id:'r4',hostId:'emma',authorId:'theo',day:150,text:'Nice room and good location, though the wifi was a bit slow for working. Still a lovely stay overall.'},
+      {id:'r5',hostId:'katelin',authorId:'amy',day:300,text:'Katelin is so kind and generous. Spotless flat, responsive to every message, home away from home.'},
+      {id:'r6',hostId:'katelin',authorId:'lena',day:220,text:'Lovely balcony and a friendly, welcoming host. Took great care of the place and of me.'},
+      {id:'r7',hostId:'katelin',authorId:'ollie',day:120,text:'Comfortable and safe, no hesitation recommending. Good communication throughout.'},
+      {id:'r8',hostId:'danica',authorId:'you',day:200,text:'Quiet garden flat, lovely and relaxed. Danica was welcoming and easy to reach.'},
+      {id:'r9',hostId:'danica',authorId:'sophie',day:90,text:'Pet-friendly and clean, a comfortable stay. Communication could have been a little quicker but a kind host.'},
+      {id:'r10',hostId:'ollie',authorId:'katelin',day:260,text:'Central, immaculate studio and a seamless check-in. Trusted him completely, would stay again.'},
+      {id:'r11',hostId:'ollie',authorId:'nate',day:140,text:'Great spot and a helpful, friendly host. Really looked after the place.'},
+      {id:'r12',hostId:'nate',authorId:'bella',day:180,text:'Nate was generous and welcoming, lovely balcony for working. Felt at ease straight away.'},
+      {id:'r13',hostId:'priya',authorId:'emma',day:210,text:'Priya is warm and organised, spotless room and a safe, central location. A real pleasure.'},
+    ];
+    const K = (m,k,d) => ({memberId:m,kind:k,day:d});
+    const contributions = [
+      K('emma','hosted',360),K('emma','hosted',320),K('emma','hosted',280),K('emma','vouched',300),K('emma','referred',250),K('emma','attended',340),
+      K('katelin','hosted',300),K('katelin','hosted',220),K('katelin','vouched',260),K('katelin','attended',280),K('katelin','referred',200),
+      K('ollie','hosted',260),K('ollie','reviewed',260),K('ollie','attended',150),
+      K('danica','hosted',200),K('danica','vouched',210),K('danica','attended',120),
+      K('nate','hosted',180),K('nate','referred',160),
+      K('priya','hosted',210),K('priya','vouched',190),K('priya','attended',200),
+      K('you','reviewed',200),K('you','attended',340),K('you','stayed',200),
+      K('amy','vouched',300),K('amy','stayed',300),
+      K('sophie','reviewed',320),K('sophie','attended',300),
+      K('bella','reviewed',360),K('bella','vouched',340),
+      K('theo','attended',150),K('lena','stayed',220),
+    ];
+    const threads = [
+      {id:'t-emma',withId:'emma',messages:[
+        {fromId:'you',text:'Hi Emma! Bella pointed me your way — your De Beauvoir room looks lovely.',day:396},
+        {fromId:'emma',text:'Oh amazing, any friend of Bella’s! When are you thinking?',day:396},
+        {fromId:'you',text:'The 12th–15th. Also spotted we both did the Paris exchange in 2017 😄',day:397},
+        {fromId:'emma',text:'No way! Small world. Those dates work — happy to hold them for you.',day:398}]},
+      {id:'t-katelin',withId:'katelin',messages:[
+        {fromId:'you',text:'Hi Katelin, Amy said wonderful things about staying with you.',day:380},
+        {fromId:'katelin',text:'Amy’s the best! Yes the Finsbury Park room is free end of the month.',day:381}]},
+      {id:'t-danica',withId:'danica',messages:[
+        {fromId:'danica',text:'Thanks again for the stay in April — you left the place spotless!',day:205},
+        {fromId:'you',text:'Anytime! The garden was a dream for working. Would love to come back.',day:206}]},
+    ];
+
+    // ---- trust graph: undirected reachability, BFS shortest path -------------
+    const pairKey = (a,b) => a < b ? a+'|'+b : b+'|'+a;
+    const adj = new Map(members.map(m => [m.id, new Set()]));
+    const notes = new Map();
+    for (const v of vouches) {
+      if (!adj.has(v.from) || !adj.has(v.to) || v.from === v.to) continue;
+      adj.get(v.from).add(v.to); adj.get(v.to).add(v.from);
+      const k = pairKey(v.from, v.to);
+      if (!notes.has(k) || v.note) notes.set(k, v.note ?? notes.get(k));
+    }
+    const nb = new Map([...adj].map(([id, s]) => [id, [...s].sort()]));
+    const byId = new Map(members.map(m => [m.id, m]));
+
+    function shortestPath(from, to) {
+      if (from === to) return [from];
+      const queue = [from], seen = new Set([from]), parent = new Map();
+      for (let h = 0; h < queue.length; h++) {
+        for (const next of nb.get(queue[h])) {
+          if (seen.has(next)) continue;
+          seen.add(next); parent.set(next, queue[h]);
+          if (next === to) { const p = [to]; let c = to; while (c !== from) { c = parent.get(c); p.push(c); } return p.reverse(); }
+          queue.push(next);
+        }
+      }
+      return null;
+    }
+
+    const RANK = { origin:0, education:1, work:2, interest:3 };
+    const phrase = (kind, label) => kind === 'origin' ? `You both moved to London from ${label}`
+      : kind === 'education' ? `You both studied at ${label}`
+      : kind === 'work' ? `You've both worked in ${label}`
+      : `You're both into ${label}`;
+    function overlapsOf(aId, bId) {
+      if (aId === bId) return [];
+      const a = byId.get(aId), b = byId.get(bId);
+      const keys = new Map(b.traits.map(t => [t.key, t]));
+      return a.traits.filter(t => keys.has(t.key))
+        .map(t => ({ kind:t.kind, label: phrase(t.kind, t.label) }))
+        .sort((x, y) => RANK[x.kind] - RANK[y.kind]);
+    }
+    function story(hostId) {
+      const ids = shortestPath(VIEWER, hostId);
+      const overlaps = overlapsOf(VIEWER, hostId);
+      if (!ids) return { path:[], hopNotes:[], degrees: Infinity, overlaps, reachable:false };
+      return {
+        path: ids.map(id => byId.get(id)),
+        hopNotes: ids.slice(1).map((id, i) => notes.get(pairKey(ids[i], id))),
+        degrees: ids.length - 1, overlaps, reachable: true,
+      };
+    }
+
+    // ---- guest-book NLP: lexicon + negation, trust signals, themes ----------
+    const POS = { amazing:2,incredible:2,wonderful:2,perfect:2,gem:1.5,lovely:1.5,great:1.5,good:1,clean:1,spotless:1.5,immaculate:1.5,welcoming:1.5,kind:1.5,friendly:1.5,comfortable:1,safe:1.5,helpful:1,responsive:1,generous:1.5,warm:1,easy:1,recommend:1.5,thoughtful:1.5,seamless:1.5,relaxed:1 };
+    const NEG = { dirty:1.5,messy:1,rude:2,unresponsive:1.5,late:1,uncomfortable:1.5,unsafe:2,cold:1,disappointing:1.5,avoid:2,terrible:2,awful:2,noisy:1,cramped:1,broken:1,ignored:1.5,sketchy:1.5 };
+    const NEGATORS = new Set(['not','no','never','without','hardly','barely']);
+    const SIGNALS = [
+      {label:'felt safe',re:/felt (?:so |really |completely |very )?safe/},
+      {label:'like a friend',re:/like (?:a |an old )?friend/},
+      {label:'looked after me',re:/look(?:ed)? after/},
+      {label:'would host again',re:/would (?:host|stay|have)(?: (?:them|her|him))? again/},
+      {label:'took care of the place',re:/took (?:great )?care/},
+      {label:'trusted them',re:/trust(?:ed)?(?: her| him| them)?/},
+      {label:'home away from home',re:/home away from home/},
+      {label:'no hesitation',re:/no hesitation/},
+    ];
+    const THEMES = {
+      cleanliness:['clean','spotless','tidy','immaculate','dirty','messy','mess'],
+      communication:['responsive','replied','communication','reach','clear','helpful','organised'],
+      warmth:['welcoming','kind','friendly','lovely','warm','generous','thoughtful'],
+      safety:['safe','secure','comfortable','trusted','trust','ease','unsafe'],
+      location:['location','central','close','convenient','station','area','neighbourhood'],
+    };
+    const tokenize = (t) => t.toLowerCase().replace(/n['’]t/g, ' not').split(/[^a-z]+/).filter(Boolean);
+    function analyze(text) {
+      const tokens = tokenize(text);
+      let raw = 0, hits = 0;
+      for (let i = 0; i < tokens.length; i++) {
+        const t = tokens[i];
+        const p = POS[t] ? POS[t] : NEG[t] ? -NEG[t] : 0;
+        if (p === 0) continue;
+        const negated = tokens.slice(Math.max(0, i - 3), i).some(w => NEGATORS.has(w));
+        raw += negated ? -p : p; hits += 1;
+      }
+      const score = hits === 0 ? 0 : Math.max(-1, Math.min(1, raw / (hits * 2)));
+      const lower = ' ' + text.toLowerCase() + ' ';
+      const set = new Set(tokens);
+      return {
+        score,
+        sentiment: score > 0.15 ? 'Positive' : score < -0.15 ? 'Negative' : 'Mixed',
+        trustSignals: SIGNALS.filter(s => s.re.test(lower)).map(s => s.label),
+        themes: Object.entries(THEMES).filter(([, ws]) => ws.some(w => set.has(w))).map(([t]) => t),
+      };
+    }
+    function guestBook(hostId) {
+      const list = reviews.filter(r => r.hostId === hostId).sort((a, b) => b.day - a.day)
+        .map(r => ({ ...r, ...analyze(r.text) }));
+      if (!list.length) return { count:0, avgScore:0, positiveShare:0, themes:[], signals:[], highlight:null, list:[] };
+      const avgScore = list.reduce((s, a) => s + a.score, 0) / list.length;
+      const positiveShare = list.filter(a => a.sentiment === 'Positive').length / list.length;
+      const th = new Map(), sg = new Map();
+      for (const a of list) {
+        for (const t of a.themes) th.set(t, (th.get(t) ?? 0) + 1);
+        for (const s of a.trustSignals) sg.set(s, (sg.get(s) ?? 0) + 1);
+      }
+      const best = list.reduce((a, b) => (b.score > a.score ? b : a));
+      return {
+        count: list.length, avgScore, positiveShare,
+        themes: [...th.entries()].map(([theme, hits]) => ({ theme, hits })).sort((a, b) => b.hits - a.hits || a.theme.localeCompare(b.theme)),
+        signals: [...sg.entries()].map(([signal, count]) => ({ signal, count })).sort((a, b) => b.count - a.count || a.signal.localeCompare(b.signal)),
+        highlight: best.score > 0 ? best.text : null, list,
+      };
+    }
+
+    // ---- tiering: weighted contributions with recency decay ------------------
+    const WEIGHT = { hosted:5, referred:4, vouched:3, attended:2, reviewed:1, stayed:1 };
+    const TIERS = [{name:'Legend',min:25},{name:'Pillar',min:12},{name:'Trusted',min:5},{name:'Newcomer',min:0}];
+    const byMember = new Map();
+    for (const c of contributions) { const b = byMember.get(c.memberId) ?? []; b.push(c); byMember.set(c.memberId, b); }
+    const scored = [...byMember.entries()].map(([memberId, cs]) => ({
+      memberId,
+      score: Math.round(cs.reduce((t, c) => t + WEIGHT[c.kind] * Math.pow(0.5, Math.max(0, NOW - c.day) / 120), 0) * 10) / 10,
+    })).sort((a, b) => b.score - a.score || a.memberId.localeCompare(b.memberId));
+    const standingList = scored.map((s, i) => ({
+      ...s, rank: i + 1, tier: TIERS.find(t => s.score >= t.min).name,
+      percentile: Math.round(((scored.length - i) / scored.length) * 100),
+    }));
+    const standingIdx = new Map(standingList.map(s => [s.memberId, s]));
+    const standingOf = (id) => standingIdx.get(id) ?? { memberId:id, score:0, tier:'Newcomer', rank: standingList.length + 1, percentile:0 };
+
+    return { members, byId, listings, TAGS, reviews, threads, story, overlapsOf, guestBook, standingOf, standingList, NOW, VIEWER };
+  })();
+
+  static TIER_COLOR = { Newcomer:'#8A9099', Trusted:'#17A589', Pillar:'#3B7DD8', Legend:'#C98A2B' };
+  static FLAG = { NZ:'🇳🇿', AU:'🇦🇺', GB:'🇬🇧', US:'🇺🇸' };
+  static ICON = { origin:'🏠', education:'🎓', work:'💼', interest:'🧗' };
+
+  state = { tab:'explore', route:null, view:'list', kind:'All', connected:false, tags:[], pin:null, draft:'', liked:{}, sent:{} };
+  scroller = React.createRef();
+
+  componentDidUpdate(_p, prev) {
+    const key = (s) => s.tab + ':' + (s.route ? s.route.name + s.route.id : '');
+    if (key(prev) !== key(this.state) && this.scroller.current) this.scroller.current.scrollTop = 0;
+  }
+
+  // ---- display helpers ------------------------------------------------------
+  mix(hex, amt) {
+    const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    const f = (c) => Math.round(c + (255 - c) * amt);
+    return `rgb(${f(r)},${f(g)},${f(b)})`;
+  }
+  grad(m) { return `linear-gradient(145deg, ${this.mix(m.c, .38)}, ${m.c})`; }
+  face(m) { return { initial: m.name[0], grad: this.grad(m), flag: Component.FLAG[m.country] ?? '🏳️' }; }
+  degreeLabel(d) { return d === 1 ? 'Direct friend' : d === 2 ? '2nd degree' : d === 3 ? '3rd degree' : `${d}th degree`; }
+  when(day) {
+    const ago = Component.W.NOW - day;
+    if (ago < 30) return `${ago} days ago`;
+    const mo = Math.round(ago / 30);
+    return mo <= 1 ? 'last month' : `${mo} months ago`;
+  }
+  nav(name, id) { return () => this.setState({ route: { name, id } }); }
+
+  // ---- explore --------------------------------------------------------------
+  visibleListings() {
+    const W = Component.W, s = this.state;
+    const sortBy = this.props.sortBy ?? 'Closest connection';
+    let rows = W.listings.map(l => ({ l, st: W.story(l.hostId) }));
+    if (s.kind !== 'All') rows = rows.filter(r => r.l.kind === s.kind);
+    if (s.connected) rows = rows.filter(r => r.st.degrees <= 2);
+    if (s.tags.length) rows = rows.filter(r => s.tags.every(t => r.l.tags.includes(t)));
+    rows.sort((a, b) => sortBy === 'Price' ? a.l.price - b.l.price
+      : sortBy === 'Most reviewed' ? W.guestBook(b.l.hostId).count - W.guestBook(a.l.hostId).count
+      : a.st.degrees - b.st.degrees || a.l.price - b.l.price);
+    return rows;
+  }
+
+  card({ l, st }) {
+    const W = Component.W, host = W.byId.get(l.hostId), f = this.face(host);
+    const via = st.degrees >= 2 ? st.path[1] : null;
+    const overlap = st.overlaps[0];
+    return {
+      ...f, id: l.id, title: l.title, area: l.area, kind: l.kind, price: `£${l.price}`,
+      photo: `linear-gradient(150deg, ${this.mix(l.photo, .3)}, ${l.photo} 60%, ${this.mix(l.photo, -0.0)})`,
+      tagLine: l.tags.slice(0, 3).join(' · '),
+      degree: this.degreeLabel(st.degrees),
+      vouch: via ? `Vouched for by ${via.name}` : `You know ${host.name} directly`,
+      viaInitial: via ? via.name[0] : f.initial,
+      viaGrad: via ? this.grad(via) : f.grad,
+      hasOverlap: !!overlap, overlap: overlap ? overlap.label : '',
+      heartFill: this.state.liked[l.id] ? '#E5567A' : 'none',
+      heartStroke: this.state.liked[l.id] ? '#E5567A' : '#8A9099',
+      like: (e) => { e.stopPropagation(); this.setState(s => ({ liked: { ...s.liked, [l.id]: !s.liked[l.id] } })); },
+      open: this.nav('profile', l.hostId),
+    };
+  }
+
+  mapPins(rows) {
+    const lats = rows.map(r => r.l.lat), lngs = rows.map(r => r.l.lng);
+    const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+    const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+    const spanLat = (maxLat - minLat) || 1, spanLng = (maxLng - minLng) || 1;
+    const dot = (d) => d <= 1 ? '#17A589' : d === 2 ? '#4FBFA6' : '#9BCFC3';
+    return rows.map(({ l, st }, i) => {
+      const sel = this.state.pin === l.id;
+      return {
+        x: `${12 + ((l.lng - minLng) / spanLng) * 76}%`,
+        y: `${14 + ((maxLat - l.lat) / spanLat) * 62}%`,
+        price: `£${l.price}`, dot: dot(st.degrees),
+        pad: sel ? '10px 15px' : '7px 12px',
+        ring: sel ? '#17A589' : 'rgba(255,255,255,0)',
+        shadow: sel ? '0 8px 20px rgba(23,165,137,.30)' : '0 3px 10px rgba(26,26,26,.16)',
+        z: sel ? 3 : 2,
+        on: () => this.setState({ pin: l.id }),
+      };
+    });
+  }
+
+  // ---- screens --------------------------------------------------------------
+  profileVals(hostId) {
+    const W = Component.W, host = W.byId.get(hostId), st = W.story(hostId);
+    const gb = W.guestBook(hostId), sd = W.standingOf(hostId);
+    const listing = W.listings.find(l => l.hostId === hostId);
+    return {
+      ...this.face(host), name: host.name,
+      subtitle: listing ? `${listing.title} · ${listing.area}` : 'Member of the club',
+      tierColor: Component.TIER_COLOR[sd.tier], tierLabel: `${sd.tier} · #${sd.rank}`,
+      degree: this.degreeLabel(st.degrees),
+      tags: listing ? listing.tags : [],
+      chain: st.path.map(p => ({ initial: p.name[0], grad: this.grad(p) })),
+      connSummary: st.degrees >= 2 ? `${st.path.length - 2} ${st.path.length - 2 === 1 ? 'person connects' : 'people connect'} you to ${host.name} — via ${st.path[1].name}.` : `You vouched for ${host.name} directly.`,
+      overlap: st.overlaps.length ? st.overlaps[0].label : 'No shared history yet — you would be first.',
+      reviewLabel: `${gb.count} ${gb.count === 1 ? 'review' : 'reviews'}`,
+      meterPct: `${Math.round(((gb.avgScore + 1) / 2) * 100)}%`,
+      sentiment: gb.avgScore > 0.15 ? 'Positive' : gb.avgScore < -0.15 ? 'Negative' : 'Mixed',
+      signals: gb.signals.slice(0, 3).map(s => `${s.signal} ·${s.count}`),
+    };
+  }
+
+  connectionVals(hostId) {
+    const W = Component.W, st = W.story(hostId), host = W.byId.get(hostId);
+    const n = st.path.length, boxW = 330, boxH = 180;
+    const xs = n === 1 ? [boxW / 2] : st.path.map((_, i) => 38 + i * ((boxW - 76) / (n - 1)));
+    const ys = st.path.map((_, i) => (i % 2 === 0 ? 104 : 58));
+    const nodes = st.path.map((p, i) => ({
+      initial: p.name[0], name: i === 0 ? 'You' : p.name, grad: this.grad(p),
+      size: i === n - 1 ? '58px' : '48px', font: i === n - 1 ? '22px' : '18px',
+      left: `${12 + xs[i] - (i === n - 1 ? 29 : 24)}px`,
+      top: `${14 + ys[i] - (i === n - 1 ? 29 : 24)}px`,
+    }));
+    const edges = xs.slice(1).map((x, i) => ({
+      d: `M ${xs[i]} ${ys[i]} Q ${(xs[i] + x) / 2} ${(ys[i] + ys[i + 1]) / 2 - 26} ${x} ${ys[i + 1]}`,
+    }));
+    const mid = Math.max(1, Math.floor(n / 2));
+    const stubs = [[-34, 44], [30, 50], [-6, 58]].map(([dx, dy]) => ({
+      d: `M ${xs[mid]} ${ys[mid]} L ${xs[mid] + dx} ${ys[mid] + dy}`,
+    }));
+    const stubDots = [[-34, 44], [30, 50], [-6, 58]].map(([dx, dy]) => ({ x: xs[mid] + dx, y: ys[mid] + dy }));
+    const hops = st.path.map((p, i) => {
+      const note = i > 0 ? st.hopNotes[i - 1] : undefined;
+      return {
+        initial: p.name[0], grad: this.grad(p),
+        name: i === 0 ? 'You' : p.name,
+        role: i === 0 ? 'Where the chain starts' : i === n - 1 ? 'The host' : `Vouched for by ${st.path[i - 1].name}`,
+        hasNote: !!note, note: note ?? '',
+        lineH: i === n - 1 ? '0px' : 'auto', gap: i === n - 1 ? '0px' : '22px',
+      };
+    });
+    return {
+      headline: `${n - 2 > 0 ? n - 2 : 1} ${n - 2 === 1 ? 'person connects' : 'people connect'} you to ${host.name}`,
+      hostName: host.name, nodes, edges, stubs, stubDots, hops,
+      overlaps: st.overlaps.map(o => ({ label: o.label, icon: Component.ICON[o.kind] })),
+      footnote: 'Overlaps are matched on canonical traits you both listed. Nothing here is inferred from private data.',
+    };
+  }
+
+  guestBookVals(hostId) {
+    const W = Component.W, gb = W.guestBook(hostId), host = W.byId.get(hostId);
+    const maxHits = Math.max(1, ...gb.themes.map(t => t.hits));
+    const cap = (s) => s[0].toUpperCase() + s.slice(1);
+    return {
+      subtitle: `${gb.count} stays with ${host.name}, read for tone and trust`,
+      stats: [
+        { value: String(gb.count), label: 'reviews', color: '#1A1A1A' },
+        { value: `${Math.round(gb.positiveShare * 100)}%`, label: 'positive', color: '#17A589' },
+        { value: String(gb.signals.reduce((t, s) => t + s.count, 0)), label: 'trust signals', color: '#17A589' },
+      ],
+      themes: gb.themes.map(t => ({
+        name: cap(t.theme), hits: `${t.hits} of ${gb.count}`,
+        pct: `${Math.round((t.hits / maxHits) * 100)}%`,
+        color: t.theme === 'safety' || t.theme === 'warmth' ? '#17A589' : '#8FC7B8',
+      })),
+      signals: gb.signals.map(s => `${s.signal} ·${s.count}`),
+      quote: gb.highlight ?? 'No reviews yet.',
+      reviews: gb.list.map(r => {
+        const a = W.byId.get(r.authorId);
+        return {
+          ...this.face(a), author: a.id === 'you' ? 'You' : a.name, when: this.when(r.day), text: r.text,
+          sentiment: r.sentiment,
+          dot: r.sentiment === 'Positive' ? '#0F8D74' : r.sentiment === 'Negative' ? '#C15B5B' : '#8A9099',
+          tint: r.sentiment === 'Positive' ? '#E7F4F0' : '#F0F0EC',
+        };
+      }),
+    };
+  }
+
+  threadVals(hostId) {
+    const W = Component.W, host = W.byId.get(hostId), st = W.story(hostId), sd = W.standingOf(hostId);
+    const base = (W.threads.find(t => t.withId === hostId) ?? { messages: [] }).messages;
+    const msgs = [...base, ...(this.state.sent[hostId] ?? [])];
+    return {
+      ...this.face(host), name: host.name,
+      context: st.degrees >= 2 ? `${this.degreeLabel(st.degrees)} · via ${st.path[1].name}` : 'Direct friend',
+      tier: sd.tier, tierColor: Component.TIER_COLOR[sd.tier],
+      hasOverlap: st.overlaps.length > 0,
+      overlap: st.overlaps.length ? st.overlaps[0].label : '',
+      bubbles: msgs.map(m => m.fromId === 'you'
+        ? { text: m.text, align: 'flex-end', bg: '#17A589', fg: '#FFFFFF', radius: '18px 18px 6px 18px' }
+        : { text: m.text, align: 'flex-start', bg: '#FFFFFF', fg: '#1A1A1A', radius: '18px 18px 18px 6px' }),
+    };
+  }
+
+  send = () => {
+    const id = this.state.route && this.state.route.id;
+    const text = this.state.draft.trim();
+    if (!id || !text) return;
+    this.setState(s => ({ draft: '', sent: { ...s.sent, [id]: [...(s.sent[id] ?? []), { fromId: 'you', text, day: Component.W.NOW }] } }));
+  };
+
+  renderVals() {
+    const W = Component.W, s = this.state, r = s.route;
+    const rows = this.visibleListings();
+    const active = '#17A589', idle = '#8A9099';
+    const on = (v, a, b) => (v ? a : b);
+    const pill = (v) => ({ bg: on(v, '#17A589', '#FFFFFF'), fg: on(v, '#FFFFFF', '#4B5563'), bd: on(v, '#17A589', '#ECECE8') });
+    const kinds = ['All', 'Room', 'Whole place'];
+    const chips = [
+      { label: 'Connected', ...pill(s.connected), on: () => this.setState({ connected: !s.connected }) },
+      ...kinds.map(k => ({ label: k, ...pill(s.kind === k), on: () => this.setState({ kind: k }) })),
+      ...(this.props.showTagFilters ?? true ? W.TAGS.map(t => ({
+        label: t, ...pill(s.tags.includes(t)),
+        on: () => this.setState(st => ({ tags: st.tags.includes(t) ? st.tags.filter(x => x !== t) : [...st.tags, t] })),
+      })) : []),
+    ];
+    const selected = rows.find(x => x.l.id === s.pin);
+    const previewSt = selected ? selected.st : null;
+
+    const vals = {
+      scroller: this.scroller,
+      isExplore: s.tab === 'explore' && !r,
+      isCommunity: s.tab === 'community' && !r,
+      isTrips: s.tab === 'trips' && !r,
+      isMessages: s.tab === 'messages' && !r,
+      isMe: s.tab === 'me' && !r,
+      isProfile: !!r && r.name === 'profile',
+      isConnection: !!r && r.name === 'connection',
+      isGuestBook: !!r && r.name === 'guestbook',
+      isThread: !!r && r.name === 'thread',
+      back: () => this.setState({ route: null }),
+      tabColor: {
+        explore: on(s.tab === 'explore', active, idle), community: on(s.tab === 'community', active, idle),
+        trips: on(s.tab === 'trips', active, idle), messages: on(s.tab === 'messages', active, idle),
+        me: on(s.tab === 'me', active, idle),
+      },
+      goExplore: () => this.setState({ tab: 'explore', route: null }),
+      goCommunity: () => this.setState({ tab: 'community', route: null }),
+      goTrips: () => this.setState({ tab: 'trips', route: null }),
+      goMessages: () => this.setState({ tab: 'messages', route: null }),
+      goMe: () => this.setState({ tab: 'me', route: null }),
+      // explore
+      chips,
+      listBtn: { bg: on(s.view === 'list', '#FFFFFF', 'transparent'), fg: on(s.view === 'list', '#1A1A1A', '#8A9099') },
+      mapBtn: { bg: on(s.view === 'map', '#FFFFFF', 'transparent'), fg: on(s.view === 'map', '#1A1A1A', '#8A9099') },
+      connectedBtn: pill(s.connected),
+      toggleConnected: () => this.setState({ connected: !s.connected }),
+      setList: () => this.setState({ view: 'list' }),
+      setMap: () => this.setState({ view: 'map' }),
+      isListView: s.view === 'list', isMapView: s.view === 'map',
+      cards: rows.map(x => this.card(x)),
+      noCards: rows.length === 0,
+      pins: this.mapPins(rows),
+      hasPreview: !!selected, noPreview: !selected,
+      preview: selected ? (() => {
+        const c = this.card(selected), via = previewSt.degrees >= 2 ? previewSt.path[1].name : null;
+        return {
+          ...c, degree: c.degree,
+          trustLine: previewSt.overlaps.length
+            ? previewSt.overlaps[0].label + (via ? ` · vouched for by ${via}` : '')
+            : (via ? `Vouched for by ${via}` : 'A direct friend of yours'),
+        };
+      })() : {},
+      // community
+      similar: W.members.filter(m => m.id !== W.VIEWER)
+        .map(m => ({ m, o: W.overlapsOf(W.VIEWER, m.id) }))
+        .filter(x => x.o.length)
+        .sort((a, b) => b.o.length - a.o.length || a.m.name.localeCompare(b.m.name))
+        .map(({ m, o }) => ({ ...this.face(m), name: m.name, top: o[0].label, count: `${o.length} in common`, open: this.nav('profile', m.id) })),
+      leaders: W.standingList.slice(0, 8).map(st => {
+        const m = W.byId.get(st.memberId);
+        return {
+          ...this.face(m), name: m.id === 'you' ? 'You' : m.name, rank: `${st.rank}`,
+          rankColor: st.rank <= 3 ? '#C98A2B' : '#8A9099',
+          tier: st.tier, tierColor: Component.TIER_COLOR[st.tier], score: st.score.toFixed(1),
+        };
+      }),
+      // trips
+      trips: [
+        { name: 'Trip', detail: '1 night @ £47/night', dates: '30 – 31 Jul', confirmed: false },
+        { name: 'Bday', detail: '4 nights @ £45/night', dates: '23 – 27 Apr', confirmed: true },
+      ],
+      // messages
+      inbox: W.threads.map(t => {
+        const m = W.byId.get(t.withId), st = W.story(t.withId);
+        const sent = this.state.sent[t.withId] ?? [];
+        const last = [...t.messages, ...sent].slice(-1)[0];
+        return { ...this.face(m), name: m.name, degree: this.degreeLabel(st.degrees), last: last ? last.text : '', open: this.nav('thread', t.withId) };
+      }),
+      draft: s.draft,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      onKey: (e) => { if (e.key === 'Enter') this.send(); },
+      send: this.send,
+      // me
+      me: (() => {
+        const m = W.byId.get(W.VIEWER), st = W.standingOf(W.VIEWER);
+        return {
+          ...this.face(m), name: 'You', tierColor: Component.TIER_COLOR[st.tier], tierLabel: `${st.tier} · top ${100 - st.percentile + 1}%`,
+          stats: [
+            { value: st.score.toFixed(1), label: 'points' },
+            { value: `#${st.rank}`, label: 'in the club' },
+            { value: String(W.members.filter(x => x.id !== 'you' && W.overlapsOf('you', x.id).length).length), label: 'people like you' },
+          ],
+          traits: m.traits.map(t => ({ icon: Component.ICON[t.kind], label: t.label })),
+        };
+      })(),
+    };
+
+    if (r && r.name === 'profile') Object.assign(vals, { host: this.profileVals(r.id), goConnection: this.nav('connection', r.id), goGuestBook: this.nav('guestbook', r.id), goThread: this.nav('thread', r.id) });
+    if (r && r.name === 'connection') Object.assign(vals, { conn: this.connectionVals(r.id), goThread: this.nav('thread', r.id) });
+    if (r && r.name === 'guestbook') Object.assign(vals, { gb: this.guestBookVals(r.id) });
+    if (r && r.name === 'thread') Object.assign(vals, { thread: this.threadVals(r.id) });
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

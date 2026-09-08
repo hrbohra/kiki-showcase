@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; background: #F5F5F4; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; -webkit-tap-highlight-color: transparent; }
+  a { color: #0E4E42; text-decoration: none; }
+  a:hover { color: #C15B5B; }
+  ::selection { background: #CDE9E1; color: #0B4139; }
+  :focus { outline: none; }
+  :focus-visible { outline: 2.5px solid #17A589; outline-offset: 3px; border-radius: 4px; }
+  img { user-select: none; -webkit-user-drag: none; }
+  p, span, h1, h2, h3 { text-wrap: pretty; }
+  .kk-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+  .kk-quote { text-indent: -0.36em; }
+  @keyframes goldPass { from { background-position: -140% 0; } to { background-position: 240% 0; } }
+  @keyframes peekIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  @media (max-width: 1280px) {
+    .kk-work { grid-template-columns: minmax(0, 1fr) !important; }
+    .kk-notes { position: static !important; border-left: none !important; padding-left: 0 !important; }
+    .kk-two, .kk-explore, .kk-inbox { grid-template-columns: minmax(0, 1fr) !important; }
+    .kk-side { position: static !important; }
+  }
+  @media (max-width: 760px) {
+    .kk-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .kk-tabs { overflow-x: auto !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#F5F5F4; font-family:-apple-system,'SF Pro Text',system-ui,sans-serif; color:#1A1A1A;" onKeyDown="{{ onKey }}">
+
+  <div style="position:sticky; top:0; z-index:30; background:rgba(255,255,255,0.93); backdrop-filter:saturate(180%) blur(14px); box-shadow:inset 0 -1px 0 #ECECE8;">
+    <div class="kk-pad" style="max-width:1560px; margin:0 auto; padding:0 40px; height:66px; display:flex; align-items:center; gap:32px;">
+      <div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
+        <svg aria-hidden="true" viewBox="0 0 100 60" width="30" height="18"><circle cx="38" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle></svg>
+        <span style="font-size:17px; font-weight:700; letter-spacing:-0.2px;">Kiki</span>
+      </div>
+      <div class="kk-tabs" style="display:flex; align-items:center; gap:2px; height:66px; min-width:0;">
+        <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="7">
+          <div role="button" tabindex="0" onClick="{{ tab.go }}" style="{{ tab.style }}">{{ tab.label }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1;"></div>
+      <div style="display:flex; align-items:center; gap:14px; flex-shrink:0;">
+        <span class="kk-num" style="font-size:12.5px; color:#626C75;">{{ dayLabel }}</span>
+        <img draggable="false" decoding="async" src="assets/avatars/you.jpg" alt="You" title="Your profile" role="button" tabindex="0" onClick="{{ goMe }}" style-hover="box-shadow:0 0 0 2.5px #17A589;" style="width:30px; height:30px; border-radius:15px; object-fit:cover; display:block; cursor:pointer; transition:box-shadow .18s ease;">
+      </div>
+    </div>
+  </div>
+
+  <div class="kk-work kk-pad" style="max-width:1560px; margin:0 auto; padding:36px 40px 96px; display:grid; grid-template-columns:minmax(0,1fr) 372px; gap:40px; align-items:start;">
+
+    <div style="min-width:0;">
+
+      <sc-if value="{{ isExplore }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:22px; animation:pageIn 320ms ease both;">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.6px;">Explore</h1>
+              <span style="font-size:14px; color:#626C75;">Sorted by how close they are to you, never by price.</span>
+            </div>
+            <div style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
+              <div role="button" tabindex="0" onClick="{{ setHomes }}" style="{{ homesTab }}">Homes</div>
+              <div role="button" tabindex="0" onClick="{{ setMap }}" style="{{ mapTab }}">Map</div>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:260px; background:#FFFFFF; border-radius:999px; padding:13px 20px; font-size:14px; color:#626C75; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">Search by dates or duration</div>
+            <div role="button" tabindex="0" onClick="{{ toggleConnected }}" style="{{ connectedChip }}">Connected only</div>
+            <sc-for list="{{ tagChips }}" as="chip" hint-placeholder-count="5">
+              <div role="button" tabindex="0" onClick="{{ chip.go }}" style="{{ chip.style }}">{{ chip.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
+            <div class="kk-explore" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(316px,1fr)); gap:18px;">
+              <sc-for list="{{ listings }}" as="l" hint-placeholder-count="6">
+                <div role="button" tabindex="0" onClick="{{ l.go }}" title="{{ l.title }}" style-hover="transform:translateY(-3px); box-shadow:0 2px 4px rgba(26,26,26,0.05), 0 16px 36px rgba(26,26,26,0.10);" style="background:#FFFFFF; border-radius:18px; overflow:hidden; cursor:pointer; display:flex; flex-direction:column; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); transition:transform .2s ease, box-shadow .2s ease;">
+                  <div style="position:relative; height:168px; background:{{ l.tint }};">
+                    {{ l.photoEl }}
+                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(20,25,24,0), rgba(20,25,24,0.42));"></div>
+                    <div style="position:absolute; top:12px; left:12px; background:rgba(255,255,255,0.94); border-radius:999px; padding:5px 11px; font-size:11.5px; font-weight:700; color:#1A1A1A;">{{ l.kind }}</div>
+                    <div style="position:absolute; bottom:11px; left:12px; right:12px; display:flex; align-items:center; gap:7px;">
+                      {{ l.hostEl }}
+                      <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; text-shadow:0 1px 4px rgba(20,25,24,0.5);">{{ l.host }}</span>
+                    </div>
+                  </div>
+                  <div style="padding:15px 16px 16px; display:flex; flex-direction:column; gap:9px;">
+                    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px;">
+                      <span style="font-size:15.5px; font-weight:700;">{{ l.area }}</span>
+                      <span class="kk-num" style="font-size:14px; font-weight:700;">{{ l.price }}</span>
+                    </div>
+                    <div style="{{ l.reachStyle }}">{{ l.reach }}</div>
+                    <div style="font-size:12.5px; line-height:1.45; color:#626C75;">{{ l.tags }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showMap }}" hint-placeholder-val="{{ true }}">
+            <div class="kk-explore" style="display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:18px; align-items:start;">
+              <div style="position:relative; background:#EAEDE9; border-radius:18px; height:600px; overflow:hidden; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <svg aria-hidden="true" viewBox="0 0 800 600" style="position:absolute; inset:0; width:100%; height:100%;">
+                  <rect width="800" height="600" fill="#EDF0EC"></rect>
+                  <path d="M0 372 C 150 348, 300 396, 430 366 C 560 336, 680 372, 800 352" stroke="#C6D6DE" stroke-width="26" fill="none" opacity="0.85"></path>
+                  <g stroke="#DCE0DA" stroke-width="2" fill="none">
+                    <path d="M120 0 L 150 600"></path><path d="M340 0 L 300 600"></path><path d="M560 0 L 610 600"></path>
+                    <path d="M0 140 L 800 120"></path><path d="M0 480 L 800 500"></path>
+                  </g>
+                  <g fill="#E3E7E0"><rect x="180" y="180" width="90" height="70" rx="8"></rect><rect x="420" y="420" width="120" height="80" rx="8"></rect><rect x="620" y="200" width="80" height="90" rx="8"></rect></g>
+                </svg>
+                <sc-for list="{{ pins }}" as="p" hint-placeholder-count="6">
+                  <div role="button" tabindex="0" onClick="{{ p.go }}" title="{{ p.title }}" style="{{ p.style }}">
+                    {{ p.photoEl }}
+                    <span class="kk-num" style="{{ p.labelStyle }}">{{ p.price }}</span>
+                  </div>
+                </sc-for>
+                <div style="position:absolute; left:16px; bottom:16px; background:rgba(255,255,255,0.94); border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:7px; box-shadow:0 6px 20px rgba(26,26,26,0.12);">
+                  <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75;">Ring thickness</span>
+                  <span style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:#4B5563;"><span style="width:14px; height:14px; border-radius:7px; border:3px solid #17A589; display:block;"></span>1 step from you</span>
+                  <span style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:#4B5563;"><span style="width:14px; height:14px; border-radius:7px; border:1.5px solid #17A589; display:block;"></span>2 steps</span>
+                  <span style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:#4B5563;"><span style="width:14px; height:14px; border-radius:7px; border:1.5px dashed #9FC9BF; display:block;"></span>3 or more</span>
+                </div>
+              </div>
+              <div class="kk-side" style="position:sticky; top:90px; display:flex; flex-direction:column; gap:14px;">
+                <sc-if value="{{ hasPick }}" hint-placeholder-val="{{ true }}">
+                  <div style="background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); animation:peekIn 240ms ease;">
+                    {{ pick.photoEl }}
+                    <div style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        {{ pick.hostEl }}
+                        <div style="display:flex; flex-direction:column;">
+                          <span style="font-size:15px; font-weight:700;">{{ pick.host }}</span>
+                          <span class="kk-num" style="font-size:12.5px; color:#626C75;">{{ pick.area }} · {{ pick.price }}</span>
+                        </div>
+                      </div>
+                      <div style="{{ pick.reachStyle }}">{{ pick.reach }}</div>
+                      <div style="font-size:13px; line-height:1.5; color:#4B5563;">{{ pick.via }}</div>
+                      <div role="button" tabindex="0" onClick="{{ pick.go }}" style-hover="background:#149177;" style="background:#17A589; color:#FFFFFF; border-radius:12px; height:44px; display:flex; align-items:center; justify-content:center; font-size:14.5px; font-weight:700; cursor:pointer; transition:background .18s ease;">See how you're connected</div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ noPick }}" hint-placeholder-val="{{ true }}">
+                  <div style="background:#FFFFFF; border-radius:18px; padding:20px; font-size:14px; line-height:1.55; color:#4B5563; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">Pick a home on the map to see how you reach that person. Thicker rings are closer to you.</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCommunity }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:26px; animation:pageIn 320ms ease both;">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.6px;">Community</h1>
+            <span style="font-size:14px; color:#626C75;">Who you have things in common with, and who gives back.</span>
+          </div>
+
+          <div class="kk-two" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:baseline; gap:12px;">
+                <h2 style="margin:0; font-size:18px; font-weight:700; letter-spacing:-0.2px;">People like you</h2>
+                <span style="font-size:13px; color:#626C75;">Most in common first</span>
+              </div>
+              <div style="background:#FFFFFF; border-radius:18px; padding:6px 20px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <sc-for list="{{ similar }}" as="s" hint-placeholder-count="5">
+                  <div role="button" tabindex="0" onClick="{{ s.go }}" title="Open their profile" style-hover="background:#FAFAF9;" style="display:flex; align-items:center; gap:14px; padding:14px 8px; margin:0 -8px; border-radius:12px; cursor:pointer; box-shadow:{{ s.rule }}; transition:background .18s ease;">
+                    {{ s.faceEl }}
+                    <div style="flex:1; display:flex; flex-direction:column; gap:3px; min-width:0;">
+                      <span style="font-size:15.5px; font-weight:700;">{{ s.name }}</span>
+                      <span style="font-size:12.5px; color:#626C75;">{{ s.trait }}</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; background:#E7F4F0; border-radius:12px; padding:7px 13px; flex-shrink:0;">
+                      <span class="kk-num" style="font-size:17px; font-weight:700; color:#0E4E42; line-height:1.1;">{{ s.count }}</span>
+                      <span style="font-size:10px; font-weight:700; color:#0E4E42;">shared</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <span style="font-size:12.5px; line-height:1.5; color:#626C75;">Shared facts, not a compatibility score. Each one is checkable on their profile.</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:baseline; gap:12px;">
+                <h2 style="margin:0; font-size:18px; font-weight:700; letter-spacing:-0.2px;">Giving back</h2>
+                <span style="font-size:13px; color:#626C75;">Recent counts for more</span>
+              </div>
+              <div style="background:#FFFFFF; border-radius:18px; padding:6px 20px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <sc-for list="{{ board }}" as="b" hint-placeholder-count="8">
+                  <div role="button" tabindex="0" onClick="{{ b.go }}" title="Open their profile" style-hover="background:#FAFAF9;" style="display:flex; align-items:center; gap:12px; padding:13px 8px; margin:0 -8px; border-radius:12px; cursor:pointer; box-shadow:{{ b.rule }}; transition:background .18s ease;">
+                    {{ b.faceEl }}
+                    <div style="flex:1; display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-size:15px; font-weight:{{ b.weight }};">{{ b.name }}</span>
+                      <span style="font-size:12.5px; color:#626C75;">{{ b.what }}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px; flex-shrink:0;">
+                      <sc-for list="{{ b.bars }}" as="bar" hint-placeholder-count="4">
+                        <span aria-hidden="true" style="{{ bar.style }}"></span>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <span style="font-size:12.5px; line-height:1.5; color:#626C75;">Bars are what they did, not points: hosting, vouching, referring, showing up. No rank, no tier, no leaderboard position.</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isGuestBook }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:24px; animation:pageIn 320ms ease both;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <img draggable="false" decoding="async" src="assets/avatars/emma.jpg" alt="Emma" role="button" tabindex="0" title="Open Emma's profile" onClick="{{ goTrust }}" style-hover="box-shadow:0 0 0 3px #17A589;" style="width:58px; height:58px; border-radius:29px; object-fit:cover; display:block; cursor:pointer; transition:box-shadow .18s ease;">
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.6px;">Emma's guest book</h1>
+              <span style="font-size:14px; color:#626C75;">Four people have written about staying with her. You know three of them.</span>
+            </div>
+          </div>
+
+          <div class="kk-two" style="display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:18px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75;">People you know</span>
+              <sc-for list="{{ knownReviews }}" as="r" hint-placeholder-count="3">
+                <div style="background:#E7F4F0; border-radius:18px; padding:20px; padding-left:23px; box-shadow:inset 3px 0 0 #17A589; display:flex; gap:14px;">
+                  <span role="button" tabindex="0" title="Open their profile" onClick="{{ r.go }}" style-hover="box-shadow:0 0 0 2.5px #17A589;" style="display:block; border-radius:22px; flex-shrink:0; cursor:pointer; transition:box-shadow .18s ease;">{{ r.faceEl }}</span>
+                  <div style="display:flex; flex-direction:column; gap:8px; min-width:0;">
+                    <p class="kk-quote" style="margin:0; font-size:15px; line-height:1.5; color:#1A1A1A;">“{{ r.text }}”</p>
+                    <span style="font-size:12.5px; color:#2C6559;">{{ r.meta }}</span>
+                  </div>
+                </div>
+              </sc-for>
+
+              <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75; margin-top:8px;">Someone you don't know</span>
+              <div style="background:#FFFFFF; border-radius:18px; padding:20px; display:flex; gap:14px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <img draggable="false" decoding="async" src="assets/avatars/theo.jpg" alt="Theo" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block; flex-shrink:0;">
+                <div style="display:flex; flex-direction:column; gap:8px; min-width:0;">
+                  <p class="kk-quote" style="margin:0; font-size:15px; line-height:1.5; color:#1A1A1A;">“Nice room and good location, though the wifi was a bit slow for working. Still a lovely stay overall.”</p>
+                  <span style="font-size:12.5px; color:#626C75;">Theo · 3 steps away · 8 months ago</span>
+                </div>
+              </div>
+              <span style="font-size:12.5px; line-height:1.5; color:#626C75;">Kept where you can see it. A guest book with no complaints in it is not a guest book you can trust.</span>
+            </div>
+
+            <div class="kk-side" style="position:sticky; top:90px; display:flex; flex-direction:column; gap:14px;">
+              <div style="background:#FFFFFF; border-radius:18px; padding:22px; display:flex; flex-direction:column; gap:16px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75;">What comes up</span>
+                <sc-for list="{{ themes }}" as="t" hint-placeholder-count="4">
+                  <div style="display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px;">
+                      <span style="font-size:14px; font-weight:600;">{{ t.label }}</span>
+                      <span class="kk-num" style="font-size:12.5px; color:#626C75;">{{ t.said }}</span>
+                    </div>
+                    <div style="height:6px; border-radius:3px; background:#F0F0EC; overflow:hidden;"><div style="{{ t.barStyle }}"></div></div>
+                    <span style="font-size:12px; color:#626C75;">{{ t.who }}</span>
+                  </div>
+                </sc-for>
+                <span style="font-size:12.5px; line-height:1.5; color:#626C75; border-top:1px solid #F0F0EC; padding-top:14px;">Counted from the words people actually wrote. Every bar is a phrase you can go and read.</span>
+              </div>
+
+              <div style="background:#FFFFFF; border-radius:18px; padding:22px; padding-left:25px; box-shadow:inset 3px 0 0 #C15B5B, 0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); display:flex; flex-direction:column; gap:10px;">
+                <span style="font-size:13.5px; font-weight:700; color:#C15B5B;">What this book can't tell you</span>
+                <span style="font-size:14.5px; line-height:1.45;">Every entry is about Emma as a host. Nobody here has had her to stay.</span>
+                <span style="font-size:14.5px; line-height:1.45;">Four entries over eleven months. That's a thin record either way.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMe }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:24px; animation:pageIn 320ms ease both;">
+          <div class="kk-two" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:18px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="background:#FFFFFF; border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:16px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <div style="display:flex; align-items:center; gap:16px;">
+                  <img draggable="false" decoding="async" src="assets/avatars/you.jpg" alt="You" style="width:80px; height:80px; border-radius:40px; object-fit:cover; display:block;">
+                  <div style="display:flex; flex-direction:column; gap:5px;">
+                    <h1 style="margin:0; font-size:28px; font-weight:700; letter-spacing:-0.6px; line-height:1.05;">You</h1>
+                    <span style="font-size:14px; color:#626C75;">From Mount Eden · in London since 2023</span>
+                  </div>
+                </div>
+                <div style="border-top:1px solid #F0F0EC; padding-top:16px; display:flex; flex-direction:column; gap:10px;">
+                  <span style="font-size:15px; line-height:1.5;">You've vouched for <strong style="font-weight:700;">4 people</strong>. Three of them have hosted since.</span>
+                  <span style="font-size:13.5px; line-height:1.5; color:#4B5563;">That's the number that matters here. It's what you've put your name behind, and it's how other people reach the ones you know.</span>
+                </div>
+              </div>
+
+              <div style="background:#FFFFFF; border-radius:20px; padding:22px; display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75;">What you've done</span>
+                <sc-for list="{{ myActs }}" as="a" hint-placeholder-count="4">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:{{ a.rule }}; padding-top:{{ a.pad }};">
+                    <span style="font-size:14.5px;">{{ a.label }}</span>
+                    <span class="kk-num" style="font-size:14.5px; font-weight:700;">{{ a.value }}</span>
+                  </div>
+                </sc-for>
+                <span style="font-size:12.5px; line-height:1.5; color:#626C75; border-top:1px solid #F0F0EC; padding-top:14px;">No score, no rank, no tier. We're not going to tell you what kind of member you are.</span>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="background:#FFFFFF; border-radius:20px; padding:22px; display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+                  <span style="font-size:16px; font-weight:700;">What we match you on</span>
+                  <span style="font-size:12.5px; color:#626C75;">4 facts</span>
+                </div>
+                <sc-for list="{{ myTraits }}" as="t" hint-placeholder-count="4">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; box-shadow:{{ t.rule }}; padding-top:{{ t.pad }};">
+                    <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
+                      <span style="font-size:14.5px;">{{ t.label }}</span>
+                      <span style="font-size:12px; color:#626C75;">{{ t.source }}</span>
+                    </div>
+                    <span style="{{ t.tagStyle }}">{{ t.tag }}</span>
+                  </div>
+                </sc-for>
+                <div role="button" tabindex="0" onClick="{{ pEdit }}" style-hover="background:#E7F4F0;" style="border:1px solid #17A589; border-radius:12px; height:44px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#0E4E42; cursor:pointer; transition:background .18s ease;">Change what we can use</div>
+              </div>
+
+              <div style="background:#FFFFFF; border-radius:20px; padding:22px; padding-left:25px; box-shadow:inset 3px 0 0 #C15B5B, 0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); display:flex; flex-direction:column; gap:12px;">
+                <span style="font-size:13.5px; font-weight:700; color:#C15B5B;">What other people can see</span>
+                <span style="font-size:14.5px; line-height:1.45;">Your name appears on Emma's trust page, because you vouched for Bella and Bella vouched for her.</span>
+                <div role="button" tabindex="0" onClick="{{ pConsent }}" style-hover="text-decoration-color:#C15B5B;" style="font-size:14px; font-weight:600; color:#C15B5B; cursor:pointer; text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:3px; text-decoration-color:transparent; transition:text-decoration-color .18s ease; align-self:flex-start;">Choose where you're named</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMessages }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:22px; animation:pageIn 320ms ease both;">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.6px;">Messages</h1>
+            <span style="font-size:14px; color:#626C75;">Every thread carries how you know them, so you never open one cold.</span>
+          </div>
+
+          <div class="kk-inbox" style="display:grid; grid-template-columns:392px minmax(0,1fr); gap:18px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ threads }}" as="t" hint-placeholder-count="3">
+                <div role="button" tabindex="0" onClick="{{ t.go }}" title="Open this conversation" style="{{ t.style }}">
+                  {{ t.faceEl }}
+                  <div style="flex:1; display:flex; flex-direction:column; gap:4px; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:15.5px; font-weight:700;">{{ t.name }}</span>
+                      <span style="{{ t.pillStyle }}">{{ t.reach }}</span>
+                    </div>
+                    <span style="font-size:13px; color:#4B5563; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ t.preview }}</span>
+                    <span style="font-size:12px; color:#626C75;">{{ t.via }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#FFFFFF; border-radius:20px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); min-height:600px;">
+              <div style="padding:16px 20px; display:flex; align-items:center; gap:13px; box-shadow:inset 0 -1px 0 #ECECE8;">
+                <span role="button" tabindex="0" title="Open their profile" onClick="{{ goTrust }}" style-hover="box-shadow:0 0 0 2.5px #17A589;" style="display:block; border-radius:21px; flex-shrink:0; cursor:pointer; transition:box-shadow .18s ease;">{{ chat.faceEl }}</span>
+                <div style="flex:1; display:flex; flex-direction:column; gap:2px; min-width:0;">
+                  <span style="font-size:16px; font-weight:700;">{{ chat.name }}</span>
+                  <span style="font-size:12.5px; color:#2C6559; font-weight:600;">{{ chat.context }}</span>
+                </div>
+                <div role="button" tabindex="0" onClick="{{ goTrust }}" style-hover="background:#E7F4F0;" style="border:1px solid #17A589; border-radius:10px; padding:9px 14px; font-size:13px; font-weight:600; color:#0E4E42; cursor:pointer; transition:background .18s ease;">How you're connected</div>
+              </div>
+
+              <div style="flex:1; padding:20px; display:flex; flex-direction:column; gap:12px;">
+                <div style="align-self:center; background:#E7F4F0; border-radius:12px; padding:9px 14px; font-size:12.5px; font-weight:600; color:#0E4E42;">{{ chat.opener }}</div>
+                <sc-for list="{{ chat.messages }}" as="m" hint-placeholder-count="4">
+                  <div style="{{ m.rowStyle }}">
+                    <div style="{{ m.bubbleStyle }}">{{ m.text }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="padding:14px 20px 20px; display:flex; align-items:center; gap:10px; box-shadow:inset 0 1px 0 #ECECE8;">
+                <div style="flex:1; background:#F5F5F4; border-radius:999px; padding:13px 18px; font-size:14px; color:#626C75;">{{ chat.placeholder }}</div>
+                <div role="button" tabindex="0" onClick="{{ pSend }}" style-hover="background:#149177;" style="width:46px; height:46px; border-radius:23px; background:#17A589; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:700; cursor:pointer; flex-shrink:0; transition:background .18s ease;">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTrips }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:24px; animation:pageIn 320ms ease both;">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.6px;">Trips</h1>
+              <span style="font-size:14px; color:#626C75;">Where you're going, and who you'll owe a thank you.</span>
+            </div>
+            <div role="button" tabindex="0" onClick="{{ pAddTrip }}" style-hover="background:#149177;" style="background:#17A589; color:#FFFFFF; border-radius:12px; padding:13px 22px; font-size:14.5px; font-weight:700; cursor:pointer; transition:background .18s ease;">Add a trip</div>
+          </div>
+
+          <div class="kk-two" style="display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:18px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75;">Coming up</span>
+              <div style="background:#FFFFFF; border-radius:18px; overflow:hidden; display:flex; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <img draggable="false" decoding="async" src="assets/listings/emma.jpg" alt="Emma's room" style="width:172px; height:172px; object-fit:cover; display:block; flex-shrink:0;">
+                <div style="flex:1; padding:20px; display:flex; flex-direction:column; gap:10px; min-width:0;">
+                  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+                    <span style="font-size:17px; font-weight:700;">Emma's room, De Beauvoir</span>
+                    <span style="background:#E7F4F0; border-radius:999px; padding:5px 11px; font-size:11.5px; font-weight:700; color:#0E4E42;">Confirmed</span>
+                  </div>
+                  <span class="kk-num" style="font-size:14px; color:#4B5563;">14 – 21 Sep · 7 nights · £44 / night</span>
+                  <div style="display:flex; align-items:center; gap:9px; margin-top:2px;">
+                    <img draggable="false" decoding="async" src="assets/avatars/bella.jpg" alt="Bella" role="button" tabindex="0" title="Open Bella's profile" onClick="{{ pBella }}" style-hover="box-shadow:0 0 0 2.5px #17A589;" style="width:26px; height:26px; border-radius:13px; object-fit:cover; display:block; cursor:pointer; transition:box-shadow .18s ease;">
+                    <span style="font-size:13px; color:#2C6559;">Bella put you two in touch. Worth telling her how it went.</span>
+                  </div>
+                  <div style="display:flex; gap:8px; margin-top:auto;">
+                    <div role="button" tabindex="0" onClick="{{ pMessage }}" style-hover="background:#E7F4F0;" style="border:1px solid #17A589; border-radius:10px; padding:9px 14px; font-size:13px; font-weight:600; color:#0E4E42; cursor:pointer; transition:background .18s ease;">Message Emma</div>
+                    <div role="button" tabindex="0" onClick="{{ pDetails }}" style-hover="background:#F5F5F4;" style="border:1px solid #ECECE8; border-radius:10px; padding:9px 14px; font-size:13px; font-weight:600; color:#4B5563; cursor:pointer; transition:background .18s ease;">Trip details</div>
+                  </div>
+                </div>
+              </div>
+
+              <span style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#626C75; margin-top:8px;">Been and gone</span>
+              <div style="background:#FFFFFF; border-radius:18px; overflow:hidden; display:flex; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <div style="width:132px; height:132px; background:#EDF0EC; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <svg aria-hidden="true" viewBox="0 0 100 60" width="46" height="28"><circle cx="38" cy="30" r="21" stroke="#B7CFC8" stroke-width="8" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#B7CFC8" stroke-width="8" fill="none"></circle></svg>
+                </div>
+                <div style="flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:9px; min-width:0;">
+                  <span style="font-size:16px; font-weight:700;">Danica's garden flat, Tooting</span>
+                  <span class="kk-num" style="font-size:13.5px; color:#4B5563;">23 – 27 Apr · 4 nights</span>
+                  <div style="background:#E7F4F0; border-radius:12px; padding:11px 13px; display:flex; flex-direction:column; gap:7px;">
+                    <span style="font-size:13px; line-height:1.45; color:#0E4E42;">You haven't written in Danica's guest book yet. She wrote in yours in April.</span>
+                    <div role="button" tabindex="0" onClick="{{ pWrite }}" style-hover="background:#149177;" style="background:#17A589; color:#FFFFFF; border-radius:10px; padding:9px 13px; font-size:13px; font-weight:700; cursor:pointer; align-self:flex-start; transition:background .18s ease;">Write about your stay</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kk-side" style="position:sticky; top:90px; display:flex; flex-direction:column; gap:14px;">
+              <div style="background:#FFFFFF; border-radius:18px; padding:22px; display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05);">
+                <span style="font-size:16px; font-weight:700;">What a trip leaves behind</span>
+                <span style="font-size:13.5px; line-height:1.55; color:#4B5563;">Every stay makes the next one easier for someone else. Yours have added three routes into the network.</span>
+                <sc-for list="{{ tripEffects }}" as="e" hint-placeholder-count="3">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:{{ e.rule }}; padding-top:{{ e.pad }};">
+                    <span style="font-size:14px;">{{ e.label }}</span>
+                    <span class="kk-num" style="font-size:14px; font-weight:700;">{{ e.value }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:#FFFFFF; border-radius:18px; padding:22px; padding-left:25px; box-shadow:inset 3px 0 0 #C15B5B, 0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05); display:flex; flex-direction:column; gap:10px;">
+                <span style="font-size:13.5px; font-weight:700; color:#C15B5B;">Still open</span>
+                <span style="font-size:14.5px; line-height:1.45;">One guest book entry you owe. Until you write it, Danica's record is thinner than it should be.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div class="kk-notes" style="position:sticky; top:90px; border-left:1px solid #ECECE8; padding-left:32px; display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <span style="font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#626C75;">{{ noteKicker }}</span>
+        <p style="margin:0; font-size:19px; line-height:1.35; font-weight:600; letter-spacing:-0.2px;">{{ noteLead }}</p>
+      </div>
+      <sc-for list="{{ notes }}" as="n" hint-placeholder-count="4">
+        <div style="display:flex; flex-direction:column; gap:6px; border-top:1px solid #ECECE8; padding-top:16px;">
+          <span style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#626C75;">{{ n.title }}</span>
+          <p style="margin:0; font-size:13.5px; line-height:1.6; color:#4B5563;">{{ n.body }}</p>
+        </div>
+      </sc-for>
+      <sc-if value="{{ showToast }}" hint-placeholder-val="{{ true }}">
+        <div role="status" aria-live="polite" style="background:#1A1A1A; color:#FFFFFF; border-radius:12px; padding:11px 14px; font-size:13px; font-weight:600; animation:peekIn 220ms ease;">{{ toast }}</div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1560,&quot;height&quot;:1200}}">
+const PHOTO = {
+  you: 'assets/avatars/you.jpg', emma: 'assets/avatars/emma.jpg', bella: 'assets/avatars/bella.jpg',
+  sophie: 'assets/avatars/sophie.jpg', amy: 'assets/avatars/amy.jpg', theo: 'assets/avatars/theo.jpg',
+  katelin: 'assets/avatars/katelin.jpg', priya: 'assets/avatars/priya.jpg', nate: 'assets/avatars/nate.jpg',
+  danica: 'assets/avatars/danica.jpg', ollie: 'assets/avatars/ollie.jpg', lena: 'assets/avatars/lena.jpg',
+};
+
+// From src/domain/fixtures.ts. Degrees are what allShortestPaths returns from the viewer.
+const LISTINGS = [
+  { id: 'l-danica', host: 'danica', area: 'Tooting', price: 41, kind: 'Room', deg: 1, via: 'You matched with Danica in April. You have stayed there.', tags: 'Quiet · Garden · Pet-friendly', x: 34, y: 78, tint: '#CFC9D6' },
+  { id: 'l-emma', host: 'emma', area: 'De Beauvoir', price: 44, kind: 'Room', deg: 2, via: 'Through Bella, who left a note about her, and through Sophie.', tags: 'Near tube · Quiet · WFH desk · Female-only', x: 62, y: 30, tint: '#CBD5CE' },
+  { id: 'l-nate', host: 'nate', area: 'Hackney', price: 49, kind: 'Whole place', deg: 2, via: 'Through Bella. She has not written anything about him.', tags: 'Balcony · WFH desk · Long stays', x: 72, y: 24, tint: '#CED6C4' },
+  { id: 'l-katelin', host: 'katelin', area: 'Finsbury Park', price: 38, kind: 'Room', deg: 2, via: 'Through Amy, who stayed with her last summer.', tags: 'Near tube · Balcony · Long stays', x: 46, y: 16, tint: '#D6CFC4' },
+  { id: 'l-priya', host: 'priya', area: 'Bermondsey', price: 46, kind: 'Room', deg: 3, via: 'Katelin brought her in. Nobody you know has met her.', tags: 'Near tube · Central · Female-only', x: 58, y: 62, tint: '#D6C4CE' },
+  { id: 'l-ollie', host: 'ollie', area: 'Peckham', price: 52, kind: 'Whole place', deg: 3, via: 'Reached through Amy and Katelin. A long way round.', tags: 'Central · Ensuite · WFH desk', x: 54, y: 82, tint: '#C4D0D6' },
+];
+
+const TAGS = ['Near tube', 'Quiet', 'WFH desk', 'Garden', 'Long stays'];
+
+const NAME = (id) => id.charAt(0).toUpperCase() + id.slice(1);
+
+// Per-listing interiors, mirroring src/ui/listingPhotos.ts (CC via Openverse —
+// see assets/listings/ATTRIBUTIONS.md). Keyed by host so a missing one degrades visibly.
+const ROOM_PHOTO = {
+  emma: 'assets/listings/emma.jpg', katelin: 'assets/listings/katelin.jpg',
+  danica: 'assets/listings/danica.jpg', ollie: 'assets/listings/ollie.jpg',
+  nate: 'assets/listings/nate.jpg', priya: 'assets/listings/priya.jpg',
+};
+
+// A missing portrait must never resolve to the viewer's own face.
+function faceOf(id) {
+  const src = PHOTO[id];
+  if (!src) console.warn('[kiki] no portrait for member "' + id + '"');
+  return src || null;
+}
+
+function el(tag, props, children) { return React.createElement(tag, props, children); }
+
+function faceEl(id, alt, style, extra) {
+  const src = faceOf(id);
+  if (src) return el('img', { src, alt, draggable: false, decoding: 'async', style, ...(extra || {}) });
+  return el('div', {
+    role: 'img', 'aria-label': alt + ', no photo',
+    style: { ...style, background: '#E4EAE8', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    ...(extra || {}),
+  }, el('span', { style: { fontSize: 12, fontWeight: 700, color: '#626C75' } }, alt.slice(0, 1)));
+}
+
+function roomEl(hostId, alt, height) {
+  const src = ROOM_PHOTO[hostId];
+  const box = { width: '100%', height, objectFit: 'cover', display: 'block' };
+  if (src) return el('img', { src, alt, draggable: false, decoding: 'async', style: box });
+  return el('div', {
+    role: 'img', 'aria-label': 'No photo of ' + alt + ' yet',
+    style: { ...box, background: '#EDF0EC', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  }, el('svg', { 'aria-hidden': 'true', viewBox: '0 0 100 60', width: 52, height: 32 }, [
+    el('circle', { key: 'a', cx: 38, cy: 30, r: 21, stroke: '#C3D2CC', strokeWidth: 8, fill: 'none' }),
+    el('circle', { key: 'b', cx: 62, cy: 30, r: 21, stroke: '#C3D2CC', strokeWidth: 8, fill: 'none' }),
+  ]));
+}
+
+class Component extends DCLogic {
+  state = { page: 'explore', mode: 'homes', connected: false, tags: [], pick: 'l-emma', thread: 'emma', toast: '' };
+
+  peek(msg) {
+    clearTimeout(this._t);
+    this.setState({ toast: msg });
+    this._t = setTimeout(() => this.setState({ toast: '' }), 1900);
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  onKey = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    const el = e.target.closest('[role="button"]');
+    if (!el) return;
+    e.preventDefault();
+    el.click();
+  };
+
+  go(page) { this.setState({ page }); }
+
+  reachOf(deg) {
+    if (deg === 1) return { text: 'One step from you', bg: '#E7F4F0', fg: '#0E4E42', bd: '#17A589' };
+    if (deg === 2) return { text: 'Two steps from you', bg: '#E7F4F0', fg: '#0E4E42', bd: 'transparent' };
+    return { text: deg + ' steps away', bg: '#F5F5F4', fg: '#626C75', bd: 'transparent' };
+  }
+
+  reachStyle(deg) {
+    const r = this.reachOf(deg);
+    return 'align-self:flex-start; background:' + r.bg + '; color:' + r.fg + '; border:1px solid ' + r.bd
+      + '; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:700;';
+  }
+
+  filtered() {
+    return LISTINGS.filter((l) => {
+      if (this.state.connected && l.deg > 2) return false;
+      for (const t of this.state.tags) if (!l.tags.includes(t)) return false;
+      return true;
+    });
+  }
+
+  chipStyle(active) {
+    return 'border:1px solid ' + (active ? '#17A589' : '#ECECE8') + '; background:' + (active ? '#E7F4F0' : '#FFFFFF')
+      + '; color:' + (active ? '#0E4E42' : '#4B5563') + '; border-radius:999px; padding:9px 15px; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all .18s ease;';
+  }
+
+  segStyle(active) {
+    return 'padding:8px 20px; border-radius:999px; font-size:13.5px; font-weight:700; cursor:pointer; transition:all .18s ease;'
+      + (active ? 'background:#FFFFFF; color:#1A1A1A; box-shadow:0 1px 3px rgba(26,26,26,0.12);' : 'background:transparent; color:#626C75;');
+  }
+
+  notesFor(page) {
+    const N = {
+      explore: {
+        kicker: 'Explore · the front door',
+        lead: 'The sort order is the whole product argument, so it is stated out loud above the results.',
+        notes: [
+          { title: 'Closest first, never cheapest', body: 'The existing screen already sorts by connection degree, but never says so, and a silent sort reads as a default. The subhead now names it. Every card leads with how you reach that person, before the area and before the price.' },
+          { title: 'The badge is a sentence, not a code', body: '"Two steps from you" instead of "2nd degree". Degree is a graph term; steps is what a person would say. Only one step gets a teal border, because past two steps the number stops meaning much and the design should not imply otherwise.' },
+          { title: 'The map encodes distance in the pin', body: 'Ring thickness is social distance, which is the one variable the map can add over the list. Three or more steps draws dashed, matching the outer ring on the trust page, so the same mark means the same thing in both places.' },
+          { title: 'Filters that answer a real question', body: '"Connected only" is the filter people actually want and it is first. The dozen tag chips from the demo are trimmed to five, since a filter row longer than the results is a menu, not a tool.' },
+          { title: 'Real rooms, and what happens without one', body: 'Each card carries that listing\u2019s own interior, mirroring listingPhotos.ts. A card whose photo is missing draws the loop mark on its tinted panel rather than borrowing another listing\u2019s, because a placeholder says the photo is missing while a duplicate says two different rooms look identical. Same rule on portraits: a member with no avatar draws an initial tile and warns, so a stranger can never be shown wearing your face.' },
+        ],
+      },
+      community: {
+        kicker: 'Community · the risky page',
+        lead: 'This is the page I would push back on hardest, and the leaderboard is why.',
+        notes: [
+          { title: 'What I removed, and why', body: 'The current screen ranks members 1 to n with a points score and a tier badge: Pillar, Regular, Newcomer. Ranking people publicly turns generosity into competition, and it tells the person at position 40 something about themselves they never asked to know. It is also the same aggregate-score idea the trust page refuses. It cannot be wrong there and fine here.' },
+          { title: 'What replaced it', body: 'The same contributions, shown as what someone actually did: hosted, vouched, referred, showed up. Four bars, no total, no position. You can see that Emma hosts a lot and Bella vouches a lot, which is the useful part, without either of them being above the other.' },
+          { title: 'People like you, honestly labelled', body: 'The count is shared facts, not a compatibility percentage, and the label says so. One tap opens the profile where each fact is listed with its provenance, so the number is checkable rather than authoritative.' },
+          { title: 'If the leaderboard has to stay', body: 'Make it opt-in per member, cap it at a top handful rather than a full ranking, and never show a person their own position unless they ask. Recency weighting already helps, since it stops the board calcifying around early members.' },
+        ],
+      },
+      guestbook: {
+        kicker: 'Guest book · the evidence layer',
+        lead: 'The trust page cites this page, so this page has to survive being checked.',
+        notes: [
+          { title: 'Grouped by whose word it is', body: 'The current screen lists reviews newest first with a sentiment chip on each. Recency is the wrong axis here: what matters is whether you know the person who wrote it. Three entries from people you know, then one from someone you do not, each labelled with distance and date.' },
+          { title: 'The 82% positive meter is gone', body: 'A single percentage is an aggregate score by another name, and it hides the one entry a host most needs to read. Theo mentions slow wifi; averaged into a number that complaint disappears, which is exactly the information a percentage is worst at carrying.' },
+          { title: 'Themes keep their receipts', body: 'The NLP roll-up is genuinely useful, so it stays, but each bar names how many people said it and who. A theme you cannot trace back to a sentence is a claim the interface is making on its own behalf.' },
+          { title: 'The book states its own limits', body: 'Four entries over eleven months is a thin record, and every one describes Emma as a host rather than as a guest. Both facts are computable and both change the decision, so they sit in the caveat card rather than being left for the reader to notice.' },
+        ],
+      },
+      me: {
+        kicker: 'Me · the page about you',
+        lead: 'A profile that scores you is a performance review. This one is a record.',
+        notes: [
+          { title: 'Points, rank and tier removed', body: 'The current screen greets you with a score, a position out of the cohort, and a tier badge. Nobody asked to be graded by the place they sleep. The number that replaced them is the one that describes what you did rather than what you are worth: you vouched for four people, and three of them have hosted since.' },
+          { title: 'Provenance on your own facts', body: 'Each matching fact says where it came from, self declared or spotted by us. Seeing "we worked this out" about yourself is the moment you understand what the model is doing, and it makes the same label on someone else\u2019s profile legible rather than creepy.' },
+          { title: 'The consent card', body: 'You are named on Emma\u2019s trust page because you vouched for Bella. The person being cited should be able to see that and change it. The schema now has consentToDisplay per vouch, so this control can exist; without it the trust page is making a promise on your behalf.' },
+          { title: 'Recency, stated plainly', body: 'The demo notes that recent contributions count for more. That is a fair rule and worth keeping, but it belongs next to the record it affects rather than as a footnote under a score.' },
+        ],
+      },
+      messages: {
+        kicker: 'Messages · where it gets said',
+        lead: 'Two panes, because on desktop the reason you are talking to someone can sit beside the talking.',
+        notes: [
+          { title: 'Trust context in the list, not just the thread', body: 'The inbox row carries how you reach that person and through whom, so you never open a conversation without knowing why it exists. On mobile that context lives inside the thread; here it can live in both without costing a tap.' },
+          { title: 'The opener is the mutual friend\u2019s work', body: 'Kiki\u2019s pitch is being the mutual friend in the city, so the thread opens with the reason it exists rather than an empty field. It reads as an introduction, which is what a mutual friend does, and it is drawn from the graph rather than written by a model.' },
+          { title: 'Voice from the archive', body: 'These are the fixture messages, and they already sound like the Instagram threads the model is meant to learn from: contractions, an exclamation, no dashes. That register is the asset. The interface should never write in a more formal voice than the people using it.' },
+          { title: 'One button out to the evidence', body: '"How you\u2019re connected" sits in the thread header, because the moment doubt appears is mid conversation, not before it. It is a link to the trust page rather than a summary, so there is one source for that story.' },
+        ],
+      },
+      trips: {
+        kicker: 'Trips · the loop closing',
+        lead: 'The current screen is a receipt. A trip is the moment trust gets created, so this page asks for it back.',
+        notes: [
+          { title: 'The unwritten entry is the point', body: 'You stayed with Danica in April and never wrote about it. That gap is why the next person deciding on Danica has less to go on. Naming it here, with the button next to it, is the cheapest way to make the whole graph denser.' },
+          { title: 'Credit where the match came from', body: 'Bella put you and Emma in touch, so Bella is on the trip card. Vouching is invisible work, and a system that never shows you the outcome of yours will get less of it.' },
+          { title: 'What a trip leaves behind', body: 'The side panel counts what your stays added to the network rather than what they cost you. Same data as a booking history, framed as contribution, which is the frame the rest of the product uses.' },
+          { title: 'Emoji thumbnails replaced', body: 'The demo uses an aeroplane and a birthday cake as trip images. Real photography where it exists, and the Kiki loop mark where it does not, keeps the page in the same visual language as every other surface.' },
+        ],
+      },
+    };
+    return N[page] || N.explore;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const page = s.page;
+    const list = this.filtered();
+    const pick = LISTINGS.find((l) => l.id === s.pick) || LISTINGS[1];
+    const n = this.notesFor(page);
+
+    const TABS = [
+      ['explore', 'Explore'], ['community', 'Community'], ['guestbook', 'Guest book'],
+      ['trips', 'Trips'], ['messages', 'Messages'], ['me', 'Me'],
+    ];
+
+    const THREADS = [
+      { id: 'emma', name: 'Emma', deg: 2, preview: 'No way! Small world. Those dates work, happy to hold them for you.', via: 'Through Bella and Sophie' },
+      { id: 'katelin', name: 'Katelin', deg: 2, preview: "Amy's the best! Yes the Finsbury Park room is free end of the month.", via: 'Through Amy' },
+      { id: 'danica', name: 'Danica', deg: 1, preview: 'You: Anytime! The garden was a dream for working.', via: 'You stayed there in April' },
+    ];
+
+    const CHATS = {
+      emma: {
+        name: 'Emma', photo: PHOTO.emma, context: 'Two steps from you · through Bella',
+        opener: 'Bella vouched for Emma. That is why this thread exists.',
+        placeholder: 'Message Emma…',
+        messages: [
+          { mine: true, text: 'Hi Emma! Bella pointed me your way, your De Beauvoir room looks lovely.' },
+          { mine: false, text: "Oh amazing, any friend of Bella's! When are you thinking?" },
+          { mine: true, text: 'The 12th to 15th. Also spotted we both did the Paris exchange in 2017 😄' },
+          { mine: false, text: 'No way! Small world. Those dates work, happy to hold them for you.' },
+        ],
+      },
+      katelin: {
+        name: 'Katelin', photo: PHOTO.katelin, context: 'Two steps from you · through Amy',
+        opener: 'Amy stayed with Katelin last summer and wrote about it.',
+        placeholder: 'Message Katelin…',
+        messages: [
+          { mine: true, text: 'Hi Katelin, Amy said wonderful things about staying with you.' },
+          { mine: false, text: "Amy's the best! Yes the Finsbury Park room is free end of the month." },
+        ],
+      },
+      danica: {
+        name: 'Danica', photo: PHOTO.danica, context: 'One step from you · you stayed there',
+        opener: 'You matched with Danica in April.',
+        placeholder: 'Message Danica…',
+        messages: [
+          { mine: false, text: 'Thanks again for the stay in April, you left the place spotless!' },
+          { mine: true, text: 'Anytime! The garden was a dream for working. Would love to come back.' },
+        ],
+      },
+    };
+
+    const chat = CHATS[s.thread] || CHATS.emma;
+
+    const bar = (filled, i) => ({
+      style: 'width:7px; height:' + (10 + filled * 5) + 'px; border-radius:2px; background:'
+        + (filled ? '#17A589' : '#E4EAE8') + '; display:block;',
+    });
+
+    // Recency-weighted contributions from fixtures.ts, shown as acts rather than a score.
+    const BOARD = [
+      { id: 'emma', acts: [3, 1, 1, 1], what: 'Hosted 3 · vouched · referred · showed up' },
+      { id: 'katelin', acts: [2, 1, 1, 1], what: 'Hosted 2 · vouched · referred · showed up' },
+      { id: 'priya', acts: [1, 1, 0, 1], what: 'Hosted · vouched · showed up' },
+      { id: 'danica', acts: [1, 1, 0, 1], what: 'Hosted · vouched · showed up' },
+      { id: 'nate', acts: [1, 0, 1, 0], what: 'Hosted · referred' },
+      { id: 'bella', acts: [0, 1, 0, 0], what: 'Vouched · wrote a guest book entry' },
+      { id: 'amy', acts: [0, 1, 0, 0], what: 'Vouched · stayed' },
+      { id: 'you', acts: [0, 0, 0, 1], what: 'Wrote an entry · showed up · stayed' },
+    ];
+
+    const SIMILAR = [
+      { id: 'emma', count: 4, trait: 'Mount Eden · Paris 2017 · Blok Shoreditch · Dalston picnic' },
+      { id: 'katelin', count: 1, trait: 'Paris, 2017' },
+      { id: 'nate', count: 1, trait: 'Mount Eden' },
+      { id: 'sophie', count: 1, trait: 'Bouldering at Blok Shoreditch' },
+      { id: 'danica', count: 1, trait: 'Bouldering at Blok Shoreditch' },
+    ];
+
+    const rule = (i) => (i === 0 ? 'none' : 'inset 0 1px 0 #F0F0EC');
+
+    return {
+      onKey: this.onKey,
+      dayLabel: 'London · Sep 2026',
+      goMe: () => this.go('me'),
+      goTrust: () => this.peek('Opens the Trust tab, designed separately'),
+      tabs: TABS.map(([id, label]) => ({
+        label,
+        go: () => this.go(id),
+        style: 'display:flex; align-items:center; height:66px; padding:0 15px; font-size:14.5px; cursor:pointer; white-space:nowrap; transition:color .18s ease; '
+          + (page === id
+            ? 'font-weight:700; color:#1A1A1A; box-shadow:inset 0 -2.5px 0 #1A1A1A;'
+            : 'font-weight:600; color:#626C75;'),
+      })),
+
+      isExplore: page === 'explore',
+      isCommunity: page === 'community',
+      isGuestBook: page === 'guestbook',
+      isMe: page === 'me',
+      isMessages: page === 'messages',
+      isTrips: page === 'trips',
+
+      showList: s.mode === 'homes',
+      showMap: s.mode === 'map',
+      setHomes: () => this.setState({ mode: 'homes' }),
+      setMap: () => this.setState({ mode: 'map' }),
+      homesTab: this.segStyle(s.mode === 'homes'),
+      mapTab: this.segStyle(s.mode === 'map'),
+      toggleConnected: () => this.setState((p) => ({ connected: !p.connected })),
+      connectedChip: this.chipStyle(s.connected),
+      tagChips: TAGS.map((t) => ({
+        label: t,
+        style: this.chipStyle(s.tags.includes(t)),
+        go: () => this.setState((p) => ({
+          tags: p.tags.includes(t) ? p.tags.filter((x) => x !== t) : p.tags.concat([t]),
+        })),
+      })),
+
+      listings: list.map((l) => ({
+        title: NAME(l.host) + "'s place in " + l.area,
+        host: NAME(l.host),
+        hostEl: faceEl(l.host, NAME(l.host), {
+          width: 26, height: 26, borderRadius: 13, objectFit: 'cover', display: 'block',
+          border: '1.5px solid rgba(255,255,255,0.9)', flexShrink: 0,
+        }),
+        photoEl: roomEl(l.host, NAME(l.host) + "'s place", 168),
+        tint: l.tint,
+        area: l.area,
+        price: '£' + l.price + ' / night',
+        kind: l.kind,
+        tags: l.tags,
+        reach: this.reachOf(l.deg).text,
+        reachStyle: this.reachStyle(l.deg),
+        go: () => this.peek(NAME(l.host) + "'s profile opens the Trust tab"),
+      })),
+
+      pins: list.map((l) => {
+        const close = l.deg === 1;
+        const far = l.deg >= 3;
+        const on = s.pick === l.id;
+        return {
+          title: NAME(l.host) + ' · ' + this.reachOf(l.deg).text,
+          host: NAME(l.host),
+          price: '£' + l.price,
+          go: () => this.setState({ pick: l.id }),
+          style: 'position:absolute; left:' + l.x + '%; top:' + l.y + '%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; z-index:' + (on ? 6 : 3) + ';',
+          photoEl: faceEl(l.host, NAME(l.host), {
+            width: on ? 50 : 40, height: on ? 50 : 40, borderRadius: on ? 25 : 20,
+            objectFit: 'cover', display: 'block', background: '#FFFFFF', transition: 'all .2s ease',
+            border: close ? '3px solid #17A589' : far ? '1.5px dashed #9FC9BF' : '1.5px solid #17A589',
+            boxShadow: '0 4px 14px rgba(26,26,26,' + (on ? '0.28' : '0.16') + ')',
+          }),
+          labelStyle: 'background:' + (on ? '#1A1A1A' : 'rgba(255,255,255,0.95)') + '; color:' + (on ? '#FFFFFF' : '#1A1A1A')
+            + '; border-radius:999px; padding:3px 9px; font-size:11.5px; font-weight:700; box-shadow:0 2px 8px rgba(26,26,26,0.14);',
+        };
+      }),
+      hasPick: s.mode === 'map' && list.some((l) => l.id === s.pick),
+      noPick: s.mode === 'map' && !list.some((l) => l.id === s.pick),
+      pick: {
+        title: NAME(pick.host) + "'s place",
+        host: NAME(pick.host),
+        hostEl: faceEl(pick.host, NAME(pick.host), { width: 34, height: 34, borderRadius: 17, objectFit: 'cover', display: 'block' }),
+        photoEl: roomEl(pick.host, NAME(pick.host) + "'s place", 150),
+        area: pick.area,
+        price: '£' + pick.price + ' / night',
+        reach: this.reachOf(pick.deg).text,
+        reachStyle: this.reachStyle(pick.deg),
+        via: pick.via,
+        go: () => this.peek(NAME(pick.host) + "'s Trust tab opens"),
+      },
+
+      similar: SIMILAR.map((x, i) => ({
+        name: NAME(x.id),
+        faceEl: faceEl(x.id, NAME(x.id), { width: 44, height: 44, borderRadius: 22, objectFit: 'cover', display: 'block', flexShrink: 0 }),
+        count: x.count,
+        trait: x.trait,
+        rule: rule(i),
+        go: () => this.peek(NAME(x.id) + "'s profile opens"),
+      })),
+      board: BOARD.map((b, i) => ({
+        name: b.id === 'you' ? 'You' : NAME(b.id),
+        faceEl: faceEl(b.id, b.id === 'you' ? 'You' : NAME(b.id), { width: 38, height: 38, borderRadius: 19, objectFit: 'cover', display: 'block', flexShrink: 0 }),
+        what: b.what,
+        weight: b.id === 'you' ? '800' : '700',
+        rule: rule(i),
+        bars: b.acts.map((a, j) => bar(a, j)),
+        go: () => this.peek(b.id === 'you' ? 'Opens your own page' : NAME(b.id) + "'s profile opens"),
+      })),
+
+      knownReviews: [
+        { id: 'bella', text: 'Emma was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.', meta: 'Bella · one step from you · 40 days ago' },
+        { id: 'sophie', text: 'Such a warm, thoughtful host. Great communication and a really central location. Felt like a friend by the end.', meta: 'Sophie · one step from you · 3 months ago' },
+        { id: 'amy', text: 'Clean, comfortable and easy from start to finish. She looked after everything. A real gem.', meta: 'Amy · one step from you · 4 months ago' },
+      ].map((r) => ({
+        faceEl: faceEl(r.id, NAME(r.id), { width: 44, height: 44, borderRadius: 22, objectFit: 'cover', display: 'block' }),
+        name: NAME(r.id), text: r.text, meta: r.meta,
+        go: () => this.peek(NAME(r.id) + "'s profile opens"),
+      })),
+      themes: [
+        { label: 'Felt safe', said: '2 of 4', who: 'Bella and Amy', pct: 50 },
+        { label: 'Spotless', said: '3 of 4', who: 'Bella, Sophie and Amy', pct: 75 },
+        { label: 'Good communication', said: '2 of 4', who: 'Sophie and Amy', pct: 50 },
+        { label: 'Slow wifi', said: '1 of 4', who: 'Theo, who you do not know', pct: 25 },
+      ].map((t) => ({
+        label: t.label, said: t.said, who: t.who,
+        barStyle: 'width:' + t.pct + '%; height:6px; border-radius:3px; background:' + (t.label === 'Slow wifi' ? '#C15B5B' : '#17A589') + ';',
+      })),
+
+      myActs: [
+        { label: 'People you vouched for', value: '4' },
+        { label: 'Stays you have been on', value: '1' },
+        { label: 'Guest book entries you wrote', value: '1' },
+        { label: 'Kiki events you turned up to', value: '2' },
+      ].map((a, i) => ({ ...a, rule: rule(i), pad: i === 0 ? '0' : '12px' })),
+      myTraits: [
+        { label: 'Mount Eden', source: 'You typed this when you joined', tag: 'Your words' },
+        { label: 'Paris, 2017', source: 'You typed this when you joined', tag: 'Your words' },
+        { label: 'Bouldering at Blok Shoreditch', source: 'You typed this when you joined', tag: 'Your words' },
+        { label: 'The Dalston picnic in June', source: 'We spotted this on our own event list', tag: 'We worked it out' },
+      ].map((t, i) => ({
+        ...t, rule: rule(i), pad: i === 0 ? '0' : '12px',
+        tagStyle: 'flex-shrink:0; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; '
+          + (t.tag === 'Your words'
+            ? 'background:#E7F4F0; color:#0E4E42;'
+            : 'border:1px dashed #D9D9D4; color:#626C75;'),
+      })),
+      pEdit: () => this.peek('Opens what we are allowed to match on'),
+      pConsent: () => this.peek('Opens where your name may appear'),
+
+      threads: THREADS.map((t) => ({
+        name: t.name,
+        faceEl: faceEl(t.id, t.name, { width: 48, height: 48, borderRadius: 24, objectFit: 'cover', display: 'block', flexShrink: 0 }),
+        preview: t.preview,
+        via: t.via,
+        reach: this.reachOf(t.deg).text,
+        pillStyle: 'background:#E7F4F0; color:#0E4E42; border-radius:999px; padding:3px 9px; font-size:11px; font-weight:700; white-space:nowrap;',
+        go: () => this.setState({ thread: t.id }),
+        style: 'display:flex; align-items:center; gap:13px; padding:15px 16px; border-radius:16px; cursor:pointer; transition:all .18s ease; background:'
+          + (s.thread === t.id ? '#FFFFFF' : 'rgba(255,255,255,0.6)')
+          + '; box-shadow:' + (s.thread === t.id
+            ? 'inset 3px 0 0 #17A589, 0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.06)'
+            : '0 1px 2px rgba(26,26,26,0.03)') + ';',
+      })),
+      chat: {
+        name: chat.name, context: chat.context, opener: chat.opener, placeholder: chat.placeholder,
+        faceEl: faceEl(s.thread, chat.name, { width: 42, height: 42, borderRadius: 21, objectFit: 'cover', display: 'block' }),
+        messages: chat.messages.map((m) => ({
+          text: m.text,
+          rowStyle: 'display:flex; justify-content:' + (m.mine ? 'flex-end' : 'flex-start') + ';',
+          bubbleStyle: 'max-width:74%; padding:12px 15px; font-size:14.5px; line-height:1.5; '
+            + (m.mine
+              ? 'background:#17A589; color:#FFFFFF; border-radius:18px 18px 6px 18px;'
+              : 'background:#F5F5F4; color:#1A1A1A; border-radius:18px 18px 18px 6px;'),
+        })),
+      },
+      pSend: () => this.peek('Sends the message'),
+
+      tripEffects: [
+        { label: 'Homes you can now reach in one step', value: '4' },
+        { label: 'People who reach someone through you', value: '3' },
+        { label: 'Entries written about your stays', value: '1' },
+      ].map((e, i) => ({ ...e, rule: rule(i), pad: i === 0 ? '0' : '12px' })),
+      pAddTrip: () => this.peek('Opens a new trip'),
+      pMessage: () => this.peek('Opens your thread with Emma'),
+      pDetails: () => this.peek('Opens the trip details'),
+      pWrite: () => this.peek("Opens Danica's guest book to write"),
+      pBella: () => this.peek("Opens Bella's profile"),
+
+      noteKicker: n.kicker,
+      noteLead: n.lead,
+      notes: n.notes,
+      showToast: !!s.toast,
+      toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

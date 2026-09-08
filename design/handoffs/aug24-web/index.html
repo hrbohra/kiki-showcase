@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #F5F5F4; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #0E4E42; text-decoration: none; }
+  a:hover { color: #17A589; }
+  ::selection { background: #E7F4F0; }
+  textarea { font-family: inherit; }
+  textarea::placeholder { color: #626C75; }
+</style>
+</helmet>
+<div style="min-height:100vh;background:#F5F5F4">
+
+  <div style="position:sticky;top:0;z-index:30;height:66px;background:rgba(255,255,255,.94);border-bottom:1px solid #ECECE8">
+    <div style="max-width:1560px;margin:0 auto;height:66px;padding:0 40px;display:flex;align-items:center;gap:24px">
+      <div style="display:flex;align-items:center;gap:6px">
+        <svg width="30" height="18" viewBox="0 0 100 60" aria-label="Kiki"><circle cx="38" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle></svg>
+        <span style="font-size:17px;font-weight:700;letter-spacing:-.2px;color:#1A1A1A">Kiki</span>
+      </div>
+      <div style="display:flex;height:66px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+          <div onClick="{{ n.go }}" style="height:66px;padding:0 15px;display:flex;align-items:center;white-space:nowrap;cursor:pointer;font-size:14.5px;font-weight:{{ n.weight }};color:{{ n.color }};box-shadow:inset 0 -2.5px 0 {{ n.underline }}">{{ n.label }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1"></div>
+      <img src="assets/avatars/you.jpg" onClick="{{ goMe }}" alt="You" style="width:30px;height:30px;border-radius:50%;object-fit:cover;cursor:pointer" />
+    </div>
+  </div>
+
+  <div style="max-width:1560px;margin:0 auto;padding:36px 40px 96px">
+
+    <sc-if value="{{ isExplore }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div>
+        <div style="font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.6px">Explore</div>
+        <div style="margin-top:4px;font-size:14px;color:#626C75">Sorted by how close they are to you, never by price.</div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+        <div style="flex-grow:1;min-width:260px;background:#FFFFFF;border:1px solid #ECECE8;border-radius:999px;padding:13px 20px;font-size:14px;color:#626C75">Search by dates or duration</div>
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="6">
+          <div onClick="{{ f.toggle }}" style="cursor:pointer;border-radius:999px;padding:8px 15px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};font-size:13px;font-weight:700;white-space:nowrap">{{ f.label }}</div>
+        </sc-for>
+        <div style="flex:1"></div>
+        <div style="display:flex;background:#ECECE8;border-radius:999px;padding:3px">
+          <div onClick="{{ showHomes }}" style="cursor:pointer;padding:7px 16px;border-radius:999px;font-size:13px;font-weight:700;background:{{ homesBg }};color:{{ homesColor }}">Homes</div>
+          <div onClick="{{ showMap }}" style="cursor:pointer;padding:7px 16px;border-radius:999px;font-size:13px;font-weight:700;background:{{ mapBg }};color:{{ mapColor }}">Map</div>
+        </div>
+      </div>
+
+      <sc-if value="{{ isHomes }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;gap:18px">
+          <sc-for list="{{ listings }}" as="l" hint-placeholder-count="3">
+            <div onClick="{{ l.open }}" style="flex:1 1 300px;min-width:0;max-width:380px;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden;cursor:pointer;transition:transform .16s" style-hover="transform:translateY(-3px)">
+              <div style="position:relative;height:168px;background:#ECECE8;display:flex;align-items:flex-end">
+                <div role="img" aria-label="{{ l.area }}" style="position:absolute;inset:0;background-image:url({{ l.room }});background-size:cover;background-position:center"></div>
+                <div style="position:absolute;inset:0;background:linear-gradient(rgba(20,25,24,0),rgba(20,25,24,.42))"></div>
+                <div style="position:absolute;top:12px;left:12px;background:rgba(255,255,255,.94);border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:700;color:#4B5563">{{ l.kind }}</div>
+                <div style="position:relative;display:flex;align-items:center;gap:8px;padding:12px">
+                  <div style="position:relative;width:26px;height:26px;flex:none">
+                    <div role="img" aria-label="{{ l.name }}" style="width:26px;height:26px;border-radius:50%;border:3px solid #FFFFFF;background-image:url({{ l.avatar }});background-size:cover;background-position:center"></div>
+                  </div>
+                  <span style="font-size:14px;font-weight:700;color:#FFFFFF;text-shadow:0 1px 4px rgba(20,25,24,.5)">{{ l.name }}</span>
+                </div>
+              </div>
+              <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                  <div style="font-size:15.5px;font-weight:700;color:#1A1A1A">{{ l.place }}</div>
+                  <div style="font-size:14px;font-weight:700;color:#1A1A1A;white-space:nowrap">£{{ l.price }} / night</div>
+                </div>
+                <div style="align-self:flex-start;border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:700;background:{{ l.reachBg }};color:{{ l.reachColor }};border:1px solid {{ l.reachBorder }}">{{ l.reach }}</div>
+                <div style="font-size:12.5px;color:#626C75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ l.tags }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:60px 0;display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="font-size:17px;font-weight:700;color:#4B5563">No homes match those filters.</div>
+            <div style="font-size:13px;color:#626C75">Turn one off to widen the search.</div>
+            <div onClick="{{ clearFilters }}" style="margin-top:14px;cursor:pointer;background:#17A589;color:#fff;border-radius:12px;padding:12px 24px;font-size:14.5px;font-weight:700">Clear filters</div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:stretch">
+          <div style="flex:1 1 520px;min-width:0">
+            <div ref="{{ setMapEl }}" onMouseDown="{{ onMapDown }}" onMouseMove="{{ onMapMove }}" onMouseUp="{{ onMapUp }}" onMouseLeave="{{ onMapUp }}" style="position:relative;height:{{ mapHeight }}px;min-height:520px;border-radius:20px;overflow:hidden;background:#EFEEE9;cursor:{{ mapCursor }};user-select:none;touch-action:none">
+              <img src="assets/map/london.jpg" alt="Central London" draggable="false" style="position:absolute;left:0;top:0;width:768px;height:768px;transform-origin:0 0;transform:{{ mapTransform }}" />
+              <div style="position:absolute;inset:0;background:rgba(231,244,240,.10);pointer-events:none"></div>
+              <div style="position:absolute;left:16px;bottom:22px;pointer-events:none">
+                <svg width="150" height="90" viewBox="0 0 100 60" opacity="0.12"><circle cx="38" cy="30" r="21" stroke="#17A589" stroke-width="5" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#17A589" stroke-width="5" fill="none"></circle></svg>
+              </div>
+
+              <sc-for list="{{ pins }}" as="p" hint-placeholder-count="6">
+                <div onClick="{{ p.select }}" onMouseEnter="{{ p.hover }}" onMouseLeave="{{ p.unhover }}" style="position:absolute;left:{{ p.left }}px;top:{{ p.top }}px;z-index:{{ p.z }};opacity:{{ p.opacity }};transform:translate(-50%,-50%);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:opacity .18s">
+                  <div style="display:flex;align-items:center;justify-content:center;background:#FFFFFF;border-radius:50%;width:{{ p.ringSize }}px;height:{{ p.ringSize }}px;border-width:{{ p.ringWidth }}px;border-style:{{ p.ringStyle }};border-color:{{ p.ringColor }};box-shadow:0 4px 14px rgba(26,26,26,.14)">
+                    <div style="position:relative;width:{{ p.size }}px;height:{{ p.size }}px">
+                      <div role="img" aria-label="{{ p.name }}" style="width:100%;height:100%;border-radius:50%;background-image:url({{ p.avatar }});background-size:cover;background-position:center"></div>
+                      <div style="position:absolute;right:-2px;bottom:-2px;width:17px;height:17px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:10px">{{ p.flag }}</div>
+                    </div>
+                  </div>
+                  <div style="border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;white-space:nowrap;box-shadow:0 4px 14px rgba(26,26,26,.1);background:{{ p.labelBg }};color:{{ p.labelColor }}">{{ p.label }}</div>
+                </div>
+              </sc-for>
+
+              <sc-for list="{{ edges }}" as="ed" hint-placeholder-count="0">
+                <div onClick="{{ ed.go }}" style="position:absolute;left:{{ ed.left }}px;top:{{ ed.top }}px;z-index:7;transform:translate(-50%,0);cursor:pointer;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.94);border:1px solid #CFE4DE;border-radius:999px;padding:4px 10px;box-shadow:0 4px 14px rgba(26,26,26,.1);white-space:nowrap">
+                  <span style="font-size:11px;font-weight:800;color:#17A589">{{ ed.chevron }}</span>
+                  <span style="font-size:11px;font-weight:800;color:#0E4E42">{{ ed.label }}</span>
+                </div>
+              </sc-for>
+
+              <div style="position:absolute;left:16px;top:16px;background:rgba(255,255,255,.92);border-radius:14px;padding:10px 14px;box-shadow:0 8px 24px rgba(26,26,26,.05);pointer-events:none">
+                <div style="font-size:13px;font-weight:700;color:#1A1A1A">{{ mapCountTitle }}</div>
+                <div style="margin-top:2px;font-size:11.5px;color:#626C75">{{ mapCountSub }}</div>
+              </div>
+
+              <div style="position:absolute;right:12px;top:12px;background:rgba(255,255,255,.92);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ legend }}" as="g" hint-placeholder-count="3">
+                  <div onClick="{{ g.toggle }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;opacity:{{ g.opacity }}">
+                    <span style="width:16px;height:16px;border-radius:50%;flex:none;border-width:{{ g.w }}px;border-style:{{ g.style }};border-color:{{ g.color }}"></span>
+                    <span style="font-size:11.5px;font-weight:600;color:#4B5563;white-space:nowrap">{{ g.label }}</span>
+                  </div>
+                </sc-for>
+                <div style="margin-top:1px;padding-top:7px;border-top:1px solid #F0F0EC;font-size:10.5px;font-weight:700;color:#626C75">{{ legendHint }}</div>
+              </div>
+
+              <div style="position:absolute;right:12px;bottom:26px;display:flex;flex-direction:column;gap:6px">
+                <div onClick="{{ zoomIn }}" style="cursor:pointer;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.94);box-shadow:0 4px 14px rgba(26,26,26,.1);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800">+</div>
+                <div onClick="{{ zoomOut }}" style="cursor:pointer;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.94);box-shadow:0 4px 14px rgba(26,26,26,.1);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800">−</div>
+                <div onClick="{{ resetMap }}" style="cursor:pointer;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.94);box-shadow:0 4px 14px rgba(26,26,26,.1);display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800">FIT</div>
+              </div>
+
+              <div style="position:absolute;right:6px;bottom:4px;background:rgba(255,255,255,.7);border-radius:4px;padding:1px 4px;font-size:9px;font-weight:600;color:#626C75;pointer-events:none">© OpenStreetMap · CARTO</div>
+            </div>
+            <div style="margin-top:12px;font-size:12.5px;color:#626C75">Drag to move, scroll to zoom. The ring is how close the host is to you, never a price.</div>
+          </div>
+
+          <div style="width:340px;flex:none;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden;align-self:flex-start">
+            <sc-if value="{{ noPin }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:20px;font-size:14px;line-height:21px;color:#626C75">Pick a pin to see the home, the host, and how you reach them.</div>
+            </sc-if>
+            <sc-if value="{{ hasPin }}" hint-placeholder-val="{{ false }}">
+              <div role="img" aria-label="{{ pin.area }}" style="height:180px;background-image:url({{ pin.room }});background-size:cover;background-position:center"></div>
+              <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div role="img" aria-label="{{ pin.name }}" style="width:34px;height:34px;flex:none;border-radius:50%;background-image:url({{ pin.avatar }});background-size:cover;background-position:center"></div>
+                  <div style="font-size:16px;font-weight:700">{{ pin.title }}</div>
+                </div>
+                <div style="align-self:flex-start;border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:700;background:{{ pin.reachBg }};color:{{ pin.reachColor }};border:1px solid {{ pin.reachBorder }}">{{ pin.reach }}</div>
+                <div style="font-size:13.5px;color:#4B5563">{{ pin.route }}</div>
+                <div onClick="{{ openPinTrust }}" style="margin-top:4px;cursor:pointer;background:#17A589;border-radius:12px;padding:12px;text-align:center;font-size:14.5px;font-weight:700;color:#fff">See how you're connected</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCommunity }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.6px">Community</div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+        <div style="flex:1 1 320px;min-width:0">
+          <div style="margin-bottom:12px;font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">People like you</div>
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:0 16px">
+            <sc-for list="{{ similar }}" as="s" hint-placeholder-count="6">
+              <div onClick="{{ s.open }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid {{ s.divider }}">
+                <div style="position:relative;width:44px;height:44px;flex:none">
+                  <div role="img" aria-label="{{ s.name }}" style="width:44px;height:44px;border-radius:50%;background-image:url({{ s.avatar }});background-size:cover;background-position:center"></div>
+                  <div style="position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:10px">{{ s.flag }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:16px;font-weight:700">{{ s.name }}</div>
+                  <div style="margin-top:3px;font-size:13px;color:#626C75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ s.facts }}</div>
+                </div>
+                <div style="flex:none;background:#E7F4F0;border-radius:14px;padding:6px 12px;text-align:center">
+                  <div style="font-size:17px;font-weight:700;color:#0E4E42">{{ s.count }}</div>
+                  <div style="font-size:10px;font-weight:700;color:#0E4E42">in common</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:10px;font-size:12.5px;color:#626C75">Shared facts, not a compatibility score.</div>
+        </div>
+        <div style="flex:1 1 320px;min-width:0">
+          <div style="margin-bottom:12px;font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Giving back</div>
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:0 16px">
+            <sc-for list="{{ board }}" as="b" hint-placeholder-count="8">
+              <div onClick="{{ b.open }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid {{ b.divider }}">
+                <div style="width:22px;text-align:center;font-size:15px;font-weight:800;color:{{ b.rankColor }}">{{ b.rank }}</div>
+                <div role="img" aria-label="{{ b.name }}" style="width:40px;height:40px;flex:none;border-radius:50%;background-image:url({{ b.avatar }});background-size:cover;background-position:center"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:16px;font-weight:700">{{ b.name }}</div>
+                  <div style="margin-top:3px;display:flex;align-items:center;gap:6px">
+                    <span style="width:7px;height:7px;border-radius:4px;background:{{ b.tierColor }}"></span>
+                    <span style="font-size:11px;font-weight:800;color:{{ b.tierColor }}">{{ b.tier }}</span>
+                  </div>
+                </div>
+                <div style="text-align:right;flex:none">
+                  <div style="font-size:16px;font-weight:800">{{ b.points }}</div>
+                  <div style="font-size:10px;font-weight:700;color:#626C75">points</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:10px;font-size:12.5px;color:#626C75">Ranked by giving back — hosting, vouching, referring, showing up. Recent counts more.</div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isGuestbook }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div>
+        <div style="font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.6px">Emma's guest book</div>
+        <div style="margin-top:4px;font-size:14px;color:#626C75">What guests wrote — grouped by whether you know them.</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+        <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:18px;font-weight:700">What guests say</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">4</div><div style="font-size:12.5px;color:#626C75">entries</div></div>
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">100%</div><div style="font-size:12.5px;color:#626C75">positive</div></div>
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">4</div><div style="font-size:12.5px;color:#626C75">trust signals</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="flex:1;height:9px;border-radius:999px;background:#F0F0EC;overflow:hidden"><div style="height:9px;border-radius:999px;background:#17A589;width:92%"></div></div>
+              <div style="width:66px;text-align:right;font-size:12px;font-weight:800;color:#0E4E42">Positive</div>
+            </div>
+            <div style="margin-top:4px;font-size:11.5px;font-weight:800;color:#4B5563;text-transform:uppercase;letter-spacing:.6px">Themes, with receipts</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ themes }}" as="t" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:13px;font-weight:700;color:#4B5563">{{ t.name }}</span>
+                    <span style="font-size:13px;font-weight:700;color:#626C75">{{ t.of }}</span>
+                  </div>
+                  <div style="height:8px;border-radius:999px;background:#F0F0EC;overflow:hidden"><div style="height:8px;border-radius:999px;background:{{ t.fill }};width:{{ t.pct }}%"></div></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ signals }}" as="s" hint-placeholder-count="4">
+                <div style="border:1px solid #17A589;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:#0E4E42">{{ s }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="position:relative;overflow:hidden;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px 20px 20px 23px;display:flex;flex-direction:column;gap:8px">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#C15B5B"></div>
+            <div style="font-size:13.5px;font-weight:700;color:#C15B5B">What this book can't tell you</div>
+            <div style="font-size:14.5px;line-height:21px;color:#1A1A1A">Every entry describes Emma as a host, never as a guest. Nobody here has handed her their keys and gone away, which is the thing you'd be doing.</div>
+          </div>
+        </div>
+
+        <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:12px">
+          <div style="margin-top:4px;font-size:11.5px;font-weight:800;color:#626C75;letter-spacing:.8px">FROM PEOPLE YOU KNOW</div>
+          <sc-for list="{{ entries }}" as="e" hint-placeholder-count="4">
+            <div style="position:relative;overflow:hidden;background:#E7F4F0;border-radius:20px;padding:18px 18px 18px 20px;display:flex;flex-direction:column;gap:10px">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#17A589"></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div role="img" aria-label="{{ e.name }}" style="width:34px;height:34px;flex:none;border-radius:50%;background-image:url({{ e.avatar }});background-size:cover;background-position:center"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:700">{{ e.name }}</div>
+                  <div style="font-size:12.5px;color:#626C75">{{ e.degree }}</div>
+                </div>
+                <div style="flex:none;background:#E7F4F0;border:1px solid #17A589;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:#0E4E42">{{ e.sentiment }}</div>
+              </div>
+              <div style="font-size:15px;line-height:22px;color:#1A1A1A">{{ e.text }}</div>
+            </div>
+          </sc-for>
+          <div style="margin-top:4px;font-size:11.5px;font-weight:800;color:#626C75;letter-spacing:.8px">FROM PEOPLE YOU DON'T</div>
+          <div style="background:#FFFFFF;border:1px dashed #D9D9D4;border-radius:20px;padding:18px 20px;font-size:14.5px;line-height:21px;color:#4B5563">No one outside your circle has written about Emma. Everything above comes from four people you can go and ask yourself.</div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isTrips }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.6px">Kiki Trips</div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+        <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Coming up</div>
+          <div style="display:flex;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden">
+            <img src="assets/listings/emma.jpg" alt="Emma's Room" style="width:160px;min-height:150px;object-fit:cover;flex:none" />
+            <div style="flex:1;min-width:0;padding:16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:17px;line-height:24px;font-weight:700">Emma’s Room · De Beauvoir</div>
+              <div style="font-size:14px;color:#4B5563">14 – 21 Sep · 7 nights · £44/night</div>
+              <div style="margin-top:2px;display:flex;align-items:center;gap:8px">
+                <img src="assets/avatars/bella.jpg" alt="Bella" style="width:22px;height:22px;border-radius:50%;object-fit:cover" />
+                <span style="font-size:13.5px;font-weight:600;color:#0E4E42">Bella made this match.</span>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Been and gone</div>
+          <div style="display:flex;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden">
+            <img src="assets/listings/danica.jpg" alt="Danica's Room" style="width:160px;min-height:150px;object-fit:cover;flex:none" />
+            <div style="flex:1;min-width:0;padding:16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:17px;line-height:24px;font-weight:700">Danica’s Room · Tooting</div>
+              <div style="font-size:14px;color:#4B5563">23 – 27 Apr · 4 nights</div>
+              <sc-if value="{{ entryPending }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:2px;background:#E7F4F0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px">
+                  <div style="font-size:13.5px;line-height:19px;color:#0E4E42">You haven't written Danica's guest-book entry yet. That gap is why the next person has less to go on.</div>
+                  <div onClick="{{ openWrite }}" style="cursor:pointer;background:#17A589;border-radius:10px;padding:10px;text-align:center;font-size:13.5px;font-weight:700;color:#fff">Write it</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ entryDone }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:2px;background:#E7F4F0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:13.5px;font-weight:700;color:#0E4E42">Entry written</div>
+                  <div style="font-size:13.5px;line-height:19px;color:#2C6559">Danica can see it now, and so can the next person deciding about her.</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:16px;font-weight:700">What your trips leave behind</div>
+            <div style="display:flex;align-items:baseline;gap:10px"><span style="width:30px;font-size:22px;font-weight:800">2</span><span style="font-size:14px;color:#4B5563">stays completed</span></div>
+            <div style="display:flex;align-items:baseline;gap:10px"><span style="width:30px;font-size:22px;font-weight:800">{{ entriesWritten }}</span><span style="font-size:14px;color:#4B5563">guest-book entries written</span></div>
+            <div style="display:flex;align-items:baseline;gap:10px"><span style="width:30px;font-size:22px;font-weight:800">4</span><span style="font-size:14px;color:#4B5563">people you've vouched for</span></div>
+            <div style="margin-top:4px;font-size:12.5px;color:#626C75">What your stays added to the network — not what they cost you.</div>
+          </div>
+          <sc-if value="{{ entryPending }}" hint-placeholder-val="{{ true }}">
+            <div style="position:relative;overflow:hidden;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:18px 18px 18px 21px;display:flex;flex-direction:column;gap:8px">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#C15B5B"></div>
+              <div style="font-size:13.5px;font-weight:700;color:#C15B5B">Still open</div>
+              <div style="font-size:14.5px;line-height:21px;color:#1A1A1A">You owe Danica a guest-book entry from April.</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isMessages }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.6px">Messages</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+        <div style="width:392px;flex:1 1 392px;max-width:392px;min-width:0;display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ threads }}" as="t" hint-placeholder-count="3">
+            <div onClick="{{ t.open }}" style="position:relative;overflow:hidden;cursor:pointer;display:flex;gap:12px;padding:14px;border-radius:16px;background:{{ t.bg }};box-shadow:{{ t.shadow }}">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ t.mark }}"></div>
+              <div role="img" aria-label="{{ t.name }}" style="width:44px;height:44px;flex:none;border-radius:50%;background-image:url({{ t.avatar }});background-size:cover;background-position:center"></div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15.5px;font-weight:700">{{ t.name }}</span>
+                  <span style="border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:700;background:{{ t.reachBg }};color:{{ t.reachColor }};border:1px solid {{ t.reachBorder }}">{{ t.reach }}</span>
+                </div>
+                <div style="font-size:12.5px;font-weight:600;color:#2C6559;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.via }}</div>
+                <div style="font-size:13.5px;color:#4B5563;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.preview }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:1 1 340px;min-width:0;height:620px;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #ECECE8">
+            <div role="img" aria-label="{{ thread.name }}" style="width:40px;height:40px;flex:none;border-radius:50%;background-image:url({{ thread.avatar }});background-size:cover;background-position:center"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:700">{{ thread.name }}</div>
+              <div style="font-size:13px;font-weight:600;color:#2C6559">{{ thread.via }}</div>
+            </div>
+            <div onClick="{{ openThreadGraph }}" style="flex:none;cursor:pointer;border:1px solid #17A589;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700;color:#0E4E42">How you're connected ›</div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="align-self:center;max-width:420px;text-align:center;margin-bottom:8px;font-size:13px;color:#626C75">{{ thread.origin }}</div>
+            <sc-for list="{{ bubbles }}" as="b" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:{{ b.align }}">
+                <div style="max-width:74%;padding:11px 14px;font-size:14.5px;line-height:21px;background:{{ b.bg }};color:{{ b.color }};border-radius:{{ b.radius }}">{{ b.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:12px;border-top:1px solid #ECECE8">
+            <div style="flex:1;min-width:0;background:#F7F7F5;border:1px solid #ECECE8;border-radius:999px;padding:12px 16px;font-size:14px;color:#626C75">Message {{ thread.name }}…</div>
+            <div style="width:42px;height:42px;flex:none;border-radius:21px;background:#17A589;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isMe }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:18px">
+        <div style="position:relative;width:72px;height:72px;flex:none">
+          <img src="assets/avatars/you.jpg" alt="You" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block" />
+          <div style="position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:15px">🇳🇿</div>
+        </div>
+        <div>
+          <div style="font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.6px">You</div>
+          <div style="margin-top:2px;max-width:520px;font-size:16px;color:#4B5563">You've vouched for 4 people. Three of them have hosted since.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Your standing</div>
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex">
+              <div style="display:flex;align-items:center;gap:6px;border:1px solid #8A9099;border-radius:999px;padding:6px 12px">
+                <span style="width:7px;height:7px;border-radius:4px;background:#8A9099"></span>
+                <span style="font-size:11px;font-weight:800;color:#8A9099">Newcomer · #9</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">2</div><div style="font-size:12.5px;color:#626C75">points</div></div>
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">#9</div><div style="font-size:12.5px;color:#626C75">of 12</div></div>
+              <div style="flex:1;background:#F5F5F4;border-radius:12px;padding:12px 0;text-align:center"><div style="font-size:21px;font-weight:800">6</div><div style="font-size:12.5px;color:#626C75">like you</div></div>
+            </div>
+            <div style="font-size:12.5px;color:#626C75">Recent contributions count for more — your standing reflects the last few months.</div>
+          </div>
+          <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">What you've done</div>
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ deeds }}" as="d" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:92px;flex:none;font-size:14.5px;font-weight:600;color:#4B5563">{{ d.name }}</div>
+                <div style="flex:1;min-width:0;height:10px;border-radius:999px;background:#E4EAE8;overflow:hidden"><div style="height:10px;border-radius:999px;background:#17A589;width:{{ d.pct }}%"></div></div>
+                <div style="width:20px;flex:none;text-align:right;font-size:14.5px;font-weight:800">{{ d.value }}</div>
+              </div>
+            </sc-for>
+            <div style="font-size:12.5px;color:#626C75">You've never hosted. That's the one gap a host will notice, and the one you can close.</div>
+          </div>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">What we match you on</div>
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ matchOn }}" as="m" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="font-size:18px;flex:none">{{ m.icon }}</div>
+                <div style="flex:1;min-width:0;font-size:15px;font-weight:600">{{ m.label }}</div>
+                <div style="flex:none;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:700;background:{{ m.tagBg }};color:{{ m.tagColor }};border:1px {{ m.tagBorderStyle }} {{ m.tagBorder }}">{{ m.source }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="position:relative;overflow:hidden;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px 20px 20px 23px;display:flex;flex-direction:column;gap:8px">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#C15B5B"></div>
+            <div style="font-size:13.5px;font-weight:700;color:#C15B5B">What other people can see</div>
+            <div style="font-size:14.5px;line-height:21px;color:#1A1A1A">You're shown as a voucher on the trust pages of people you've vouched for. You can turn that off per person.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+
+  <sc-if value="{{ isPerson }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:40;background:#F5F5F4;overflow:auto">
+    <div style="position:sticky;top:0;z-index:20;height:68px;background:rgba(255,255,255,.94);border-bottom:1px solid #ECECE8">
+      <div style="max-width:1440px;margin:0 auto;height:68px;padding:0 40px;display:flex;align-items:center;gap:28px">
+        <div onClick="{{ back }}" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <svg width="30" height="18" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#17A589" stroke-width="9" fill="none"></circle></svg>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-.2px">Kiki</span>
+        </div>
+        <div style="display:flex;height:68px">
+          <sc-for list="{{ personTabs }}" as="t" hint-placeholder-count="3">
+            <div onClick="{{ t.go }}" style="height:68px;padding:0 16px;display:flex;align-items:center;cursor:pointer;font-size:15px;font-weight:{{ t.weight }};color:{{ t.color }};box-shadow:inset 0 -2.5px 0 {{ t.underline }}">{{ t.label }}</div>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div style="display:flex;border:1px solid #ECECE8;border-radius:999px;padding:3px;background:#FFFFFF">
+          <div onClick="{{ setHostView }}" style="cursor:pointer;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:{{ hostWeight }};background:{{ hostBg }};color:{{ hostColor }}">The host</div>
+          <div onClick="{{ setGuestView }}" style="cursor:pointer;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:{{ guestWeight }};background:{{ guestBg }};color:{{ guestColor }}">The guest</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1440px;margin:0 auto;padding:36px 40px 80px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+      <div style="width:376px;flex:0 1 376px;min-width:0;display:flex;flex-direction:column;gap:16px">
+        <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+          <div style="position:relative;width:92px;height:92px">
+            <div role="img" aria-label="{{ person.name }}" style="width:92px;height:92px;border-radius:50%;background-image:url({{ person.avatar }});background-size:cover;background-position:center"></div>
+            <div style="position:absolute;right:-2px;bottom:-2px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:17px">{{ person.flag }}</div>
+          </div>
+          <div style="margin-top:6px;font-size:27px;line-height:34px;font-weight:700;letter-spacing:-.6px">{{ person.name }}</div>
+          <div style="font-size:14px;line-height:20px;white-space:nowrap;color:#4B5563">Hoping to stay with you</div>
+          <div style="margin-top:4px;background:#1A1A1A;color:#fff;border-radius:999px;padding:7px 14px;font-size:13px;line-height:18px;font-weight:600;white-space:nowrap">{{ person.dates }}</div>
+          <div style="margin-top:6px;font-size:17px;line-height:25px;color:#1A1A1A">{{ person.headline }}</div>
+          <div style="font-size:14px;line-height:22px;color:#4B5563">{{ person.sub }}</div>
+        </div>
+
+        <sc-if value="{{ isTrust }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:24px;display:flex;flex-direction:column;gap:12px;align-items:stretch">
+            <sc-if value="{{ person.hasAsk }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ openPersonGraph }}" style="cursor:pointer;border:1px solid #17A589;border-radius:12px;min-height:48px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px">
+                <div style="font-size:15px;line-height:21px;font-weight:600;color:#0E4E42">{{ person.askLabel }}</div>
+                <div style="font-size:12.5px;line-height:18px;color:#2C6559">{{ person.askSub }}</div>
+              </div>
+            </sc-if>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div>
+                <div style="font-size:14px;line-height:20px;white-space:nowrap;font-weight:600">{{ person.name }} · {{ person.nights }}</div>
+                <div style="font-size:12.5px;line-height:18px;white-space:nowrap;color:#626C75">£{{ person.price }} / night</div>
+              </div>
+              <div style="background:#17A589;border-radius:12px;padding:14px 24px;font-size:15px;font-weight:700;color:#fff;cursor:pointer">Reply</div>
+            </div>
+            <div style="align-self:center;font-size:12.5px;line-height:18px;white-space:nowrap;color:#626C75">Deciding later is a real option.</div>
+            <sc-if value="{{ person.hasConsent }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:8px;border-top:1px solid #F0F0EC;padding-top:12px">
+                <div style="width:24px;height:24px;flex:none;border-radius:50%;background-image:url({{ person.consentAvatar }});background-size:cover;background-position:center"></div>
+                <div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:#0E4E42">{{ person.consent }}</div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:relative;overflow:hidden;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:24px 24px 24px 27px;display:flex;flex-direction:column;gap:9px">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#C15B5B"></div>
+            <div style="font-size:13.5px;font-weight:700;color:#C15B5B">What we don't know</div>
+            <div style="font-size:15px;line-height:22px;color:#1A1A1A">{{ person.unknown }}</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRoomTab }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden">
+            <div role="img" aria-label="{{ person.place }}" style="height:184px;background-image:url({{ person.room }});background-size:cover;background-position:center"></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:9px">
+              <div style="font-size:15px;font-weight:700">£{{ person.price }} / night · {{ person.kind }}</div>
+              <div onClick="{{ goMessages }}" style="cursor:pointer;background:#17A589;border-radius:12px;padding:12px;text-align:center;font-size:14.5px;font-weight:700;color:#fff">Message {{ person.name }}</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isProfileTab }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ person.tagList }}" as="tg" hint-placeholder-count="4">
+                <div style="background:#F7F7F5;border:1px solid #ECECE8;border-radius:999px;padding:8px 15px;font-size:13px;font-weight:700;color:#4B5563">{{ tg }}</div>
+              </sc-for>
+            </div>
+            <div style="font-size:14.5px;line-height:21px;color:#1A1A1A">{{ person.bio }}</div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:40px">
+        <sc-if value="{{ isTrust }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ person.hasCounts }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:22px 24px;display:flex;flex-wrap:wrap;gap:24px">
+              <sc-for list="{{ person.counts }}" as="c" hint-placeholder-count="4">
+                <div style="flex:1 1 150px;min-width:0;display:flex;flex-direction:column;gap:4px">
+                  <div style="font-size:12.5px;color:#626C75">{{ c.label }}</div>
+                  <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">{{ c.value }}</div>
+                  <div style="font-size:12.5px;color:#626C75">{{ c.note }}</div>
+                </div>
+              </sc-for>
+              <div style="flex-basis:100%;border-top:1px solid #F0F0EC;padding-top:12px;font-size:12.5px;color:#626C75">Counts only. We won't add these up into a score for you.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ person.hasNothing }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:24px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+              <div style="width:38px;height:38px;border-radius:19px;background:#F5F5F4;display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="13" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" stroke="#B7C2C0" stroke-width="8" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#B7C2C0" stroke-width="8" fill="none" stroke-dasharray="14 10"></circle></svg>
+              </div>
+              <div style="font-size:18px;line-height:25px;font-weight:700">You two don't have anyone in common yet.</div>
+              <div style="font-size:14px;line-height:21px;color:#4B5563">We're not going to dress that up. Nobody you know can tell you anything about {{ person.name }}, so here's everything we do have instead.</div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">{{ person.routeHeading }}</div>
+            <sc-if value="{{ person.isDirect }}" hint-placeholder-val="{{ false }}">
+              <div style="position:relative;overflow:hidden;background:#E7F4F0;border-radius:20px;padding:20px 20px 20px 23px;display:flex;flex-direction:column;gap:12px">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#17A589"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="position:relative;width:44px;height:44px;flex:none">
+                    <div role="img" aria-label="{{ person.name }}" style="width:44px;height:44px;border-radius:50%;background-image:url({{ person.avatar }});background-size:cover;background-position:center"></div>
+                    <div style="position:absolute;left:0;bottom:0;width:20px;height:20px;border-radius:10px;background:#17A589;display:flex;align-items:center;justify-content:center">
+                      <svg width="12" height="7" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" stroke="#fff" stroke-width="10" fill="none"></circle><circle cx="62" cy="30" r="21" stroke="#fff" stroke-width="10" fill="none"></circle></svg>
+                    </div>
+                  </div>
+                  <div style="flex:1;min-width:0;font-size:15.5px;font-weight:700;color:#0E4E42">{{ person.routeTitle }}</div>
+                </div>
+                <div style="font-size:14px;line-height:21px;color:#2C6559">{{ person.routeBody }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #CFE4DE;padding-top:10px">
+                  <div style="flex:1;min-width:0;font-size:13px;color:#2C6559">{{ person.routeFoot }}</div>
+                  <div onClick="{{ openPersonGraph }}" style="cursor:pointer;font-size:13px;font-weight:700;color:#0E4E42">See the route ›</div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ person.isVouched }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+                <div style="flex:1 1 340px;min-width:0;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:16px">
+                  <sc-for list="{{ chain }}" as="h" hint-placeholder-count="3">
+                    <div style="display:flex">
+                      <div style="width:36px;flex:none;display:flex;flex-direction:column;align-items:center">
+                        <div role="img" aria-label="{{ h.name }}" style="width:36px;height:36px;flex:none;border-radius:50%;border:3px solid #fff;background-image:url({{ h.avatar }});background-size:cover;background-position:center"></div>
+                        <div style="flex:1;width:2px;min-height:22px;margin:4px 0;background:{{ h.connector }}"></div>
+                      </div>
+                      <div style="flex:1;min-width:0;margin-left:12px;padding-bottom:22px">
+                        <div style="font-size:15px;font-weight:800">{{ h.name }}</div>
+                        <div style="margin-top:1px;font-size:13px;font-weight:600;color:#626C75">{{ h.role }}</div>
+                        <sc-if value="{{ h.hasNote }}" hint-placeholder-val="{{ false }}">
+                          <div style="margin-top:8px;background:#E7F4F0;border-radius:14px;padding:11px 13px;font-size:13px;font-weight:600;line-height:18px;color:#0E4E42">“{{ h.note }}”</div>
+                        </sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="width:380px;flex:1 1 320px;min-width:0;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                    <div style="font-size:15px;font-weight:700">How you're connected</div>
+                    <div onClick="{{ openPersonGraph }}" style="cursor:pointer;font-size:13px;font-weight:700;color:#0E4E42">Open ›</div>
+                  </div>
+                  <div style="position:relative;height:180px;margin:8px 0">
+                    <svg viewBox="0 0 340 180" style="position:absolute;inset:0;width:100%;height:100%">
+                      <sc-for list="{{ panelGraph.stubs }}" as="st" hint-placeholder-count="2">
+                        <line x1="{{ st.x1 }}" y1="{{ st.y1 }}" x2="{{ st.x2 }}" y2="{{ st.y2 }}" stroke="#DCE5E1" stroke-width="1.6"></line>
+                      </sc-for>
+                      <sc-for list="{{ panelGraph.edges }}" as="e" hint-placeholder-count="2">
+                        <path d="{{ e.d }}" stroke="#17A589" stroke-width="2.6" stroke-linecap="round" fill="none"></path>
+                      </sc-for>
+                    </svg>
+                    <sc-for list="{{ panelGraph.nodes }}" as="nd" hint-placeholder-count="3">
+                      <div style="position:absolute;left:{{ nd.left }}px;top:{{ nd.top }}px;width:{{ nd.size }}px;display:flex;flex-direction:column;align-items:center">
+                        <div role="img" aria-label="{{ nd.name }}" style="width:{{ nd.size }}px;height:{{ nd.size }}px;border-radius:50%;border:3px solid #fff;box-shadow:0 4px 14px rgba(26,26,26,.1);background-image:url({{ nd.avatar }});background-size:cover;background-position:center"></div>
+                        <div style="margin-top:3px;font-size:11px;font-weight:800;color:#4B5563;white-space:nowrap">{{ nd.name }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:13px;line-height:20px;color:#4B5563">{{ person.routeBody }}</div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Their track record</div>
+            <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+              <div style="flex:1 1 300px;min-width:0;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);overflow:hidden">
+                <div role="img" aria-label="{{ person.place }}" style="height:184px;background-image:url({{ person.room }});background-size:cover;background-position:center"></div>
+                <div style="padding:16px;display:flex;flex-direction:column;gap:9px">
+                  <div style="font-size:15px;line-height:21px;font-weight:700">{{ person.name }}'s place in {{ person.place }}</div>
+                  <div style="font-size:13.5px;line-height:20px;color:#4B5563">This is the flat {{ person.name }} keeps herself — the closest thing to a preview of how she'll keep yours.</div>
+                </div>
+              </div>
+              <div style="flex:1.25 1 340px;min-width:0;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:14px">
+                <div style="font-size:16px;line-height:23px;font-weight:600">{{ person.recordTitle }}</div>
+                <div style="font-size:13.5px;line-height:20px;color:#4B5563">{{ person.recordBody }}</div>
+                <div style="background:#F5F5F4;border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:21px;color:#1A1A1A">{{ person.quote }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <div onClick="{{ goGuestbook }}" style="cursor:pointer;border:1px solid #17A589;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:#0E4E42">{{ person.entriesLabel }}</div>
+                  <div style="background:#E7F4F0;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:#0E4E42">1 past match</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">The people behind {{ person.name }}</div>
+              <div style="margin-top:8px;font-size:13.5px;color:#626C75">{{ person.backersSub }}</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:16px">
+              <sc-for list="{{ person.backers }}" as="b" hint-placeholder-count="2">
+                <div style="flex:1 1 260px;min-width:0;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div role="img" aria-label="{{ b.name }}" style="width:42px;height:42px;flex:none;border-radius:50%;background-image:url({{ b.avatar }});background-size:cover;background-position:center"></div>
+                    <div style="min-width:0">
+                      <div style="font-size:15px;font-weight:700">{{ b.name }}</div>
+                      <div style="font-size:12.5px;color:#626C75">{{ b.degree }}</div>
+                    </div>
+                  </div>
+                  <div style="font-size:13.5px;line-height:20px;color:#4B5563">{{ b.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#FFFFFF;border:1px dashed #D9D9D4;border-radius:20px;padding:4px 20px">
+              <sc-for list="{{ person.inferences }}" as="i" hint-placeholder-count="2">
+                <div style="padding:8px 0;border-top:1px solid {{ i.divider }};display:flex;flex-direction:column;gap:2px">
+                  <div style="font-size:15px;line-height:21px;color:#1A1A1A">{{ i.claim }}</div>
+                  <div style="font-size:12.5px;color:#626C75">{{ i.source }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isProfileTab }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div onClick="{{ goTrustTab }}" style="cursor:pointer;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+                <div style="font-size:16px;font-weight:700">Can you trust them?</div>
+                <div style="font-size:13px;font-weight:700;color:#0E4E42">Open the Trust page ›</div>
+              </div>
+              <div style="font-size:14px;color:#4B5563">{{ person.trustLine }}</div>
+            </div>
+            <div onClick="{{ openPersonGraph }}" style="cursor:pointer;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+                <div style="font-size:16px;font-weight:700">How you're connected</div>
+                <div style="font-size:13px;font-weight:700;color:#0E4E42">View the route ›</div>
+              </div>
+              <div style="font-size:14px;color:#4B5563">See the people who link you to {{ person.name }}.</div>
+            </div>
+            <div onClick="{{ goGuestbook }}" style="cursor:pointer;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+                <div style="font-size:16px;font-weight:700">Guest book</div>
+                <div style="font-size:13px;font-weight:700;color:#0E4E42">{{ person.entriesLabel }} ›</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="flex:1;min-width:0;height:9px;border-radius:999px;background:#F0F0EC;overflow:hidden"><div style="height:9px;border-radius:999px;background:#17A589;width:92%"></div></div>
+                <div style="width:66px;text-align:right;font-size:12px;font-weight:800;color:#0E4E42">Positive</div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ signals }}" as="s" hint-placeholder-count="4">
+                  <div style="border:1px solid #17A589;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:#0E4E42">{{ s }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRoomTab }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.05);padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:18px;line-height:25px;font-weight:700">{{ person.name }}'s place in {{ person.place }}</div>
+            <div style="font-size:14.5px;line-height:21px;color:#1A1A1A">{{ person.roomBody }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ person.tagList }}" as="tg" hint-placeholder-count="4">
+                <div style="background:#F7F7F5;border:1px solid #ECECE8;border-radius:999px;padding:8px 15px;font-size:13px;font-weight:700;color:#4B5563">{{ tg }}</div>
+              </sc-for>
+            </div>
+            <div style="font-size:12.5px;color:#626C75">Photos are the host's own. We don't stage or retouch them.</div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ graphOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(31,41,43,.55);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div style="width:620px;max-width:100%;max-height:100%;overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.2);padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+          <div>
+            <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">How you're connected to {{ graph.name }}</div>
+            <div style="margin-top:4px;font-size:13.5px;color:#626C75">{{ graph.sub }}</div>
+          </div>
+          <div onClick="{{ closeModal }}" style="cursor:pointer;font-size:20px;line-height:1;color:#626C75">×</div>
+        </div>
+        <div style="position:relative;height:180px;margin:4px 0">
+          <svg viewBox="0 0 572 180" style="position:absolute;inset:0;width:100%;height:100%">
+            <sc-for list="{{ modalGraph.stubs }}" as="st" hint-placeholder-count="3">
+              <line x1="{{ st.x1 }}" y1="{{ st.y1 }}" x2="{{ st.x2 }}" y2="{{ st.y2 }}" stroke="#DCE5E1" stroke-width="1.6"></line>
+            </sc-for>
+            <sc-for list="{{ modalGraph.edges }}" as="e" hint-placeholder-count="2">
+              <path d="{{ e.d }}" stroke="#17A589" stroke-width="2.6" stroke-linecap="round" fill="none"></path>
+            </sc-for>
+          </svg>
+          <sc-for list="{{ modalGraph.nodes }}" as="nd" hint-placeholder-count="3">
+            <div style="position:absolute;left:{{ nd.left }}px;top:{{ nd.top }}px;width:{{ nd.size }}px;display:flex;flex-direction:column;align-items:center">
+              <div role="img" aria-label="{{ nd.name }}" style="width:{{ nd.size }}px;height:{{ nd.size }}px;border-radius:50%;border:3px solid #fff;box-shadow:0 4px 14px rgba(26,26,26,.1);background-image:url({{ nd.avatar }});background-size:cover;background-position:center"></div>
+              <div style="margin-top:3px;font-size:11px;font-weight:800;color:#4B5563;white-space:nowrap">{{ nd.name }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#FFFFFF;border-radius:20px;padding:0">
+          <sc-for list="{{ chain }}" as="h" hint-placeholder-count="3">
+            <div style="display:flex">
+              <div style="width:36px;flex:none;display:flex;flex-direction:column;align-items:center">
+                <div role="img" aria-label="{{ h.name }}" style="width:36px;height:36px;flex:none;border-radius:50%;border:3px solid #fff;background-image:url({{ h.avatar }});background-size:cover;background-position:center"></div>
+                <div style="flex:1;width:2px;min-height:22px;margin:4px 0;background:{{ h.connector }}"></div>
+              </div>
+              <div style="flex:1;min-width:0;margin-left:12px;padding-bottom:22px">
+                <div style="font-size:15px;font-weight:800">{{ h.name }}</div>
+                <div style="margin-top:1px;font-size:13px;font-weight:600;color:#626C75">{{ h.role }}</div>
+                <sc-if value="{{ h.hasNote }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;background:#E7F4F0;border-radius:14px;padding:11px 13px;font-size:13px;font-weight:600;line-height:18px;color:#0E4E42">“{{ h.note }}”</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:12.5px;color:#626C75">{{ graph.foot }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ writeOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(31,41,43,.55);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div style="width:560px;max-width:100%;max-height:100%;overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 8px 24px rgba(26,26,26,.2);padding:24px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+          <div>
+            <div style="font-size:19px;line-height:26px;font-weight:700;letter-spacing:-.2px">Write Danica's guest-book entry</div>
+            <div style="margin-top:4px;font-size:13.5px;color:#626C75">Four nights in Tooting, 23 – 27 April.</div>
+          </div>
+          <div onClick="{{ closeModal }}" style="cursor:pointer;font-size:20px;line-height:1;color:#626C75">×</div>
+        </div>
+        <textarea placeholder="What was it actually like staying there?" style="width:100%;height:120px;background:#F5F5F4;border:1px solid #ECECE8;border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:21px;color:#1A1A1A;resize:none;outline:none"></textarea>
+        <div style="font-size:11.5px;font-weight:800;color:#4B5563;text-transform:uppercase;letter-spacing:.6px">Trust signals</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ writeSignals }}" as="w" hint-placeholder-count="4">
+            <div onClick="{{ w.toggle }}" style="cursor:pointer;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;background:{{ w.bg }};color:{{ w.color }};border:1px solid {{ w.border }}">{{ w.label }}</div>
+          </sc-for>
+        </div>
+        <div style="font-size:12.5px;line-height:19px;color:#626C75">Danica will see your name on this. Entries stay editable for 48 hours, then they're hers.</div>
+        <div style="display:flex;gap:10px">
+          <div onClick="{{ submitEntry }}" style="flex:1;cursor:pointer;background:#17A589;border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;color:#fff">Post entry</div>
+          <div onClick="{{ closeModal }}" style="cursor:pointer;border:1px solid #ECECE8;border-radius:12px;padding:14px 22px;font-size:15px;font-weight:700;color:#4B5563">Not now</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;explore&quot;,&quot;options&quot;:[&quot;explore&quot;,&quot;community&quot;,&quot;guestbook&quot;,&quot;trips&quot;,&quot;messages&quot;,&quot;me&quot;,&quot;person&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;defaultPerson&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;emma&quot;,&quot;options&quot;:[&quot;emma&quot;,&quot;danica&quot;,&quot;priya&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;connectedOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+// Mirrors the connected codebase: theme/tokens.ts, domain/fixtures.ts, domain/geo.ts,
+// ui/{Loop,Bars,TierBadge,GraphView,ConnectionPath,MapCanvas}.tsx and screens/web/*.
+const BRAND = '#17A589', TINT = '#E7F4F0', TINTB = '#CFE4DE', ONMINT = '#0E4E42', ONMINTSOFT = '#2C6559';
+const INK = '#1A1A1A', INKSOFT = '#4B5563', INKFAINT = '#626C75';
+const HAIR = '#ECECE8', HAIRSOFT = '#F0F0EC', DASHEDTINT = '#9FC9BF', SCREEN = '#F5F5F4', BG = '#F7F7F5';
+const TRUST = { 1: '#17A589', 2: '#4FBFA6', 3: '#9BCFC3' };
+const TIER = { Newcomer: '#8A9099', Trusted: '#17A589', Pillar: '#3B7DD8', Legend: '#C98A2B' };
+
+const AV = {
+  you: 'assets/avatars/you.jpg', emma: 'assets/avatars/emma.jpg', danica: 'assets/avatars/danica.jpg',
+  katelin: 'assets/avatars/katelin.jpg', nate: 'assets/avatars/nate.jpg', sophie: 'assets/avatars/sophie.jpg',
+  theo: 'assets/avatars/theo.jpg', priya: 'assets/avatars/priya.jpg', ollie: 'assets/avatars/ollie.jpg',
+  bella: 'assets/avatars/bella.jpg', amy: 'assets/avatars/amy.jpg', lena: 'assets/avatars/lena.jpg'
+};
+const COUNTRY = { you: 'NZ', emma: 'NZ', bella: 'GB', sophie: 'AU', amy: 'AU', katelin: 'AU', ollie: 'NZ', danica: 'AU', nate: 'NZ', priya: 'GB', theo: 'GB', lena: 'AU' };
+const FLAGS = { NZ: '\uD83C\uDDF3\uD83C\uDDFF', AU: '\uD83C\uDDE6\uD83C\uDDFA', GB: '\uD83C\uDDEC\uD83C\uDDE7' };
+const flagOf = id => FLAGS[COUNTRY[id]] || '\uD83C\uDFF3\uFE0F';
+const cap = id => id.charAt(0).toUpperCase() + id.slice(1);
+
+const LISTINGS = [
+  { id: 'danica', name: 'Danica', title: 'Danica\u2019s Room', area: 'Tooting, London', place: 'Tooting', price: 41, kind: 'Room', steps: 1, mutual: null, lat: 51.4271, lng: -0.168, tags: ['Quiet', 'Garden', 'Pet-friendly'], room: 'assets/listings/danica.jpg', route: 'You know Danica directly.' },
+  { id: 'emma', name: 'Emma', title: 'Emma\u2019s Room', area: 'De Beauvoir, London', place: 'De Beauvoir', price: 44, kind: 'Room', steps: 2, mutual: 'bella', lat: 51.5385, lng: -0.0785, tags: ['Near tube', 'Quiet', 'WFH desk', 'Female-only'], room: 'assets/listings/emma.jpg', route: 'Through Bella.' },
+  { id: 'katelin', name: 'Katelin', title: 'Katelin\u2019s Room', area: 'Finsbury Park, London', place: 'Finsbury Park', price: 38, kind: 'Room', steps: 2, mutual: 'amy', lat: 51.5646, lng: -0.1066, tags: ['Near tube', 'Balcony', 'Long stays'], room: 'assets/listings/katelin.jpg', route: 'Through Amy.' },
+  { id: 'nate', name: 'Nate', title: 'Nate\u2019s Flat', area: 'Hackney, London', place: 'Hackney', price: 49, kind: 'Whole place', steps: 2, mutual: 'bella', lat: 51.545, lng: -0.0553, tags: ['Balcony', 'WFH desk', 'Long stays'], room: 'assets/listings/nate.jpg', route: 'Through Bella.' },
+  { id: 'ollie', name: 'Ollie', title: 'Ollie\u2019s Studio', area: 'Peckham, London', place: 'Peckham', price: 52, kind: 'Whole place', steps: 3, mutual: 'katelin', lat: 51.4739, lng: -0.0693, tags: ['Central', 'Ensuite', 'WFH desk'], room: 'assets/listings/ollie.jpg', route: 'Through Amy and others.' },
+  { id: 'priya', name: 'Priya', title: 'Priya\u2019s Room', area: 'Bermondsey, London', place: 'Bermondsey', price: 46, kind: 'Room', steps: 3, mutual: 'katelin', lat: 51.4979, lng: -0.0637, tags: ['Near tube', 'Central', 'Female-only'], room: 'assets/listings/priya.jpg', route: 'Through Katelin and others.' }
+];
+
+// geo.ts mercatorTilePixel over the bundled 3x3 CARTO grid (mapTiles.ts).
+const MAPG = { z: 12, x0: 2045, y0: 1361, tile: 256, grid: 768 };
+function merc(lng, lat) {
+  const n = Math.pow(2, MAPG.z), t = MAPG.tile;
+  const rad = (lat * Math.PI) / 180;
+  return {
+    x: ((lng + 180) / 360) * n * t - MAPG.x0 * t,
+    y: ((1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2) * n * t - MAPG.y0 * t
+  };
+}
+const GEO = {};
+LISTINGS.forEach(l => { GEO[l.id] = merc(l.lng, l.lat); });
+const BOUNDS = (function () {
+  const xs = LISTINGS.map(l => GEO[l.id].x), ys = LISTINGS.map(l => GEO[l.id].y);
+  const minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+  const minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+  return { minX, maxX, minY, maxY, cx: (minX + maxX) / 2, cy: (minY + maxY) / 2, w: maxX - minX, h: maxY - minY };
+})();
+
+// MapCanvas.tsx ringOf
+const ringOf = d => d <= 1 ? { w: 3, c: TRUST[1], dashed: false }
+  : d === 2 ? { w: 2, c: TRUST[2], dashed: false }
+  : { w: 1.5, c: TRUST[3], dashed: true };
+
+// webBits.tsx reachText + ReachPill
+const reachText = d => d === 1 ? 'One step from you' : d === 2 ? 'Two steps from you' : d === 3 ? 'Three steps away' : d + ' steps away';
+const reachPill = d => d <= 2
+  ? { reach: reachText(d), reachBg: TINT, reachColor: ONMINT, reachBorder: d === 1 ? BRAND : TINT }
+  : { reach: reachText(d), reachBg: BG, reachColor: INKFAINT, reachBorder: BG };
+
+// A pin is a 46px ring plus its label, centred by translate(-50%,-50%): its box spans y +/- 35.
+const PIN_HALF_H = 35, PIN_HALF_W = 47;
+
+// MapCanvas.tsx layoutPins relaxation. Only ever called with pins whose true position is in view.
+function relax(pts, mw, mh) {
+  const MIN = 58, loX = PIN_HALF_W, hiX = mw - PIN_HALF_W, loY = PIN_HALF_H, hiY = mh - PIN_HALF_H;
+  for (let it = 0; it < 90; it++) {
+    let moved = false;
+    for (let a = 0; a < pts.length; a++) {
+      for (let b = a + 1; b < pts.length; b++) {
+        const pa = pts[a], pb = pts[b];
+        let dx = pb.x - pa.x, dy = pb.y - pa.y, d = Math.hypot(dx, dy);
+        if (d >= MIN) continue;
+        if (d < 0.01) { const ang = a * 2.399963; dx = Math.cos(ang); dy = Math.sin(ang); d = 1; }
+        const push = (MIN - d) / 2, ux = dx / d, uy = dy / d;
+        pa.x -= ux * push; pa.y -= uy * push; pb.x += ux * push; pb.y += uy * push;
+        moved = true;
+      }
+    }
+    for (const p of pts) {
+      p.x = Math.min(Math.max(p.x, loX), hiX);
+      p.y = Math.min(Math.max(p.y, loY), hiY);
+    }
+    if (!moved) break;
+  }
+  return pts;
+}
+
+// GraphView.tsx: quadratic edges on an alternating baseline, H = 180.
+function graphLayout(ids, w) {
+  const n = ids.length;
+  const nodes = ids.map((id, i) => ({
+    id, x: n === 1 ? w / 2 : 34 + (i / (n - 1)) * (w - 68), y: i % 2 === 0 ? 104 : 58
+  }));
+  const size = i => i === n - 1 ? 58 : n > 4 ? 42 : 48;
+  const edges = nodes.slice(1).map((p, i) => {
+    const a = nodes[i], cx = (a.x + p.x) / 2, cy = Math.min(a.y, p.y) - 26;
+    return { d: 'M ' + a.x + ' ' + a.y + ' Q ' + cx + ' ' + cy + ' ' + p.x + ' ' + p.y };
+  });
+  const mid = nodes[Math.floor(n / 2)] || nodes[0];
+  const stubs = [0, 1, 2].map(i => {
+    const ang = Math.PI * (0.62 + i * 0.28);
+    return { x1: mid.x, y1: mid.y, x2: mid.x + Math.cos(ang) * 30, y2: mid.y + Math.sin(ang) * 26 + 22 };
+  });
+  return {
+    stubs, edges,
+    nodes: nodes.map((p, i) => ({
+      avatar: AV[p.id], name: i === 0 ? 'You' : cap(p.id), size: size(i),
+      left: Math.round(p.x - size(i) / 2), top: Math.round(p.y - size(i) / 2)
+    }))
+  };
+}
+
+const PEOPLE = {
+  emma: {
+    id: 'emma', name: 'Emma', place: 'De Beauvoir', price: 44, kind: 'Room', nights: '7 nights',
+    dates: '14 Sep \u2013 21 Sep', room: 'assets/listings/emma.jpg',
+    headline: 'Emma is taking over your space for 7 nights.',
+    sub: 'Because Bella vouches for her, your keys, your kitchen and your bed are in good hands.',
+    hasAsk: true, askLabel: 'Ask Bella about Emma', askSub: "she's hosted for you before",
+    hasConsent: true, consent: 'Bella and Sophie both said yes to being shown here.', consentAvatar: AV.bella,
+    unknown: 'Emma has never been a guest on Kiki. Nothing in her record tells you how she treats someone else\u2019s flat.',
+    hasCounts: true, hasNothing: false, isDirect: false, isVouched: true,
+    counts: [
+      { label: 'Vouched for by', value: 'Bella and Sophie', note: '2 independent routes' },
+      { label: 'Guest book', value: '4 entries', note: 'from people you know' },
+      { label: 'Times hosted', value: '4', note: 'Never stayed anywhere' },
+      { label: 'On Kiki since', value: 'Jul 2025', note: '13 months' }
+    ],
+    routeHeading: 'How you know Emma',
+    routeTitle: 'Two people connect you',
+    routeBody: 'Bella hosted you in March and has known Emma for two years. Sophie was at the Dalston picnic with you both in June.',
+    routeFoot: 'Two independent routes. Neither is a score.',
+    path: ['you', 'bella', 'emma'],
+    chainNote: 'She hosted my friend Rachel for a fortnight and looked after the flat incredibly well.',
+    recordTitle: '4 of 4 people in their guest book are people you know',
+    recordBody: 'Every review talks about Emma as a host. Not one is from someone who had her as a guest, which is what you\u2019d be doing.',
+    quote: '\u201CEmma was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.\u201D',
+    entriesLabel: '4 guest book entries',
+    trustLine: '2 people connect you \u2014 via Bella and Sophie.',
+    bio: 'Moved to London from Mount Eden two years ago. Works hybrid, away most of September for a wedding back home.',
+    roomBody: 'A room in a shared first-floor flat in De Beauvoir. Bookshelf wall, west light, five minutes from Dalston Kingsland.',
+    tagList: ['Near tube', 'Quiet', 'WFH desk', 'Female-only'],
+    backersSub: 'Both of them agreed to be named, and either will take your call.',
+    backers: [
+      { name: 'Bella', avatar: AV.bella, degree: 'One step from you', note: 'Hosted you in March. Has known Emma for two years.' },
+      { name: 'Sophie', avatar: AV.sophie, degree: 'One step from you', note: 'At the Dalston picnic with you both in June.' }
+    ],
+    inferences: [
+      { claim: 'You both moved to London from Mount Eden.', source: 'Her words and yours' },
+      { claim: 'You were both studying in Paris in 2017.', source: 'Her words and yours' },
+      { claim: 'You were both at the Dalston picnic in June.', source: 'We worked it out \u2014 nobody told us' }
+    ]
+  },
+  danica: {
+    id: 'danica', name: 'Danica', place: 'Tooting', price: 41, kind: 'Room', nights: '3 nights',
+    dates: '2 Oct \u2013 5 Oct', room: 'assets/listings/danica.jpg',
+    headline: 'Danica is taking over your space for 3 nights.',
+    sub: 'You already know her yourself. She\u2019d have your keys, your kitchen and everything you own.',
+    hasAsk: false, askLabel: '', askSub: '', hasConsent: false, consent: '', consentAvatar: AV.you,
+    unknown: 'You stayed at Danica\u2019s once. You\u2019ve never seen how she treats a flat that isn\u2019t her own.',
+    hasCounts: true, hasNothing: false, isDirect: true, isVouched: false,
+    counts: [
+      { label: 'Connected', value: 'Directly', note: 'No mutual needed' },
+      { label: 'Guest book', value: '2 entries', note: 'from people you know' },
+      { label: 'Times hosted', value: '2', note: 'Never stayed anywhere' },
+      { label: 'On Kiki since', value: 'Feb 2026', note: '6 months' }
+    ],
+    routeHeading: 'How you know Danica',
+    routeTitle: 'You\u2019re directly connected',
+    routeBody: 'You don\u2019t need a mutual to vouch for Danica \u2014 you know them yourself. That\u2019s the strongest link Kiki can show you.',
+    routeFoot: 'You matched with Danica in April.',
+    path: ['you', 'danica'], chainNote: '',
+    recordTitle: '2 of 2 people in their guest book are people you know',
+    recordBody: 'Every review talks about Danica as a host. Not one is from someone who had her as a guest, which is what you\u2019d be doing.',
+    quote: '\u201CQuiet garden flat, lovely and relaxed. Danica was welcoming and easy to reach.\u201D',
+    entriesLabel: '2 guest book entries',
+    trustLine: 'You know Danica yourself. No mutual needed.',
+    bio: 'Australian, in Tooting since 2024. Gardens on weekends, works from the kitchen table, away in early October.',
+    roomBody: 'A double room in a quiet garden flat in Tooting. Pet-friendly \u2014 there\u2019s a cat, and she stays.',
+    tagList: ['Quiet', 'Garden', 'Pet-friendly'],
+    backersSub: 'A direct link needs nobody else to confirm it.',
+    backers: [{ name: 'You', avatar: AV.you, degree: 'Direct', note: 'You stayed with Danica in April. You are the connection.' }],
+    inferences: [
+      { claim: 'You are both into bouldering at Blok Shoreditch.', source: 'Her words and yours' },
+      { claim: 'You stayed four nights in her flat in April.', source: 'Your own trip history' }
+    ]
+  },
+  priya: {
+    id: 'priya', name: 'Priya', place: 'Bermondsey', price: 46, kind: 'Room', nights: '3 nights',
+    dates: '2 Oct \u2013 5 Oct', room: 'assets/listings/priya.jpg',
+    headline: 'Priya is taking over your space for 3 nights.',
+    sub: 'She\u2019d have your keys, your kitchen and everything you own. Nobody you know can tell you how that will go.',
+    hasAsk: false, askLabel: '', askSub: '', hasConsent: false, consent: '', consentAvatar: AV.you,
+    unknown: 'Nobody you know has met Priya. Two people wrote her a good entry, but you don\u2019t know either of them.',
+    hasCounts: false, hasNothing: true, isDirect: false, isVouched: true, counts: [],
+    routeHeading: 'How they got in',
+    routeTitle: 'Vouched for by Katelin',
+    routeBody: '\u201CKatelin invited them into Kiki.\u201D Through Katelin, who is two steps from you \u2014 far enough not to count.',
+    routeFoot: 'One route, and not a close one.',
+    path: ['you', 'amy', 'katelin', 'priya'],
+    chainNote: 'Katelin brought Priya into Kiki.',
+    recordTitle: 'They\u2019ve stayed with 2 people. Both wrote them a good entry.',
+    recordBody: 'Neither of those people is in your circle, so you can\u2019t go and ask. Read the words and decide what they\u2019re worth to you.',
+    quote: '\u201CLeft the place cleaner than she found it. Easy to communicate with and would have her back any time.\u201D',
+    entriesLabel: '2 guest book entries',
+    trustLine: 'No one connects you yet. Katelin invited her in.',
+    bio: 'In Bermondsey since last year, nursing at Guy\u2019s. Invited by Katelin. Two stays on Kiki, both as a guest.',
+    roomBody: 'A room in a Victorian conversion near Bermondsey station. Quiet street, ten minutes to the Jubilee line.',
+    tagList: ['Near tube', 'Central', 'Female-only'],
+    backersSub: 'One name, two steps away. That is thinner than it looks.',
+    backers: [
+      { name: 'Katelin', avatar: AV.katelin, degree: 'Two steps from you', note: 'Invited Priya into Kiki. You have never met.' },
+      { name: 'Daniel', avatar: AV.you, degree: "Someone you don't know", note: 'Hosted Priya in March and wrote her a good entry.' }
+    ],
+    inferences: [
+      { claim: 'She grew up in Manchester. You have no overlap there.', source: 'Her words' },
+      { claim: 'She nurses at Guy\u2019s. Nobody in your circle works there.', source: 'Her words' }
+    ]
+  }
+};
+
+const GRAPHS = {
+  emma: { name: 'Emma', sub: 'Two independent routes.', foot: 'Kiki shows the route, not a score. Both of these people agreed to be named.' },
+  danica: { name: 'Danica', sub: 'No one in between.', foot: 'A direct link needs nobody else to confirm it.' },
+  priya: { name: 'Priya', sub: 'One route, and not a close one.', foot: 'Two steps is far enough that we would not lean on it. Deciding later is a real option.' }
+};
+
+const THREADS = [
+  { id: 'emma', name: 'Emma', avatar: AV.emma, steps: 2, via: 'Through Bella and Sophie', preview: 'No way! Small world. Those dates work \u2014 happy \u2026', origin: 'Bella vouched for Emma. That is why this thread exists.',
+    bubbles: [ { me: true, text: 'Hi Emma! Bella pointed me your way \u2014 your De Beauvoir room looks lovely.' }, { me: false, text: 'Oh amazing, any friend of Bella\u2019s! When are you thinking?' }, { me: true, text: 'The 12th\u201315th. Also spotted we both did the Paris exchange in 2017.' }, { me: false, text: 'No way! Small world. Those dates work \u2014 happy to hold them for you.' } ] },
+  { id: 'katelin', name: 'Katelin', avatar: AV.katelin, steps: 2, via: 'Through Amy', preview: 'Amy\u2019s the best! Yes the Finsbury Park room is free\u2026', origin: 'Amy vouched for Katelin. That is why this thread exists.',
+    bubbles: [ { me: true, text: 'Hey Katelin \u2014 Amy said I should get in touch about the Finsbury Park room.' }, { me: false, text: 'Amy\u2019s the best! Yes the Finsbury Park room is free that week.' } ] },
+  { id: 'danica', name: 'Danica', avatar: AV.danica, steps: 1, via: 'Direct friend', preview: 'You: Anytime! The garden was a dream for workin\u2026', origin: 'You matched with Danica in April. No one vouched \u2014 you already knew each other.',
+    bubbles: [ { me: false, text: 'Thanks again for looking after the place so well in April.' }, { me: true, text: 'Anytime! The garden was a dream for working in.' } ] }
+];
+
+class Component extends DCLogic {
+  state = {
+    screen: null, exploreView: 'homes', pin: null,
+    person: null, personTab: 'trust', view: 'host',
+    thread: 'emma', filters: null, modal: null, graph: null,
+    entryWritten: false, picked: ['felt safe'],
+    mw: 0, mh: 0, zoom: null, cx: BOUNDS.cx, cy: BOUNDS.cy, hover: null, degFilter: null, dragging: false
+  };
+
+  /**
+   * Fit the listing bbox, but never below "cover" — the bundled 3x3 grid is all the basemap
+   * there is, so zooming out past cover would put pins on blank background.
+   */
+  fitZoom(mw, mh) {
+    const base = Math.max(mw, mh) / MAPG.grid;
+    if (!base) return 1;
+    const cover = Math.max(mw, mh) / MAPG.grid / base; // == 1
+    const padX = 96, padY = 72;
+    const availX = Math.max(mw - padX, 80), availY = Math.max(mh - padY, 80);
+    const z = Math.min(availX / (BOUNDS.w * base), availY / (BOUNDS.h * base));
+    return Math.min(Math.max(z, cover), 6);
+  }
+
+  /** Keep the viewport inside the basemap so no empty band is ever visible. */
+  clampCenter(cx, cy, zoom, mw, mh) {
+    const S = (Math.max(mw, mh) / MAPG.grid) * zoom;
+    if (!S) return { cx, cy };
+    const halfW = mw / 2 / S, halfH = mh / 2 / S;
+    // One pin-radius of slack past the tile edge: Finsbury Park sits just north of the bundled
+    // grid, and a face at its true position beats a face welded to the frame.
+    const fix = (v, half, extent) => half * 2 >= extent ? extent / 2
+      : Math.min(Math.max(v, half), extent - half);
+    return { cx: fix(cx, halfW, MAPG.grid), cy: fix(cy, halfH, MAPG.grid) };
+  }
+
+  set(patch) { this.setState(patch); if (typeof window !== 'undefined') window.scrollTo(0, 0); }
+  openPerson(id, tab) { this.set({ screen: 'person', person: PEOPLE[id] ? id : 'emma', personTab: tab || 'trust' }); }
+
+  componentWillUnmount() {
+    if (this._ro) this._ro.disconnect();
+    if (this._el) this._el.removeEventListener('wheel', this.wheel);
+  }
+
+  setMapEl = el => {
+    if (!el || this._el === el) return;
+    if (this._el) this._el.removeEventListener('wheel', this.wheel);
+    if (this._ro) this._ro.disconnect();
+    this._el = el;
+    const measure = () => { const r = el.getBoundingClientRect(); if (r.width) this.setState({ mw: r.width, mh: r.height }); };
+    measure();
+    if (typeof ResizeObserver !== 'undefined') { this._ro = new ResizeObserver(measure); this._ro.observe(el); }
+    el.addEventListener('wheel', this.wheel, { passive: false });
+  };
+
+  baseScale() {
+    const mw = this.state.mw;
+    return Math.max(mw, this.mapHeight(mw)) / MAPG.grid;
+  }
+
+  /**
+   * The card is as tall as the data needs: the listings' projected bbox at cover scale, plus
+   * room for a face and its label. Capped at mw so the cover-scaled basemap still fills it.
+   */
+  mapHeight(mw) {
+    if (!mw) return 600;
+    return Math.round(Math.min(Math.max(BOUNDS.h * (mw / MAPG.grid) + 96, 520), mw));
+  }
+  zoom() {
+    const mw = this.state.mw;
+    return this.state.zoom === null ? this.fitZoom(mw, this.mapHeight(mw)) : this.state.zoom;
+  }
+
+  zoomTo(next, mx, my) {
+    const s = this.state;
+    const z = Math.min(Math.max(next, 0.2), 6);
+    const S = this.baseScale() * this.zoom(), S2 = this.baseScale() * z;
+    const ax = mx === undefined ? s.mw / 2 : mx, ay = my === undefined ? s.mh / 2 : my;
+    const gx = s.cx + (ax - s.mw / 2) / S, gy = s.cy + (ay - s.mh / 2) / S;
+    const c = this.clampCenter(gx - (ax - s.mw / 2) / S2, gy - (ay - s.mh / 2) / S2, z, s.mw, this.mapHeight(s.mw));
+    this.setState({ zoom: z, cx: c.cx, cy: c.cy });
+  }
+
+  wheel = e => {
+    e.preventDefault();
+    const r = this._el.getBoundingClientRect();
+    this.zoomTo(this.zoom() * (e.deltaY < 0 ? 1.16 : 1 / 1.16), e.clientX - r.left, e.clientY - r.top);
+  };
+  down = e => { this._drag = { x: e.clientX, y: e.clientY, cx: this.state.cx, cy: this.state.cy, moved: false }; this.setState({ dragging: true }); };
+  move = e => {
+    const d = this._drag;
+    if (!d) return;
+    const S = this.baseScale() * this.zoom();
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (Math.abs(dx) + Math.abs(dy) > 3) d.moved = true;
+    const c = this.clampCenter(d.cx - dx / S, d.cy - dy / S, this.zoom(), this.state.mw, this.mapHeight(this.state.mw));
+    this.setState({ cx: c.cx, cy: c.cy });
+  };
+  up = () => { this._dragMoved = !!(this._drag && this._drag.moved); this._drag = null; this.setState({ dragging: false }); };
+
+  renderVals() {
+    const p = this.props || {};
+    const b = this.state;
+    const s = Object.assign({}, b, {
+      screen: b.screen || p.startScreen || 'explore',
+      person: b.person || p.defaultPerson || 'emma',
+      graph: b.graph || p.defaultPerson || 'emma',
+      filters: b.filters || (p.connectedOnly ? ['Connected only'] : [])
+    });
+
+    const nav = [['explore', 'Explore'], ['community', 'Community'], ['guestbook', 'Guest book'], ['trips', 'Trips'], ['messages', 'Messages'], ['me', 'Me']]
+      .map(([id, label]) => {
+        const on = s.screen === id;
+        return { label, weight: on ? 700 : 600, color: on ? INK : INKFAINT, underline: on ? INK : 'transparent', go: () => this.set({ screen: id }) };
+      });
+
+    const filterNames = ['\uD83E\uDD1D Connected only', 'Near tube', 'Quiet', 'WFH desk', 'Garden', 'Long stays'];
+    const filters = filterNames.map(label => {
+      const on = s.filters.indexOf(label) >= 0;
+      return { label, bg: on ? BRAND : '#FFFFFF', color: on ? '#FFFFFF' : INKSOFT, border: on ? BRAND : HAIR,
+        toggle: () => this.setState(() => {
+          const cur = s.filters;
+          return { filters: cur.indexOf(label) >= 0 ? cur.filter(f => f !== label) : cur.concat([label]) };
+        }) };
+    });
+
+    let list = LISTINGS.slice();
+    if (s.filters.indexOf(filterNames[0]) >= 0) list = list.filter(l => l.steps <= 2);
+    s.filters.filter(f => f !== filterNames[0]).forEach(f => { list = list.filter(l => l.tags.indexOf(f) >= 0); });
+    list.sort((x, y) => x.steps - y.steps);
+
+    const listings = list.map(l => Object.assign({}, l, reachPill(l.steps), {
+      avatar: AV[l.id], flag: flagOf(l.id), tags: l.tags.slice(0, 3).join(' · '),
+      open: () => this.openPerson(l.id, 'trust')
+    }));
+
+    // map
+    // Geometry follows the height we render, not the observed one, so nothing lags a resize.
+    const bw = s.mw || 900, bh = this.mapHeight(s.mw);
+    const zoom = s.zoom === null ? this.fitZoom(bw, bh) : s.zoom;
+    const S = (Math.max(bw, bh) / MAPG.grid) * zoom;
+    const ctr = this.clampCenter(s.cx, s.cy, zoom, bw, bh);
+    const ox = bw / 2 - ctr.cx * S, oy = bh / 2 - ctr.cy * S;
+    const raw = LISTINGS.map(l => ({ id: l.id, x: ox + GEO[l.id].x * S, y: oy + GEO[l.id].y * S }));
+    // A face may only be drawn where its whole box sits on real imagery; anything further out
+    // becomes an edge marker rather than a pin asserting a position it does not have.
+    const inView = raw.filter(pt => pt.y >= PIN_HALF_H && pt.y <= bh - PIN_HALF_H && pt.x >= PIN_HALF_W && pt.x <= bw - PIN_HALF_W);
+    const offView = raw.filter(pt => inView.indexOf(pt) < 0);
+    const placed = {};
+    relax(inView, bw, bh).forEach(pt => { placed[pt.id] = pt; });
+    const connLabel = l => l.steps === 1 ? 'You know them' : l.steps === 2 ? 'Friend of ' + cap(l.mutual) : l.steps + ' steps away';
+
+    const byId = {};
+    LISTINGS.forEach(l => { byId[l.id] = l; });
+    const edges = offView.map(pt => {
+      const l = byId[pt.id];
+      const north = pt.y < PIN_HALF_H, south = pt.y > bh - PIN_HALF_H, west = pt.x < PIN_HALF_W;
+      return { name: l.name, chevron: north ? '\u2191' : south ? '\u2193' : west ? '\u2190' : '\u2192',
+        left: Math.round(Math.min(Math.max(pt.x, 76), bw - 76)),
+        top: north ? 14 : south ? bh - 34 : Math.round(Math.min(Math.max(pt.y, 20), bh - 20)),
+        label: l.name + ' \u00b7 ' + l.place,
+        go: () => this.setState({ pin: l.id, cx: GEO[l.id].x, cy: GEO[l.id].y, zoom: Math.max(zoom, 1.6) }) };
+    });
+
+    const pins = LISTINGS.filter(l => placed[l.id]).map(l => {
+      const r = ringOf(l.steps), sel = s.pin === l.id, hov = s.hover === l.id;
+      const size = sel ? 50 : 40;
+      return { name: l.name, avatar: AV[l.id], flag: flagOf(l.id),
+        left: Math.round(placed[l.id].x), top: Math.round(placed[l.id].y),
+        size, ringSize: size + r.w * 2, ringWidth: r.w, ringStyle: r.dashed ? 'dashed' : 'solid',
+        ringColor: sel ? BRAND : r.c, z: sel ? 6 : hov ? 5 : 2,
+        opacity: s.degFilter !== null && s.degFilter !== l.steps ? 0.22 : 1,
+        label: hov ? l.name : connLabel(l),
+        labelBg: sel ? BRAND : '#FFFFFF', labelColor: sel ? '#FFFFFF' : ONMINT,
+        select: () => { if (!this._dragMoved) this.setState({ pin: l.id }); },
+        hover: () => this.setState({ hover: l.id }), unhover: () => this.setState({ hover: null }) };
+    });
+    const legend = [[1, 'One step from you'], [2, 'Two steps'], [3, 'Three or more']].map(([d, label]) => {
+      const r = ringOf(d);
+      return { label, w: r.w, style: r.dashed ? 'dashed' : 'solid', color: r.c,
+        opacity: s.degFilter === null || s.degFilter === d ? 1 : 0.35,
+        toggle: () => this.setState({ degFilter: s.degFilter === d ? null : d }) };
+    });
+    const pinRaw = LISTINGS.filter(l => l.id === s.pin)[0];
+    const pinObj = pinRaw ? Object.assign({}, pinRaw, reachPill(pinRaw.steps), { avatar: AV[pinRaw.id] }) : {};
+    const visible = s.degFilter === null ? LISTINGS : LISTINGS.filter(l => l.steps === s.degFilter);
+
+    const person = Object.assign({}, PEOPLE[s.person], {
+      avatar: AV[s.person], flag: flagOf(s.person),
+      consentAvatar: PEOPLE[s.person].consentAvatar || AV.you
+    });
+    const personTabs = [['room', 'Room'], ['profile', 'Profile'], ['trust', 'Trust']].map(([id, label]) => {
+      const on = s.personTab === id;
+      return { label, weight: on ? 700 : 600, color: on ? INK : INKFAINT, underline: on ? INK : 'transparent', go: () => this.setState({ personTab: id }) };
+    });
+
+    // ConnectionPath.tsx: You -> mutual -> host, note on the hop it belongs to
+    const path = person.path;
+    const chain = path.map((id, i) => ({
+      name: i === 0 ? 'You' : cap(id), avatar: AV[id],
+      role: i === 0 ? 'Where the chain starts' : i === path.length - 1 ? 'The host' : 'Mutual friend',
+      connector: i === path.length - 1 ? 'transparent' : '#CDE6DF',
+      hasNote: i === path.length - 1 && !!person.chainNote, note: person.chainNote
+    }));
+
+    const threads = THREADS.map(t => {
+      const on = s.thread === t.id;
+      return Object.assign({}, reachPill(t.steps), {
+        name: t.name, avatar: t.avatar, via: t.via, preview: t.preview,
+        bg: on ? '#FFFFFF' : 'rgba(255,255,255,0.6)',
+        shadow: on ? '0 8px 24px rgba(26,26,26,.05)' : 'none',
+        mark: on ? BRAND : 'transparent',
+        open: () => this.setState({ thread: t.id })
+      });
+    });
+    const thread = THREADS.filter(t => t.id === s.thread)[0] || THREADS[0];
+    const bubbles = thread.bubbles.map(m => ({
+      text: m.text, align: m.me ? 'flex-end' : 'flex-start',
+      bg: m.me ? BRAND : SCREEN, color: m.me ? '#FFFFFF' : INK,
+      radius: m.me ? '18px 18px 6px 18px' : '18px 18px 18px 6px'
+    }));
+
+    const similar = [
+      { id: 'emma', count: 4, facts: 'Mount Eden · Paris, 2017 · Blok Shoreditch · Dalston picnic in June' },
+      { id: 'danica', count: 1, facts: 'Blok Shoreditch' },
+      { id: 'katelin', count: 1, facts: 'Paris, 2017' },
+      { id: 'nate', count: 1, facts: 'Mount Eden' },
+      { id: 'sophie', count: 1, facts: 'Blok Shoreditch' },
+      { id: 'theo', count: 1, facts: 'Blok Shoreditch' }
+    ].map((x, i) => ({ name: cap(x.id), avatar: AV[x.id], flag: flagOf(x.id), count: x.count, facts: x.facts,
+      divider: i === 0 ? 'transparent' : HAIRSOFT, open: () => this.openPerson(x.id, 'profile') }));
+
+    const board = [['emma', 14.4, 'Pillar'], ['katelin', 8.2, 'Trusted'], ['priya', 3.2, 'Newcomer'], ['ollie', 3.1, 'Newcomer'], ['danica', 3, 'Newcomer'], ['bella', 2.9, 'Newcomer'], ['nate', 2.4, 'Newcomer'], ['amy', 2.2, 'Newcomer']]
+      .map((x, i) => ({ rank: i + 1, name: cap(x[0]), avatar: AV[x[0]], points: x[1], tier: x[2],
+        tierColor: TIER[x[2]], rankColor: i < 3 ? '#C98A2B' : INKFAINT,
+        divider: i === 0 ? 'transparent' : HAIRSOFT, open: () => this.openPerson(x[0], 'profile') }));
+
+    // Bars.tsx ThemeBar: warmth + safety read as brand, the rest a quieter teal
+    const themes = [['Warmth', 3], ['Cleanliness', 2], ['Location', 2], ['Safety', 2], ['Communication', 1]]
+      .map(t => ({ name: t[0], of: t[1] + ' of 3', pct: Math.max(6, Math.round((t[1] / 3) * 100)),
+        fill: (t[0] === 'Warmth' || t[0] === 'Safety') ? BRAND : '#8FC7B8' }));
+
+    const entries = [
+      { id: 'bella', degree: 'One step from you', sentiment: 'positive', text: 'Emma was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.' },
+      { id: 'sophie', degree: 'One step from you', sentiment: 'positive', text: 'Such a warm, thoughtful host. Great communication and a really central location. Felt like a friend by the end.' },
+      { id: 'amy', degree: 'One step from you', sentiment: 'positive', text: 'Clean, comfortable and easy from start to finish. She looked after everything. A real gem.' },
+      { id: 'theo', degree: 'Two steps from you', sentiment: 'mixed', text: 'Nice room and good location, though the wifi was a bit slow for working. Still a lovely stay overall.' }
+    ].map(e => ({ name: cap(e.id), avatar: AV[e.id], degree: e.degree, sentiment: e.sentiment, text: e.text }));
+
+    const deeds = [['Hosted', 0], ['Vouched', 4], ['Referred', 1], ['Showed up', 3]]
+      .map(d => ({ name: d[0], value: d[1], pct: Math.min(100, 10 + d[1] * 18) }));
+
+    // OverlapList/MeWeb: trait icon + provenance tag driven by fixtures' self_declared vs inferred
+    const matchOn = [
+      { icon: '\uD83C\uDF0F', label: 'Mount Eden', self: true },
+      { icon: '\uD83C\uDF93', label: 'Paris, 2017', self: true },
+      { icon: '\uD83E\uDDD7', label: 'Blok Shoreditch', self: true },
+      { icon: '\uD83C\uDF89', label: 'Dalston picnic in June', self: false }
+    ].map(m => ({ icon: m.icon, label: m.label,
+      source: m.self ? 'Your words' : 'We worked it out',
+      tagBg: m.self ? TINT : 'transparent', tagColor: m.self ? ONMINT : ONMINTSOFT,
+      tagBorder: m.self ? TINT : DASHEDTINT, tagBorderStyle: m.self ? 'solid' : 'dashed' }));
+
+    const sigLabels = ['felt safe', 'like a friend', 'looked after me', 'would host again'];
+    const writeSignals = sigLabels.map(label => {
+      const on = s.picked.indexOf(label) >= 0;
+      return { label, bg: on ? TINT : '#FFFFFF', color: on ? ONMINT : INKSOFT, border: on ? BRAND : HAIR,
+        toggle: () => this.setState(st => ({ picked: st.picked.indexOf(label) >= 0 ? st.picked.filter(x => x !== label) : st.picked.concat([label]) })) };
+    });
+
+    const openGraph = id => this.setState({ modal: 'graph', graph: GRAPHS[id] ? id : 'emma' });
+    const graphPerson = PEOPLE[GRAPHS[s.graph] ? s.graph : 'emma'];
+
+    return {
+      nav, goMe: () => this.set({ screen: 'me' }), back: () => this.set({ screen: 'explore' }),
+      isExplore: s.screen === 'explore', isCommunity: s.screen === 'community', isGuestbook: s.screen === 'guestbook',
+      isTrips: s.screen === 'trips', isMessages: s.screen === 'messages', isMe: s.screen === 'me', isPerson: s.screen === 'person',
+
+      isHomes: s.exploreView === 'homes', isMap: s.exploreView === 'map',
+      showHomes: () => this.setState({ exploreView: 'homes' }), showMap: () => this.setState({ exploreView: 'map' }),
+      homesBg: s.exploreView === 'homes' ? '#FFFFFF' : 'transparent', homesColor: s.exploreView === 'homes' ? INK : INKFAINT,
+      mapBg: s.exploreView === 'map' ? '#FFFFFF' : 'transparent', mapColor: s.exploreView === 'map' ? INK : INKFAINT,
+      filters, listings, noResults: listings.length === 0, clearFilters: () => this.setState({ filters: [] }),
+
+      pins, edges, legend, pin: pinObj, noPin: !pinRaw, hasPin: !!pinRaw,
+      setMapEl: this.setMapEl, onMapDown: this.down, onMapMove: this.move, onMapUp: this.up,
+      mapCursor: s.dragging ? 'grabbing' : 'grab',
+      mapHeight: this.mapHeight(s.mw),
+      mapTransform: 'translate(' + ox + 'px,' + oy + 'px) scale(' + S + ')',
+      mapCountTitle: visible.length + ' homes on the map',
+      mapCountSub: edges.length
+        ? edges.length + ' sit outside this view \u2014 tap the marker to go there'
+        : LISTINGS.filter(l => l.steps <= 2).length + ' are within two steps of you',
+      legendHint: s.degFilter === null ? 'Click a ring to filter' : 'Filtered \u2014 click again to clear',
+      zoomIn: () => this.zoomTo(zoom * 1.35), zoomOut: () => this.zoomTo(zoom / 1.35),
+      resetMap: () => this.setState({ zoom: null, cx: BOUNDS.cx, cy: BOUNDS.cy }),
+      openPinTrust: () => this.openPerson(s.pin, 'trust'),
+
+      similar, board, themes, entries, signals: sigLabels, deeds, matchOn,
+
+      entryPending: !s.entryWritten, entryDone: s.entryWritten, entriesWritten: s.entryWritten ? 2 : 1,
+      openWrite: () => this.setState({ modal: 'write' }),
+      submitEntry: () => this.setState({ modal: null, entryWritten: true }), writeSignals,
+
+      threads, thread, bubbles, openThreadGraph: () => openGraph(s.thread),
+
+      person, personTabs, chain,
+      panelGraph: graphLayout(person.path, 340),
+      modalGraph: graphLayout(graphPerson.path, 572),
+      isTrust: s.personTab === 'trust', isProfileTab: s.personTab === 'profile', isRoomTab: s.personTab === 'room',
+      goTrustTab: () => this.setState({ personTab: 'trust' }),
+      goGuestbook: () => this.set({ screen: 'guestbook' }),
+      goMessages: () => this.set({ screen: 'messages', thread: s.person }),
+      openPersonGraph: () => openGraph(s.person),
+      setHostView: () => this.setState({ view: 'host' }), setGuestView: () => this.setState({ view: 'guest' }),
+      hostBg: s.view === 'host' ? BG : 'transparent', hostColor: s.view === 'host' ? INK : INKSOFT, hostWeight: s.view === 'host' ? 700 : 600,
+      guestBg: s.view === 'guest' ? BG : 'transparent', guestColor: s.view === 'guest' ? INK : INKSOFT, guestWeight: s.view === 'guest' ? 700 : 600,
+
+      graphOpen: s.modal === 'graph', writeOpen: s.modal === 'write',
+      graph: GRAPHS[s.graph] || GRAPHS.emma,
+      closeModal: () => this.setState({ modal: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #0F1B17; -webkit-font-smoothing: antialiased; }
+  a { color: #E6CD8B; text-decoration: none; }
+  a:hover { color: #F2E3BE; }
+  @keyframes dd-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes dd-halo { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.08; transform: scale(1.45); } }
+  @keyframes dd-cue { 0%, 100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(7px); opacity: 1; } }
+  @keyframes dd-sweep { 0% { background-position: -160% 0; } 60%, 100% { background-position: 160% 0; } }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="background:#0F1B17; font-family:-apple-system,'SF Pro Text','Helvetica Neue',Helvetica,sans-serif; color:#F3F2EE; overflow-x:clip;">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section style="position:relative; min-height:100vh; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:44px; padding:120px 48px 96px; overflow:hidden; background:radial-gradient(125% 85% at 50% 6%, #1B3A33 0%, #152A24 40%, #0F1B17 78%);">
+    <span style="position:absolute; left:50%; top:-360px; margin-left:-560px; width:1120px; height:1120px; border-radius:999px; background:radial-gradient(circle, rgba(23,165,137,0.15) 0%, rgba(23,165,137,0) 62%); display:block; pointer-events:none;"></span>
+
+    <span data-rv="1" style="position:relative; display:flex; align-items:center; gap:11px; padding:9px 17px; border:1px solid rgba(230,205,139,0.30); border-radius:999px; background:rgba(230,205,139,0.05); white-space:nowrap;">
+      <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#E6CD8B" stroke-width="9"></circle></svg>
+      <span style="font:700 10.5px/1 ui-monospace,'SF Mono',Menlo,monospace; letter-spacing:2.2px; text-transform:uppercase; color:#E6CD8B;">Kiki · native iOS</span>
+    </span>
+
+    <h1 style="position:relative; margin:0; max-width:19ch; text-align:center; font:200 clamp(52px,7.2vw,104px)/1.02 'Newsreader',Georgia,serif; letter-spacing:-2.6px; color:#F6F5F1;">
+      <span style="display:block; overflow:hidden; padding-bottom:6px;"><span data-rv="2" style="display:block;">Not a booking app.</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:6px;"><span data-rv="3" style="display:block; color:#8FA9A1;">A way of proving</span></span>
+      <span style="display:block; overflow:hidden; padding-bottom:8px;"><span data-rv="4" style="display:block; background:linear-gradient(96deg,#E6CD8B 18%,#F6EBCB 44%,#C9A227 70%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">you are worth letting in.</span></span>
+    </h1>
+
+    <p data-rv="5" style="position:relative; margin:0; max-width:62ch; text-align:center; font:300 19px/31px 'Newsreader',Georgia,serif; color:#A9BDB6; text-wrap:pretty;">Every other stay platform starts with the room and bolts trust on afterwards as a star rating. Kiki inverts it: the person comes first, the room is a consequence, and the only currency is who will put their name next to yours.</p>
+
+    <span data-rv="6" style="position:relative; display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:16px;">
+      <span style="font:700 10px/1 ui-monospace,Menlo,monospace; letter-spacing:1.8px; text-transform:uppercase; color:#5F7A72;">Six decisions</span>
+      <svg width="13" height="22" viewBox="0 0 14 22" style="animation:dd-cue 2.4s ease-in-out infinite;"><path d="M7 1 V19" stroke="#5F7A72" stroke-width="1.5" stroke-linecap="round"></path><path d="M1.5 13.5 L7 20 L12.5 13.5" fill="none" stroke="#5F7A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </span>
+  </section>
+
+  <!-- ══════════ PREMISE ══════════ -->
+  <section style="position:relative; padding:130px 48px 120px; background:#0F1B17;">
+    <div style="max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:72px;">
+      <div style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:72px; align-items:start;">
+        <h2 data-rv="10" style="margin:0; font:200 clamp(34px,3.6vw,50px)/1.12 'Newsreader',Georgia,serif; letter-spacing:-1.3px; color:#F6F5F1;">The design job was not to make a marketplace look warm. It was to make an obligation legible.</h2>
+        <p data-rv="11" style="margin:0; padding-top:8px; font:300 18px/30px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Who vouched for you, what that costs them, and what you owe back. Sorting by degrees of separation instead of price is not a feature — it is the entire argument, and every screen below is built to hold it up.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px;">
+        <div data-rv="12" style="display:flex; flex-direction:column; gap:13px; padding:28px 24px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.16); border-radius:20px; backdrop-filter:blur(8px);">
+          <span style="font:200 34px/1 'Newsreader',serif; color:#E6CD8B;">01</span>
+          <span style="font:600 15.5px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">Native-first Expo</span>
+          <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#93A9A2;">One codebase, real iOS gestures, safe-area insets honoured on every screen.</span>
+        </div>
+        <div data-rv="13" style="display:flex; flex-direction:column; gap:13px; padding:28px 24px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.16); border-radius:20px; backdrop-filter:blur(8px);">
+          <span style="font:200 34px/1 'Newsreader',serif; color:#E6CD8B;">02</span>
+          <span style="font:600 15.5px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">A pure domain layer</span>
+          <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#93A9A2;">Degrees, vouches and standing are computed and unit-tested, not faked per screen.</span>
+        </div>
+        <div data-rv="14" style="display:flex; flex-direction:column; gap:13px; padding:28px 24px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.16); border-radius:20px; backdrop-filter:blur(8px);">
+          <span style="font:200 34px/1 'Newsreader',serif; color:#E6CD8B;">03</span>
+          <span style="font:600 15.5px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">A bespoke map</span>
+          <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#93A9A2;">Web-Mercator over real listing coordinates rather than a dropped-in map SDK.</span>
+        </div>
+        <div data-rv="15" style="display:flex; flex-direction:column; gap:13px; padding:28px 24px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.16); border-radius:20px; backdrop-filter:blur(8px);">
+          <span style="font:200 34px/1 'Newsreader',serif; color:#E6CD8B;">04</span>
+          <span style="font:600 15.5px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">Honesty in the copy</span>
+          <span style="font:400 13.5px/20px -apple-system,sans-serif; color:#93A9A2;">“Some will say no. That’s the system working.” Nothing softened to sell.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SHOWCASE ══════════ -->
+  <section style="background:#0F1B17;">
+    <div style="max-width:1420px; margin:0 auto; padding:70px 24px 96px; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:26px;">
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; flex:none;">
+        <span data-rv="20" style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:2px; text-transform:uppercase; color:#A08A45; white-space:nowrap;">{{ counter }}</span>
+        <h2 style="margin:0; max-width:22ch; font:200 clamp(30px,3.2vw,44px)/1.1 'Newsreader',Georgia,serif; letter-spacing:-1.2px; color:#F6F5F1;">{{ title }}</h2>
+        <p style="margin:0; max-width:66ch; font:300 16.5px/26px 'Newsreader',Georgia,serif; color:#A9BDB6; text-wrap:pretty;">{{ standfirst }}</p>
+      </div>
+
+      <div ref="{{ wrapRef }}" style="position:relative; width:100%; overflow:hidden;">
+      <div ref="{{ stageRef }}" style="width:1262px; transform-origin:top center; position:absolute; left:50%; margin-left:-631px; top:0;">
+      <div style="display:grid; grid-template-columns:360px 430px 360px; column-gap:56px; align-items:start;">
+
+        <!-- LEFT annotations -->
+        <div style="display:flex; flex-direction:column; gap:30px; padding-top:48px;">
+          <sc-for list="{{ left }}" as="note" hint-placeholder-count="2">
+            <div style="position:relative; display:flex; flex-direction:column; gap:8px; padding:22px 24px 22px 26px; background:rgba(255,255,255,0.055); border:1px solid rgba(255,255,255,0.14); border-radius:20px; backdrop-filter:blur(10px); animation:dd-in 520ms cubic-bezier(0.16,0.84,0.24,1) both;">
+              <span style="position:absolute; left:0; top:26px; bottom:26px; width:3px; border-radius:2px; background:{{ accent }}; display:block;"></span>
+              <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:{{ accent }};">{{ note.kicker }}</span>
+              <span style="font:600 17px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">{{ note.head }}</span>
+              <span style="font:400 14.5px/22px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">{{ note.body }}</span>
+              <span style="position:absolute; right:-64px; top:50%; width:64px; height:1px; background:rgba(255,255,255,0.26); display:block; z-index:0;"></span>
+              <span style="position:absolute; right:-67px; top:50%; margin-top:-3px; width:7px; height:7px; border-radius:4px; background:{{ accent }}; display:block; z-index:0;"></span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- PHONE -->
+        <div data-rv="21" style="display:flex; flex-direction:column; align-items:center; gap:22px;">
+          <div style="position:relative; width:410px; height:868px; padding:9px; box-sizing:border-box; background:#E7E6E2; border-radius:56px; box-shadow:0 40px 80px rgba(18,33,29,0.45), 0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(0,0,0,0.14) inset;">
+            <span style="position:absolute; left:-3px; top:196px; width:3px; height:34px; border-radius:2px 0 0 2px; background:#DAD9D5; display:block;"></span>
+            <span style="position:absolute; left:-3px; top:268px; width:3px; height:62px; border-radius:2px 0 0 2px; background:#DAD9D5; display:block;"></span>
+            <span style="position:absolute; left:-3px; top:346px; width:3px; height:62px; border-radius:2px 0 0 2px; background:#DAD9D5; display:block;"></span>
+            <span style="position:absolute; right:-3px; top:290px; width:3px; height:96px; border-radius:0 2px 2px 0; background:#DAD9D5; display:block;"></span>
+            <span style="position:absolute; inset:9px; border-radius:47px; box-shadow:0 0 0 4px #0A0A0A; display:block; pointer-events:none; z-index:3;"></span>
+            <div ref="{{ screenRef }}" style="position:relative; z-index:1; width:392px; height:850px; border-radius:47px; overflow:hidden; background:#F5F5F4;">
+
+              <span style="position:absolute; left:50%; top:11px; margin-left:-62px; width:124px; height:36px; border-radius:20px; background:#0A0A0A; z-index:9; display:block; pointer-events:none;"></span>
+              <div style="position:absolute; left:0; right:0; top:0; z-index:8; display:flex; align-items:center; justify-content:space-between; height:56px; padding:6px 32px 0; box-sizing:border-box; pointer-events:none;">
+                <span style="font:600 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">13:07</span>
+                <span style="display:flex; align-items:center; gap:5px;"><span style="width:17px; height:11px; border:1.4px solid #1A1A1A; border-radius:3px; display:block;"></span><span style="width:20px; height:8px; background:#1A1A1A; border-radius:2px; display:block;"></span></span>
+              </div>
+
+              <!-- 0 · EXPLORE -->
+              <div style="position:absolute; inset:0; display:{{ d0 }};">
+                <div style="padding:66px 16px 10px; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span>
+                    <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
+                      <span style="background:#fff; border-radius:999px; padding:6px 16px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Homes</span>
+                      <span onClick="{{ goMap }}" style="border-radius:999px; padding:6px 16px; font:600 13px/1 -apple-system,sans-serif; color:#626C75; cursor:pointer;">Map</span>
+                    </span>
+                  </div>
+                  <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">Sorted by how close they are to you, never by price.</span>
+                </div>
+                <div style="padding:0 16px; display:flex; flex-direction:column; gap:14px;">
+                  <div onClick="{{ goEmma }}" style="background:#fff; border-radius:24px; overflow:hidden; cursor:pointer; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
+                    <div style="position:relative; height:182px;">
+                      <img src="assets/listings/emma.jpg" alt="" style="width:100%; height:182px; object-fit:cover; display:block;">
+                      <span style="position:absolute; left:0; right:0; bottom:0; height:96px; background:linear-gradient(to top, rgba(14,20,18,0.66), rgba(14,20,18,0)); display:block;"></span>
+                      <span style="position:absolute; bottom:13px; right:13px; background:rgba(255,255,255,0.94); border-radius:999px; padding:5px 11px; font:700 14px/1.3 -apple-system,sans-serif; color:#1A1A1A;">£44<span style="font:400 12px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+                      <span style="position:absolute; bottom:13px; left:13px; right:104px; display:flex; align-items:center; gap:10px;">
+                        <img src="assets/avatars/emma.jpg" alt="Emma" style="width:42px; height:42px; border-radius:21px; object-fit:cover; border:2.5px solid #fff; box-sizing:border-box; display:block; flex:none;">
+                        <span style="min-width:0;">
+                          <span style="display:block; font:700 16px/1.15 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.3px; color:#fff;">Emma</span>
+                          <span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:rgba(255,255,255,0.93); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🇳🇿 De Beauvoir, London</span>
+                        </span>
+                      </span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px; padding:13px 15px;">
+                      <span style="flex:none; white-space:nowrap; border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:5px 11px; font:600 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span>
+                      <span style="flex:1; min-width:0; font:400 12.5px/1 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Near tube · Quiet · WFH desk</span>
+                    </div>
+                  </div>
+                  <div style="background:#fff; border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
+                    <div style="position:relative; height:182px;">
+                      <img src="assets/listings/danica.jpg" alt="" style="width:100%; height:182px; object-fit:cover; display:block;">
+                      <span style="position:absolute; left:0; right:0; bottom:0; height:96px; background:linear-gradient(to top, rgba(14,20,18,0.66), rgba(14,20,18,0)); display:block;"></span>
+                      <span style="position:absolute; bottom:13px; right:13px; background:rgba(255,255,255,0.94); border-radius:999px; padding:5px 11px; font:700 14px/1.3 -apple-system,sans-serif; color:#1A1A1A;">£41<span style="font:400 12px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+                      <span style="position:absolute; bottom:13px; left:13px; right:104px; display:flex; align-items:center; gap:10px;">
+                        <span style="position:relative; width:42px; height:42px; flex:none; display:block;">
+                          <span style="position:absolute; inset:-6px; border-radius:999px; background:#17A589; animation:dd-halo 4.2s ease-in-out infinite; display:block;"></span>
+                          <img src="assets/avatars/danica.jpg" alt="Danica" style="position:relative; width:42px; height:42px; border-radius:21px; object-fit:cover; border:2.5px solid #fff; box-sizing:border-box; display:block;">
+                        </span>
+                        <span style="min-width:0;">
+                          <span style="display:block; font:700 16px/1.15 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.3px; color:#fff;">Danica</span>
+                          <span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:rgba(255,255,255,0.93); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🇦🇺 Tooting, London</span>
+                        </span>
+                      </span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px; padding:13px 15px;">
+                      <span style="flex:none; white-space:nowrap; border:1px solid #17A589; background:#E7F4F0; border-radius:999px; padding:5px 11px; font:600 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">One step from you</span>
+                      <span style="flex:1; min-width:0; font:400 12.5px/1 -apple-system,sans-serif; color:#626C75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Quiet · Garden · Pet-friendly</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 1 · MAP -->
+              <div style="position:absolute; inset:0; display:{{ d1 }};">
+                <div style="padding:66px 16px 10px; display:flex; align-items:center; justify-content:space-between;">
+                  <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span>
+                  <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
+                    <span onClick="{{ goExplore }}" style="border-radius:999px; padding:6px 16px; font:600 13px/1 -apple-system,sans-serif; color:#626C75; cursor:pointer;">Homes</span>
+                    <span style="background:#fff; border-radius:999px; padding:6px 16px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Map</span>
+                  </span>
+                </div>
+                <div style="margin:8px 16px 0; position:relative; height:620px; border-radius:22px; overflow:hidden; background:#EAEEE9;">
+                  <img src="assets/map/london.jpg" alt="London" style="position:absolute; left:-150px; top:-70px; width:700px; height:700px; object-fit:cover; filter:saturate(0.6) contrast(0.95) brightness(1.04);">
+                  <span style="position:absolute; inset:0; background:radial-gradient(120% 90% at 55% 45%, rgba(231,244,240,0) 40%, rgba(20,32,29,0.12) 100%); display:block;"></span>
+                  <span style="position:absolute; left:12px; top:12px; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); border-radius:14px; padding:9px 13px; font:700 12.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">6 homes · 4 within two steps</span>
+                  <span style="position:absolute; left:250px; top:180px; margin:-27px 0 0 -27px; width:54px; height:54px; display:block;"><img src="assets/avatars/emma.jpg" alt="Emma" style="width:54px; height:54px; border-radius:27px; object-fit:cover; border:3px solid #17A589; box-sizing:border-box; display:block;"></span>
+                  <span style="position:absolute; left:106px; top:268px; margin:-22px 0 0 -22px; width:44px; height:44px; display:block;"><img src="assets/avatars/nate.jpg" alt="Nate" style="width:44px; height:44px; border-radius:22px; object-fit:cover; border:2.5px solid #4FBFA6; box-sizing:border-box; display:block;"></span>
+                  <span style="position:absolute; left:210px; top:392px; margin:-22px 0 0 -22px; width:44px; height:44px; display:block;"><img src="assets/avatars/priya.jpg" alt="Priya" style="width:44px; height:44px; border-radius:22px; object-fit:cover; border:1.5px dashed #9BCFC3; box-sizing:border-box; display:block;"></span>
+                  <span style="position:absolute; left:96px; top:474px; margin:-22px 0 0 -22px; width:44px; height:44px; display:block;"><img src="assets/avatars/danica.jpg" alt="Danica" style="width:44px; height:44px; border-radius:22px; object-fit:cover; border:3px solid #17A589; box-sizing:border-box; display:block;"></span>
+                  <div style="position:absolute; left:12px; right:12px; bottom:12px; background:rgba(255,255,255,0.9); backdrop-filter:blur(18px) saturate(1.4); border-radius:20px; padding:13px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 30px rgba(26,26,26,0.14);">
+                    <img src="assets/avatars/emma.jpg" alt="Emma" style="width:42px; height:42px; border-radius:21px; object-fit:cover; display:block;">
+                    <span style="flex:1;">
+                      <span style="display:block; font:700 15.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">🇳🇿 Emma · De Beauvoir</span>
+                      <span style="display:block; margin-top:2px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#4B5563;">Through Bella · £44 / night</span>
+                    </span>
+                    <span onClick="{{ goEmma }}" style="background:#17A589; border-radius:999px; padding:9px 15px; font:700 13px/1 -apple-system,sans-serif; color:#fff; cursor:pointer;">Open</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2 · EMMA TRUST -->
+              <div style="position:absolute; inset:0; display:{{ d2 }};">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:58px 12px 8px;">
+                  <span onClick="{{ goExplore }}" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="11" height="19" viewBox="0 0 12 20"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                  <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Emma</span>
+                  <span style="width:36px; height:36px; display:block;"></span>
+                </div>
+                <div style="padding:0 16px; display:flex; flex-direction:column; gap:13px;">
+                  <div style="display:flex; align-items:center; gap:14px; background:#fff; border-radius:22px; padding:15px;">
+                    <img src="assets/avatars/emma.jpg" alt="Emma" style="width:66px; height:66px; border-radius:33px; object-fit:cover; display:block; flex:none;">
+                    <span style="flex:1; display:flex; flex-direction:column; gap:4px;">
+                      <span style="font:700 21px/1.1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.4px; color:#1A1A1A;">Emma</span>
+                      <span style="font:400 13.5px/1.3 -apple-system,sans-serif; color:#626C75;">🇳🇿 De Beauvoir, London</span>
+                      <span style="display:flex; align-items:center; gap:9px; margin-top:2px;">
+                        <span style="flex:none; white-space:nowrap; border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:4px 10px; font:600 12px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps from you</span>
+                        <span style="font:700 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">£44<span style="font:400 12.5px -apple-system,sans-serif; color:#626C75;"> / night</span></span>
+                      </span>
+                    </span>
+                  </div>
+                  <div style="display:flex; background:#ECECE8; border-radius:14px; padding:3px;">
+                    <span style="flex:1; text-align:center; background:#fff; border-radius:10px; padding:9px 0; font:700 14px/1 -apple-system,sans-serif; color:#1A1A1A;">Trust</span>
+                    <span style="flex:1; text-align:center; padding:9px 0; font:600 14px/1 -apple-system,sans-serif; color:#626C75;">Profile</span>
+                    <span style="flex:1; text-align:center; padding:9px 0; font:600 14px/1 -apple-system,sans-serif; color:#626C75;">Room</span>
+                  </div>
+                  <div style="display:flex; align-self:flex-start; background:#E7F4F0; border-radius:999px; padding:3px;">
+                    <span style="background:#fff; border-radius:999px; padding:6px 15px; font:700 12.5px/1 -apple-system,sans-serif; color:#0E4E42;">As a host</span>
+                    <span style="padding:6px 15px; font:600 12.5px/1 -apple-system,sans-serif; color:#2C6559;">As a guest</span>
+                  </div>
+                  <div style="background:#E7F4F0; border:1px solid #CFE4DE; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:11px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                      <span style="font:700 11.5px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#2C6559;">The mutual friend</span>
+                      <span style="border-radius:999px; padding:4px 10px; font:700 11.5px/1 -apple-system,sans-serif; color:#0E4E42; border:1px solid #CFE4DE; background:linear-gradient(100deg,#fff 42%,#F2FBF8 50%,#fff 58%); background-size:280% 100%; animation:dd-sweep 5.2s ease-in-out 1.2s infinite;">✨ Draft intro</span>
+                    </div>
+                    <span style="align-self:flex-start; background:#fff; border-radius:999px; padding:7px 12px; font:700 13px/1 -apple-system,sans-serif; color:#0E4E42;">🌏 Both from Mount Eden</span>
+                    <p style="margin:0; min-height:138px; font:400 15.5px/23px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;"><span ref="{{ introRef }}"></span><span style="color:#17A589;">▌</span></p>
+                    <div ref="{{ chipsRef }}" style="display:flex; flex-wrap:wrap; gap:6px; opacity:0;">
+                      <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Mount Eden</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">their words</span></span>
+                      <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">Bella</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">a mutual</span></span>
+                      <span style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #CFE4DE; border-radius:999px; padding:5px 10px;"><span style="font:700 12px/1 -apple-system,sans-serif; color:#1A1A1A;">She hosted my friend R</span><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#2C6559;">a vouch</span></span>
+                    </div>
+                    <span style="height:1px; background:#CFE4DE; display:block;"></span>
+                    <span style="font:700 11.5px/1 -apple-system,sans-serif; letter-spacing:0.3px; text-transform:uppercase; color:#2C6559;">What this answers</span>
+                    <div style="display:flex; flex-direction:column; gap:7px;">
+                      <span style="display:flex; align-items:center; gap:10px;"><span style="width:19px; height:19px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14px/1 -apple-system,sans-serif; color:#1A1A1A;">Who they are</span></span>
+                      <span style="display:flex; align-items:center; gap:10px;"><span style="width:19px; height:19px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14px/1 -apple-system,sans-serif; color:#1A1A1A;">How they treat a home</span></span>
+                      <span style="display:flex; align-items:center; gap:10px;"><span style="width:19px; height:19px; border-radius:10px; background:#17A589; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="10" height="8" viewBox="0 0 12 10"><path d="M1 5.2 L4.3 8.5 L11 1.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font:600 14px/1 -apple-system,sans-serif; color:#1A1A1A;">Someone accountable</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3 · ONBOARD COST -->
+              <div style="position:absolute; inset:0; display:{{ d3 }};">
+                <div style="display:flex; align-items:center; gap:14px; padding:58px 16px 0;">
+                  <span style="display:flex; align-items:center; gap:5px;">
+                    <svg width="26" height="16" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#17A589" stroke-width="9"></circle></svg>
+                    <span style="font:700 16px/1 -apple-system,sans-serif; letter-spacing:-0.2px; color:#1A1A1A;">Kiki</span>
+                  </span>
+                  <span style="flex:1; display:flex; align-items:center;">
+                    <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">1</span>
+                    <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+                    <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">2</span>
+                    <span style="flex:1; height:2px; background:#17A589; margin:0 3px; display:block;"></span>
+                    <span style="width:24px; height:24px; border-radius:12px; background:#17A589; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#fff;">3</span>
+                    <span style="flex:1; height:2px; background:#ECECE8; margin:0 3px; display:block;"></span>
+                    <span style="width:24px; height:24px; border-radius:12px; background:#fff; border:1px solid #ECECE8; display:flex; align-items:center; justify-content:center; font:700 12px/1 -apple-system,sans-serif; color:#626C75;">4</span>
+                  </span>
+                </div>
+                <div style="padding:10px 16px 0; font:700 13px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">What this costs you</div>
+                <div style="padding:14px 16px;">
+                  <div style="background:#fff; border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:14px;">
+                    <span style="font:700 24px/30px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">What this costs you</span>
+                    <p style="margin:0; font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A; text-wrap:pretty;">Three things are true from the moment you join. None of them are in a terms page.</p>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                      <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                        <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                        <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">Bella’s name is on yours. If you damage someone’s flat, the person who let you in wears part of that. She can also see that you joined.</span>
+                      </div>
+                      <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                        <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                        <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">You start with nothing. No stays, no guest book, no one who can speak for you. Hosts will see that, and some will say no. That’s the system working.</span>
+                      </div>
+                      <div style="position:relative; background:#F7F7F5; border-radius:14px; padding:16px 16px 16px 21px; overflow:hidden;">
+                        <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                        <span style="font:400 15px/22px -apple-system,sans-serif; color:#1A1A1A;">What you write about people stays attached to your name. There are no anonymous reviews here.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="position:absolute; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ECECE8; padding:12px 16px 30px; display:flex; align-items:center; gap:12px;">
+                  <span style="border:1px solid #ECECE8; border-radius:14px; padding:13px 18px; font:600 14.5px/1 -apple-system,sans-serif; color:#4B5563;">Back</span>
+                  <span style="flex:1; background:#17A589; border-radius:14px; padding:14px 0; text-align:center; font:700 15px/1 -apple-system,sans-serif; color:#fff;">I understand</span>
+                  <span style="padding:13px 6px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Skip</span>
+                </div>
+              </div>
+
+              <!-- 4 · REQUESTS -->
+              <div style="position:absolute; inset:0; display:{{ d4 }};">
+                <div style="padding:66px 16px 0; display:flex; flex-direction:column; gap:15px;">
+                  <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Requests</span>
+                    <span style="font:400 14px/1.4 -apple-system,sans-serif; color:#626C75;">People asking to stay in your place. 2 need a reply.</span>
+                  </div>
+                  <span style="font:700 12px/1 -apple-system,sans-serif; letter-spacing:0.4px; text-transform:uppercase; color:#626C75;">Needs your reply</span>
+                  <div style="position:relative; background:#fff; border-radius:22px; padding:16px 16px 16px 18px; display:flex; flex-direction:column; gap:10px; overflow:hidden;">
+                    <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589; display:block;"></span>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <img src="assets/avatars/emma.jpg" alt="Emma" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block; flex:none;">
+                      <span style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                        <span style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;"><span style="font:700 16.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🇳🇿 Emma</span><span style="border:1px solid #E7F4F0; background:#E7F4F0; border-radius:999px; padding:3px 9px; font:600 11.5px/1 -apple-system,sans-serif; color:#0E4E42;">Two steps</span></span>
+                        <span style="font:400 13px/1.3 -apple-system,sans-serif; color:#4B5563;">14 Sep – 21 Sep · 7 nights</span>
+                      </span>
+                    </div>
+                    <span style="font:500 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">Bella vouches for her. Two routes, both people you can call.</span>
+                    <div ref="{{ trackRef }}" style="position:relative; height:56px; border-radius:16px; background:#F7F7F5; border:1px solid #ECECE8; overflow:hidden; touch-action:none; user-select:none;">
+                      <span ref="{{ fillRef }}" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#E7F4F0; transform:scaleX(0); transform-origin:left center; display:block;"></span>
+                      <span ref="{{ labelRef }}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:700 14.5px/1 -apple-system,sans-serif; color:#4B5563; pointer-events:none;">Slide to say yes</span>
+                      <span ref="{{ knobRef }}" onPointerDown="{{ onKnobDown }}" style="position:absolute; left:4px; top:4px; width:48px; height:48px; border-radius:14px; background:#17A589; display:flex; align-items:center; justify-content:center; cursor:grab; box-shadow:0 6px 16px rgba(23,165,137,0.32);">
+                        <svg width="17" height="17" viewBox="0 0 18 18"><path d="M4 3.5 L10.5 9 L4 14.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10 3.5 L16.5 9 L10 14.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg>
+                      </span>
+                    </div>
+                    <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">Declining costs you nothing and isn’t recorded on your standing.</span>
+                  </div>
+                  <div style="position:relative; background:#fff; border-radius:22px; padding:18px 18px 18px 21px; display:flex; flex-direction:column; gap:8px; overflow:hidden;">
+                    <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#C15B5B; display:block;"></span>
+                    <span style="font:700 13.5px/1 -apple-system,sans-serif; color:#C15B5B;">No timers here</span>
+                    <span style="font:400 14.5px/21px -apple-system,sans-serif; color:#1A1A1A;">Kiki doesn’t count down on a request or rank you for replying fast. Read the page, ask the mutual, and answer when you actually know.</span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:16px; display:flex; align-items:center; gap:12px;">
+                    <img src="assets/avatars/priya.jpg" alt="Priya" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block; flex:none;">
+                    <span style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                      <span style="display:flex; align-items:center; gap:8px;"><span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">🇬🇧 Priya</span><span style="background:#F7F7F5; border-radius:999px; padding:3px 9px; font:600 11.5px/1 -apple-system,sans-serif; color:#626C75;">Three steps</span></span>
+                      <span style="font:400 13px/1.3 -apple-system,sans-serif; color:#4B5563;">Nobody you know has met her.</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5 · ME -->
+              <div style="position:absolute; inset:0; display:{{ d5 }};">
+                <div style="padding:66px 16px 0; display:flex; flex-direction:column; gap:14px;">
+                  <div style="display:flex; align-items:center; gap:14px;">
+                    <span style="position:relative; width:62px; height:62px; flex:none; display:block;">
+                      <span style="position:absolute; inset:-3px; border-radius:999px; background:linear-gradient(140deg,#E6CD8B,#C9A227 55%,#F2E3BE); display:block;"></span>
+                      <img src="assets/avatars/you.jpg" alt="You" style="position:relative; width:62px; height:62px; border-radius:31px; object-fit:cover; border:2px solid #F5F5F4; box-sizing:border-box; display:block;">
+                    </span>
+                    <span style="flex:1; display:flex; flex-direction:column; gap:4px;">
+                      <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">You</span>
+                      <span style="font:400 13.5px/1.35 -apple-system,sans-serif; color:#626C75;">Standing, what you’ve done, and how you got in.</span>
+                    </span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:14px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                      <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">What you’ve done</span>
+                      <span style="display:flex; align-items:center; gap:6px; border:1px solid #E7D9A8; background:#FBF6E7; border-radius:999px; padding:5px 11px;"><span style="width:7px; height:7px; border-radius:4px; background:#C9A227; display:block;"></span><span style="font:700 12.5px/1 -apple-system,sans-serif; color:#7A6320;">Newcomer · #9</span></span>
+                    </div>
+                    <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Hosted</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block;"></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">0</span></span>
+                    <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Vouched</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:67%; border-radius:4px; background:#17A589;"></span></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">4</span></span>
+                    <span style="display:flex; align-items:center; gap:12px;"><span style="width:82px; font:600 13.5px/1 -apple-system,sans-serif; color:#4B5563;">Referred</span><span style="flex:1; height:8px; border-radius:4px; background:#CBDED8; display:block; overflow:hidden;"><span style="display:block; height:8px; width:33%; border-radius:4px; background:#17A589;"></span></span><span style="width:20px; text-align:right; font:700 13.5px/1 -apple-system,sans-serif; color:#1A1A1A;">2</span></span>
+                    <span style="font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">Hosting is the one bar you can’t fill by being liked. That’s deliberate.</span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:10px;">
+                    <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">How you got in</span>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <img src="assets/avatars/bella.jpg" alt="Bella" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block; flex:none;">
+                      <span style="flex:1;">
+                        <span style="display:block; font:700 15.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">🇬🇧 Bella invited you</span>
+                        <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">4 days ago · KIKI·BELLA·3F2A</span>
+                      </span>
+                    </div>
+                    <span style="background:#E7F4F0; border-radius:14px; padding:12px; font:italic 400 14.5px/21px -apple-system,sans-serif; color:#0E4E42;">“Known her since Auckland. She looked after my flat for a fortnight and I would hand her the keys again tomorrow.”</span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px;">
+                    <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">What other people can see</span>
+                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🌏 Mount Eden</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🎓 Paris, 2017</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- tab bar -->
+              <div style="position:absolute; left:0; right:0; bottom:0; z-index:7; height:83px; background:rgba(255,255,255,0.94); backdrop-filter:blur(18px) saturate(1.4); border-top:1px solid #ECECE8; display:{{ tabDisplay }}; align-items:flex-start; padding-top:9px;">
+                <span onClick="{{ goExplore }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="{{ cExplore }}" stroke-width="1.9"></circle><line x1="20" y1="20" x2="15.5" y2="15.5" stroke="{{ cExplore }}" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:{{ cExplore }};">Explore</span></span>
+                <span onClick="{{ goRequests }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" fill="none" stroke="{{ cRequests }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" fill="none" stroke="{{ cRequests }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:{{ cRequests }};">Requests</span><span style="position:absolute; top:-3px; left:calc(50% + 8px); background:#17A589; color:#fff; border-radius:999px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; font:700 10px/16px -apple-system,sans-serif; text-align:center;">2</span></span>
+                <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path><circle cx="17.5" cy="9.5" r="2.3" fill="none" stroke="#626C75" stroke-width="1.9"></circle><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Community</span></span>
+                <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5" fill="none" stroke="#626C75" stroke-width="1.9"></rect><line x1="4" y1="9.5" x2="20" y2="9.5" stroke="#626C75" stroke-width="1.9"></line><line x1="8" y1="3" x2="8" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line><line x1="16" y1="3" x2="16" y2="6" stroke="#626C75" stroke-width="1.9" stroke-linecap="round"></line></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Trips</span></span>
+                <span style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" fill="none" stroke="#626C75" stroke-width="1.9" stroke-linejoin="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:#626C75;">Messages</span></span>
+                <span onClick="{{ goMe }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="{{ cMe }}" stroke-width="1.9"></circle><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" fill="none" stroke="{{ cMe }}" stroke-width="1.9" stroke-linecap="round"></path></svg><span style="font:600 10.5px/1 -apple-system,sans-serif; color:{{ cMe }};">Me</span></span>
+              </div>
+              <span style="position:absolute; left:50%; transform:translateX(-50%); bottom:9px; z-index:9; width:140px; height:5px; border-radius:3px; background:#1A1A1A; opacity:0.85; pointer-events:none;"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT annotations -->
+        <div style="display:flex; flex-direction:column; gap:30px; padding-top:48px;">
+          <sc-for list="{{ right }}" as="note" hint-placeholder-count="2">
+            <div style="position:relative; display:flex; flex-direction:column; gap:8px; padding:22px 26px 22px 24px; background:rgba(255,255,255,0.055); border:1px solid rgba(255,255,255,0.14); border-radius:20px; backdrop-filter:blur(10px); animation:dd-in 520ms cubic-bezier(0.16,0.84,0.24,1) both;">
+              <span style="position:absolute; right:0; top:26px; bottom:26px; width:3px; border-radius:2px; background:{{ accent }}; display:block;"></span>
+              <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:{{ accent }};">{{ note.kicker }}</span>
+              <span style="font:600 17px/1.3 -apple-system,sans-serif; letter-spacing:-0.2px; color:#F6F5F1;">{{ note.head }}</span>
+              <span style="font:400 14.5px/22px -apple-system,sans-serif; color:#A9BDB6; text-wrap:pretty;">{{ note.body }}</span>
+              <span style="position:absolute; left:-64px; top:50%; width:64px; height:1px; background:rgba(255,255,255,0.26); display:block; z-index:0;"></span>
+              <span style="position:absolute; left:-67px; top:50%; margin-top:-3px; width:7px; height:7px; border-radius:4px; background:{{ accent }}; display:block; z-index:0;"></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:900px; flex:none;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+          <span onClick="{{ t.go }}" style="border-radius:999px; padding:8px 15px; font:600 12.5px/1 -apple-system,sans-serif; white-space:nowrap; cursor:pointer; border:1px solid {{ t.border }}; background:{{ t.bg }}; color:{{ t.fg }};">{{ t.label }}</span>
+        </sc-for>
+      </div>
+      <span style="font:400 12.5px/1.5 -apple-system,sans-serif; color:#7E958D; text-align:center; max-width:640px; flex:none;">Pick a screen above — or tap inside the phone: cards, tabs, the back arrow and the slide-to-accept all work.</span>
+
+      <div style="display:flex; align-items:flex-start; gap:14px; max-width:760px; margin-top:18px; padding:18px 20px; background:rgba(255,255,255,0.04); border:1px dashed rgba(255,255,255,0.22); border-radius:16px;">
+        <span style="width:3px; align-self:stretch; border-radius:2px; background:#A08A45; display:block; flex:none;"></span>
+        <span style="font:400 13px/20px -apple-system,sans-serif; color:#8FA8A0;"><strong style="color:#C9DCD5;">Note for Claude Code — scroll-driven screens.</strong> Wrap this showcase in a rail of <span style="font:600 12px ui-monospace,Menlo,monospace;">N × 100vh</span> with the stage <span style="font:600 12px ui-monospace,Menlo,monospace;">position:sticky; top:0; height:100vh</span>, and set the screen index from <span style="font:600 12px ui-monospace,Menlo,monospace;">-rail.getBoundingClientRect().top / (rail.offsetHeight - innerHeight)</span>. Two things broke it here: no ancestor may create a scroll container (<span style="font:600 12px ui-monospace,Menlo,monospace;">overflow-x:hidden</span> silently computes <span style="font:600 12px ui-monospace,Menlo,monospace;">overflow-y:auto</span> — use <span style="font:600 12px ui-monospace,Menlo,monospace;">clip</span>), and the pinned child must fit the viewport exactly, so the phone has to be scaled against the height left over after the heading and picker.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ RUN IT ══════════ -->
+  <section style="position:relative; padding:120px 48px 110px; background:#0F1B17; overflow:hidden;">
+    <span style="position:absolute; left:50%; bottom:-260px; margin-left:-520px; width:1040px; height:760px; border-radius:999px; background:radial-gradient(circle, rgba(201,162,39,0.11) 0%, rgba(201,162,39,0) 66%); display:block; pointer-events:none;"></span>
+
+    <div style="position:relative; max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:48px;">
+      <div data-rv="30" style="display:flex; flex-direction:column; gap:16px;">
+        <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:2px; text-transform:uppercase; color:#FFE7A8;">Run it yourself</span>
+        <h2 style="margin:0; max-width:22ch; font:200 clamp(34px,3.8vw,52px)/1.08 'Newsreader',Georgia,serif; letter-spacing:-1.5px; color:#F6F5F1;">It is a real build, not a prototype of one.</h2>
+        <p style="margin:0; max-width:62ch; font:300 17px/28px 'Newsreader',Georgia,serif; color:#9BB2AA; text-wrap:pretty;">Point a camera at the left code to open the build in Expo Go on your own iPhone — real gestures, real safe areas, real haptics. The right code opens the same app in a browser if you would rather just click through.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px;">
+        <div data-rv="31" style="display:flex; gap:24px; padding:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(230,205,139,0.24); border-radius:24px; align-items:center; backdrop-filter:blur(10px);">
+          <span style="width:150px; height:150px; border-radius:16px; background:#F6F5F1; display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.28);">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;margin=8&amp;data=https%3A%2F%2Fexpo.dev%2F%40you%2Fkiki" alt="Expo Go QR" style="width:150px; height:150px; display:block; object-fit:contain;">
+          </span>
+          <span style="display:flex; flex-direction:column; gap:9px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#E6CD8B;">On device</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open in Expo Go</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">Install Expo Go, scan, and the native build loads on your phone.</span>
+            <a href="{{ expoUrl }}" style="font:700 13.5px/1 -apple-system,sans-serif;">{{ expoLabel }} ›</a>
+          </span>
+        </div>
+
+        <div data-rv="32" style="display:flex; gap:24px; padding:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(23,165,137,0.30); border-radius:24px; align-items:center; backdrop-filter:blur(10px);">
+          <span style="width:150px; height:150px; border-radius:16px; background:#F6F5F1; display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.28);">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;margin=8&amp;data=https%3A%2F%2Fyour-site.example%2Fkiki" alt="Web build QR" style="width:150px; height:150px; display:block; object-fit:contain;">
+          </span>
+          <span style="display:flex; flex-direction:column; gap:9px;">
+            <span style="font:700 10.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.3px; text-transform:uppercase; color:#4FBFA6;">In a browser</span>
+            <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Open the web view</span>
+            <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The same codebase running on the web, for a quick look with no install.</span>
+            <a href="{{ webUrl }}" style="font:700 13.5px/1 -apple-system,sans-serif; color:#4FBFA6;">{{ webLabel }} ›</a>
+          </span>
+        </div>
+      </div>
+
+      <div data-rv="33" style="display:flex; align-items:flex-start; gap:16px; padding:22px 24px; background:rgba(193,91,91,0.10); border:1px solid rgba(193,91,91,0.30); border-radius:20px;">
+        <span style="width:3px; align-self:stretch; border-radius:2px; background:#C15B5B; display:block; flex:none;"></span>
+        <span style="font:400 14px/21px -apple-system,sans-serif; color:#C6B7B7;">Both codes point at placeholder URLs until you send me the Expo publish link and your site address — give me those two and they resolve to the real thing.</span>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:14px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.10);">
+        <svg width="30" height="18" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#2E4A43" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#5A4E2A" stroke-width="9"></circle></svg>
+        <span style="font:400 13px/1.4 -apple-system,sans-serif; color:#5F7A72;">Kiki — native iOS build · design decisions, not a screenshot reel.</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1500,&quot;height&quot;:1100}}">
+const EXPO_URL = 'https://expo.dev/@you/kiki';
+const WEB_URL = 'https://your-site.example/kiki';
+const TEAL = '#17A589';
+const GOLD = '#A08A45';
+
+const INTRO = 'You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends \u2014 Bella and Sophie \u2014 who can vouch for Emma in person.';
+
+const SCREENS = [
+  {
+    key: 'explore', label: 'Explore', accent: TEAL,
+    title: 'The front door sorts by people, not price.',
+    standfirst: 'Every listing app opens on inventory. Kiki opens on who you could reach, in order of how close they are to you — the sub-line under each name says the distance, and the price is deliberately the smallest thing on the card.',
+    left: [
+      { kicker: 'Hierarchy', head: 'The host is inside the photograph', body: 'Name and place sit on a bottom scrim rather than in a floating chip, so the person reads as part of the home instead of a label stuck on top of it. Price gets a pill because it must be scannable, not because it is the point.' },
+      { kicker: 'Sorting', head: 'Degrees, never price', body: 'Order comes from the graph: one step, then two, then three. A cheaper room further from you appears lower. This is the single decision that stops Kiki collapsing into a marketplace.' },
+    ],
+    right: [
+      { kicker: 'Motion', head: 'The list assembles itself', body: 'Cards rise on a 110ms stagger with an iOS spring curve. Danica carries a slow halo because she is one step away — the only animated thing on screen is the strongest trust signal.' },
+      { kicker: 'Identity', head: 'Flags blend into place', body: '🇦🇺 Tooting, London reads as a person from somewhere, living somewhere. The earlier version floated a two-letter badge on the avatar, which felt like a passport stamp on a warm app.' },
+    ],
+  },
+  {
+    key: 'map', label: 'Map', accent: TEAL,
+    title: 'A map of people who happen to have rooms.',
+    standfirst: 'Bespoke Web-Mercator projection over real listing coordinates rather than a dropped-in SDK — which means the pins can be faces, and ring weight can carry degrees of separation.',
+    left: [
+      { kicker: 'Restraint', head: 'The basemap is desaturated on purpose', body: 'Roads and parks are pulled back so faces are the only saturated thing in the frame. Zoom buttons are gone: pinch and double-tap already exist on a phone, and three chrome buttons on a map is a web layout showing through.' },
+      { kicker: 'Honesty', head: 'The trust chain is never drawn across geography', body: 'Degrees are not spatial — a mutual could be in Auckland. Tapping a face dims the map and draws the chain as a diagram instead, so the app never implies a coordinate it does not have.' },
+    ],
+    right: [
+      { kicker: 'Encoding', head: 'Ring weight is the data', body: 'Solid teal for one step, thinner for two, dashed hairline for three. You can read your own reach across a city without a legend, and colour is never asked to carry it alone.' },
+      { kicker: 'Surface', head: 'The preview is a sheet, not a card', body: 'The selected home arrives as frosted glass over the map with the route named — “through Bella” — rather than a panel docked into the layout, so the map never loses its place.' },
+    ],
+  },
+  {
+    key: 'trust', label: 'Emma · Trust', accent: TEAL,
+    title: 'The trust page is the product.',
+    standfirst: 'Not a star rating. A paragraph a mutual friend could have written, with every claim labelled by where it came from, and the whole thing switchable between how she behaves as a host and as a guest.',
+    left: [
+      { kicker: 'Provenance', head: 'Every fact carries its source', body: '“their words”, “a mutual”, “a vouch”. A shared hometown is not evidence of safety and is not dressed up as it — the chips make the difference between a claim and a corroboration visible at a glance.' },
+      { kicker: 'Asymmetry', head: 'Host and guest are different questions', body: 'How someone keeps a home and how someone treats a home are separate reputations. The segmented control refuses to average them into one score.' },
+    ],
+    right: [
+      { kicker: 'Composition', head: 'The intro types itself, once', body: 'Watch it compose on open — the box is pre-sized so nothing below it jumps, then the provenance chips settle in. The ✨ chip gets one slow sheen every five seconds. That is the entire AI treatment.' },
+      { kicker: 'Closure', head: '“What this answers”', body: 'Ticks naming the questions a host actually has: who they are, how they treat a home, someone accountable. It converts a wall of prose into a decision.' },
+    ],
+  },
+  {
+    key: 'cost', label: 'Onboarding · cost', accent: '#C15B5B',
+    title: 'Tell people what joining costs before they join.',
+    standfirst: 'Step three of onboarding is the one no growth team would ship. It states the three obligations plainly, in the flow, at the moment someone can still walk away.',
+    left: [
+      { kicker: 'Copy', head: '“Some will say no. That’s the system working.”', body: 'A new member starts with nothing and hosts will see that. Saying it out loud sets an expectation the product can actually meet, instead of a warm welcome followed by silent rejections.' },
+      { kicker: 'Accountability', head: 'The inviter is named, not hidden', body: '“Bella’s name is on yours.” Invite-only networks usually bury the referrer. Kiki puts the cost of vouching on screen, because that cost is what makes a vouch mean anything.' },
+    ],
+    right: [
+      { kicker: 'Form', head: 'Caveats get a 3px red edge, never a red card', body: 'A hairline rule marks each obligation without turning the screen into a warning. The tone stays calm; the content does the work.' },
+      { kicker: 'Progress', head: 'Four steps, no dark patterns', body: 'The stepper is honest about length, Back is always available, and Skip disappears on the final step because there is nothing left to skip past “Start exploring”.' },
+    ],
+  },
+  {
+    key: 'requests', label: 'Requests', accent: TEAL,
+    title: 'Weight on the yes, nothing on the no.',
+    standfirst: 'Accepting a stranger into your home is irreversible, so it takes a deliberate gesture. Declining is a plain tap and is never recorded — which is exactly what the copy promises.',
+    left: [
+      { kicker: 'Friction', head: 'Slide, with rising resistance', body: 'Drag it. Travel is eased so the last third takes real effort and a yes cannot be a mis-tap; release early and it springs home. On device: selection haptic at halfway, one medium impact on commit, nothing on ordinary taps.' },
+      { kicker: 'Fairness', head: '“No timers here”', body: 'No countdown on a request, no ranking for replying fast. The inbox explicitly tells hosts to read the page, ask the mutual, and answer when they actually know.' },
+    ],
+    right: [
+      { kicker: 'Truth', head: 'Weak ties are labelled as weak', body: '“Nobody you know has met her.” Third-degree requests lose the mint tint entirely, so mint only ever means someone can vouch. The design never flatters a thin connection.' },
+      { kicker: 'Layout', head: 'Two states, one card shape', body: 'Needs-reply and waiting-on-them share a card with a 3px status edge instead of two different components, so the inbox reads as one list at a glance.' },
+    ],
+  },
+  {
+    key: 'me', label: 'Me', accent: GOLD,
+    title: 'Standing you cannot buy, and cannot fake.',
+    standfirst: 'Contribution, not consumption. Hosting is weighted highest and shown empty when it is empty — the profile is willing to tell you that you have not earned anything yet.',
+    left: [
+      { kicker: 'Incentives', head: 'The empty bar is the message', body: 'Hosted sits at zero and stays visibly at zero. Bars fill left-to-right on a stagger so the gap reads as a fact about you rather than a rendering glitch.' },
+      { kicker: 'Restraint', head: 'Gold is spent once', body: 'The only gold in the app is your own standing — the ring on your avatar and the tier pill. It never appears on a CTA or another person, so status reads as earned rather than decorative.' },
+    ],
+    right: [
+      { kicker: 'Provenance', head: 'Your own facts are labelled too', body: 'Everything others can see, and how it was established. Nothing is silently inferred, which is the same promise the trust page makes about other people.' },
+      { kicker: 'Origin', head: 'How you got in stays visible', body: 'Bella’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is the thing your standing is built on.' },
+    ],
+  },
+];
+
+class Component extends DCLogic {
+  state = { i: 0 };
+
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.screenRef = React.createRef();
+    this.wrapRef = React.createRef();
+    this.stageRef = React.createRef();
+    this.railRef = React.createRef();
+    this.pinRef = React.createRef();
+    this.introRef = React.createRef();
+    this.chipsRef = React.createRef();
+    this.trackRef = React.createRef();
+    this.knobRef = React.createRef();
+    this.fillRef = React.createRef();
+    this.labelRef = React.createRef();
+    this.fit = this.fit.bind(this);
+    this.onKnobDown = this.onKnobDown.bind(this);
+    this.onMove = this.onMove.bind(this);
+    this.onUp = this.onUp.bind(this);
+    this.drag = null;
+    this.currentX = 0;
+  }
+
+  componentDidMount() {
+    this.fit();
+    window.addEventListener('resize', this.fit);
+    if (window.ResizeObserver && this.stageRef.current) {
+      this.ro = new ResizeObserver(() => this.fit());
+      this.ro.observe(this.stageRef.current);
+    }
+    this.armReveals();
+    if (this.state.i === 2) this.runIntro();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.fit();
+    if (this.state.i === 2 && prevState.i !== 2) this.runIntro();
+    if (this.state.i !== 2) clearInterval(this.typer);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.fit);
+    if (this.ro) this.ro.disconnect();
+    if (this.io) this.io.disconnect();
+    clearTimeout(this.rvSafety);
+    clearInterval(this.typer);
+    clearTimeout(this.looper);
+    window.removeEventListener('pointermove', this.onMove);
+    window.removeEventListener('pointerup', this.onUp);
+  }
+
+  // Product-reveal entrances: elements start displaced and settle once they cross
+  // into view, each on its own long ease so nothing snaps.
+  armReveals() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    if (this.io) { this.io.disconnect(); this.io = null; }
+    const items = root.querySelectorAll('[data-rv]');
+
+    const show = el => {
+      const order = parseInt(el.getAttribute('data-rv'), 10) || 0;
+      el.dataset.rvDone = '1';
+      el.style.transitionDelay = ((order % 10) * 110) + 'ms';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.filter = el.dataset.baseFilter || 'none';
+    };
+
+    if (!window.IntersectionObserver) { items.forEach(show); return; }
+
+    const pending = [];
+    items.forEach(el => {
+      if (el.dataset.rvDone === '1') return;
+      // Capture the authored filter ONCE (the headline brings its own), so a
+      // re-arm can never bake the reveal blur into the restored value.
+      if (el.dataset.baseFilter === undefined) el.dataset.baseFilter = el.style.filter || '';
+      const base = el.dataset.baseFilter;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(34px) scale(0.985)';
+      el.style.filter = (base ? base + ' ' : '') + 'blur(6px)';
+      el.style.transition = 'opacity 1150ms cubic-bezier(0.16,0.84,0.24,1), transform 1150ms cubic-bezier(0.16,0.84,0.24,1), filter 900ms ease-out';
+      el.style.willChange = 'opacity, transform';
+      pending.push(el);
+    });
+    if (!pending.length) return;
+
+    this.io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        show(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+    pending.forEach(el => this.io.observe(el));
+
+    // Anything already on screen reveals on the next frame rather than waiting
+    // for a scroll, and nothing is ever left invisible.
+    requestAnimationFrame(() => {
+      pending.forEach(el => {
+        if (el.dataset.rvDone === '1') return;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) { show(el); if (this.io) this.io.unobserve(el); }
+      });
+    });
+    // Safety net only for elements at or near the fold at arm time; anything
+    // further down keeps its scroll reveal.
+    clearTimeout(this.rvSafety);
+    const nearFold = pending.filter(el => el.getBoundingClientRect().top < window.innerHeight * 1.2);
+    if (nearFold.length) {
+      this.rvSafety = setTimeout(() => {
+        nearFold.forEach(el => { if (el.dataset.rvDone !== '1') show(el); });
+      }, 2500);
+    }
+  }
+
+  runIntro() {
+    const el = this.introRef.current, chips = this.chipsRef.current;
+    if (!el) return;
+    el.textContent = '';
+    if (chips) { chips.style.opacity = '0'; chips.style.transform = 'translateY(7px)'; }
+    let i = 0;
+    clearInterval(this.typer);
+    clearTimeout(this.looper);
+    this.typer = setInterval(() => {
+      i += 3;
+      el.textContent = INTRO.slice(0, i);
+      if (i >= INTRO.length) {
+        clearInterval(this.typer);
+        if (chips) {
+          chips.style.transition = 'opacity 520ms ease-out, transform 520ms cubic-bezier(0.16,0.84,0.24,1)';
+          chips.style.opacity = '1';
+          chips.style.transform = 'translateY(0)';
+        }
+        this.looper = setTimeout(() => { if (this.state.i === 2) this.runIntro(); }, 7000);
+      }
+    }, 16);
+  }
+
+  // The annotated stage is authored at a fixed 1262px so the leader lines always
+  // meet the bezel; it scales down as one piece and the wrap takes the scaled
+  // height. Width-only — the wrap has no height of its own to measure.
+  fit() {
+    const wrap = this.wrapRef.current, stage = this.stageRef.current;
+    if (!wrap || !stage) return;
+    const W = 1262;
+    stage.style.transform = 'none';
+    const natural = stage.offsetHeight || 1;
+    const s = Math.min(1, wrap.clientWidth / W);
+    stage.style.transform = 'scale(' + s + ')';
+    stage.style.marginLeft = -(W / 2) + 'px';
+    // The stage is absolutely positioned, so the wrap has no intrinsic height —
+    // give it the scaled height or its overflow:hidden clips everything away.
+    wrap.style.height = Math.ceil(natural * s) + 'px';
+  }
+
+  go(i) { return () => this.setState({ i }); }
+
+  qr(url) {
+    return 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=' + encodeURIComponent(url);
+  }
+
+  maxTravel() {
+    const t = this.trackRef.current;
+    return t ? Math.max(60, t.clientWidth - 56) : 240;
+  }
+
+  onKnobDown(e) {
+    if (!this.knobRef.current || this.committed) return;
+    this.drag = { startX: e.clientX, base: this.currentX || 0 };
+    this.knobRef.current.style.transition = 'none';
+    window.addEventListener('pointermove', this.onMove);
+    window.addEventListener('pointerup', this.onUp);
+  }
+
+  onMove(e) {
+    if (!this.drag) return;
+    const max = this.maxTravel();
+    const raw = Math.max(0, Math.min(max, this.drag.base + (e.clientX - this.drag.startX)));
+    const eased = max * Math.pow(raw / max, 1.35);
+    this.currentX = eased;
+    this.paint(eased / max, eased);
+  }
+
+  paint(p, x) {
+    const k = this.knobRef.current, f = this.fillRef.current, l = this.labelRef.current;
+    if (k) k.style.transform = 'translateX(' + x + 'px)';
+    if (f) f.style.transform = 'scaleX(' + p + ')';
+    if (l) l.style.opacity = String(Math.max(0, 1 - p * 1.6));
+  }
+
+  onUp() {
+    window.removeEventListener('pointermove', this.onMove);
+    window.removeEventListener('pointerup', this.onUp);
+    const k = this.knobRef.current, f = this.fillRef.current, l = this.labelRef.current;
+    if (!k) return;
+    k.style.transition = 'transform 380ms cubic-bezier(0.16,0.84,0.24,1)';
+    if (f) f.style.transition = 'transform 380ms cubic-bezier(0.16,0.84,0.24,1)';
+    const max = this.maxTravel();
+    if ((this.currentX || 0) / max > 0.86) {
+      this.committed = true;
+      this.currentX = max;
+      this.paint(1, max);
+      if (f) f.style.background = '#17A589';
+      if (l) { l.textContent = 'Yes — Emma’s in'; l.style.color = '#FFFFFF'; l.style.opacity = '1'; }
+      setTimeout(() => {
+        this.committed = false;
+        this.currentX = 0;
+        if (f) f.style.background = '#E7F4F0';
+        if (l) { l.textContent = 'Slide to say yes'; l.style.color = '#4B5563'; }
+        this.paint(0, 0);
+      }, 2400);
+    } else {
+      this.currentX = 0;
+      this.paint(0, 0);
+    }
+    this.drag = null;
+  }
+
+  renderVals() {
+    const i = this.state.i;
+    const s = SCREENS[i];
+    const d = n => (n === i ? 'block' : 'none');
+    const on = '#17A589', off = '#626C75';
+    const n2 = n => (n + 1 < 10 ? '0' + (n + 1) : String(n + 1));
+
+    return {
+      counter: n2(i) + ' / ' + n2(SCREENS.length - 1),
+      title: s.title,
+      standfirst: s.standfirst,
+      left: s.left,
+      right: s.right,
+      accent: s.accent,
+      rootRef: this.rootRef,
+      screenRef: this.screenRef,
+      wrapRef: this.wrapRef,
+      stageRef: this.stageRef,
+      introRef: this.introRef,
+      chipsRef: this.chipsRef,
+      d0: d(0), d1: d(1), d2: d(2), d3: d(3), d4: d(4), d5: d(5),
+      tabDisplay: i === 3 ? 'none' : 'flex',
+      cExplore: i === 0 || i === 1 || i === 2 ? on : off,
+      cRequests: i === 4 ? on : off,
+      cMe: i === 5 ? '#C9A227' : off,
+      goExplore: this.go(0),
+      goMap: this.go(1),
+      goEmma: this.go(2),
+      goRequests: this.go(4),
+      goMe: this.go(5),
+      tabs: SCREENS.map((sc, n) => ({
+        label: sc.label,
+        go: this.go(n),
+        bg: n === i ? '#F6F5F1' : 'rgba(255,255,255,0.06)',
+        fg: n === i ? '#12211D' : '#BFD6CE',
+        border: n === i ? '#F6F5F1' : 'rgba(255,255,255,0.18)',
+      })),
+      trackRef: this.trackRef,
+      knobRef: this.knobRef,
+      fillRef: this.fillRef,
+      labelRef: this.labelRef,
+      onKnobDown: this.onKnobDown,
+      expoUrl: EXPO_URL,
+      webUrl: WEB_URL,
+      expoLabel: 'expo.dev/@you/kiki',
+      webLabel: 'your-site.example/kiki',
+    };
+  }
+}
+</script>
+</body>
+</html>
