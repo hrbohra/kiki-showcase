@@ -566,11 +566,11 @@ class Component extends DCLogic {
         {kind:'origin',key:'origin:nz:mount-eden',label:'New Zealand (Mount Eden)'},
         {kind:'education',key:'uni:paris:2017',label:'Paris, 2017'},
         {kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
-      { id:'emma', name:'Emma', country:'NZ', c:'#C98A6B', traits:[
+      { id:'emma', name:'Maia', country:'NZ', c:'#C98A6B', traits:[
         {kind:'origin',key:'origin:nz:mount-eden',label:'New Zealand (Mount Eden)'},
         {kind:'education',key:'uni:paris:2017',label:'Paris, 2017'},
         {kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
-      { id:'bella', name:'Bella', country:'GB', c:'#5B7DB1', traits:[{kind:'origin',key:'origin:gb:london',label:'London'}]},
+      { id:'bella', name:'Nina', country:'GB', c:'#5B7DB1', traits:[{kind:'origin',key:'origin:gb:london',label:'London'}]},
       { id:'sophie', name:'Sophie', country:'AU', c:'#B15B93', traits:[{kind:'interest',key:'gym:blok-shoreditch',label:'bouldering at Blok Shoreditch'}]},
       { id:'amy', name:'Amy', country:'AU', c:'#C15B5B', traits:[{kind:'origin',key:'origin:au:sydney',label:'Sydney'}]},
       { id:'katelin', name:'Katelin', country:'AU', c:'#7BAE8E', traits:[
@@ -586,7 +586,7 @@ class Component extends DCLogic {
     ];
     const vouches = [
       {from:'you',to:'bella'},
-      {from:'bella',to:'emma',note:'Bella hosted Emma’s friend Rachel and said she looked after the flat incredibly well'},
+      {from:'bella',to:'emma',note:'Nina hosted Maia’s friend Iris and said she looked after the flat incredibly well'},
       {from:'you',to:'sophie'},{from:'sophie',to:'emma'},{from:'you',to:'amy'},
       {from:'amy',to:'katelin',note:'Amy stayed with Katelin last summer'},
       {from:'katelin',to:'ollie'},
@@ -595,7 +595,7 @@ class Component extends DCLogic {
       {from:'nate',to:'priya'},{from:'emma',to:'priya'},{from:'amy',to:'lena'},
     ];
     const listings = [
-      {id:'l-emma',hostId:'emma',title:'Emma’s Room',area:'De Beauvoir, London',price:44,kind:'Room',lat:51.5385,lng:-0.0785,photo:'#CBD5CE',tags:['Near tube','Quiet','WFH desk','Female-only']},
+      {id:'l-emma',hostId:'emma',title:'Maia’s Room',area:'De Beauvoir, London',price:44,kind:'Room',lat:51.5385,lng:-0.0785,photo:'#CBD5CE',tags:['Near tube','Quiet','WFH desk','Female-only']},
       {id:'l-katelin',hostId:'katelin',title:'Katelin’s Room',area:'Finsbury Park, London',price:38,kind:'Room',lat:51.5646,lng:-0.1066,photo:'#D6CFC4',tags:['Near tube','Balcony','Long stays']},
       {id:'l-danica',hostId:'danica',title:'Danica’s Room',area:'Tooting, London',price:41,kind:'Room',lat:51.4271,lng:-0.168,photo:'#CFC9D6',tags:['Quiet','Garden','Pet-friendly']},
       {id:'l-ollie',hostId:'ollie',title:'Ollie’s Studio',area:'Peckham, London',price:52,kind:'Whole place',lat:51.4739,lng:-0.0693,photo:'#C4D0D6',tags:['Central','Ensuite','WFH desk']},
@@ -604,7 +604,7 @@ class Component extends DCLogic {
     ];
     const TAGS = ['Near tube','Quiet','Pet-friendly','Ensuite','Balcony','Central','Garden','WFH desk','Female-only','Long stays'];
     const reviews = [
-      {id:'r1',hostId:'emma',authorId:'bella',day:360,text:'Emma was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.'},
+      {id:'r1',hostId:'emma',authorId:'bella',day:360,text:'Maia was absolutely lovely and welcoming. The room was spotless and I felt so safe the whole stay. Would host her again in a heartbeat.'},
       {id:'r2',hostId:'emma',authorId:'sophie',day:320,text:'Such a warm, thoughtful host. Great communication and a really central location. Felt like a friend by the end.'},
       {id:'r3',hostId:'emma',authorId:'amy',day:280,text:'Clean, comfortable and easy from start to finish. She looked after everything. A real gem.'},
       {id:'r4',hostId:'emma',authorId:'theo',day:150,text:'Nice room and good location, though the wifi was a bit slow for working. Still a lovely stay overall.'},
@@ -634,8 +634,8 @@ class Component extends DCLogic {
     ];
     const threads = [
       {id:'t-emma',withId:'emma',messages:[
-        {fromId:'you',text:'Hi Emma! Bella pointed me your way — your De Beauvoir room looks lovely.',day:396},
-        {fromId:'emma',text:'Oh amazing, any friend of Bella’s! When are you thinking?',day:396},
+        {fromId:'you',text:'Hi Maia! Nina pointed me your way — your De Beauvoir room looks lovely.',day:396},
+        {fromId:'emma',text:'Oh amazing, any friend of Nina’s! When are you thinking?',day:396},
         {fromId:'you',text:'The 12th–15th. Also spotted we both did the Paris exchange in 2017 😄',day:397},
         {fromId:'emma',text:'No way! Small world. Those dates work — happy to hold them for you.',day:398}]},
       {id:'t-katelin',withId:'katelin',messages:[
