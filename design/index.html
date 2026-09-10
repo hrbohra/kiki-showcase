@@ -104,6 +104,13 @@
     .spine-label { display: none; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  /* 4b · coda — the AI decision (a written chapter, no handoff artifact) */
+  .coda { border-top: 1px solid rgba(255,255,255,0.09); }
+  .coda .wrap { max-width: 1180px; margin: 0 auto; padding: 66px 28px 10px; }
+  .coda .body { margin: 0; }
+  .coda-cta { display: inline-block; margin-top: 22px; font: 700 12px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #4FBFA6; text-decoration: none; }
+  .coda-cta:hover { color: #7FE0CB; }
 </style>
 </head>
 <body>
@@ -148,6 +155,25 @@
 
   <!-- 4 · acts + entries -->
   <main id="root"></main>
+
+  <!-- 4b · coda — the AI decision, written out (no prototype to embed) -->
+  <section class="coda">
+    <div class="wrap">
+      <div class="act-grid">
+        <h2><span class="kicker" style="color:#4FBFA6">CODA · INTELLIGENCE · 10 SEP</span>The mutual friend, actually written.</h2>
+        <div>
+          <p class="body">The whole product rests on one paragraph a stranger will trust — the introduction a mutual friend could have written. In the record above it types itself out of a fixed script, theatre so the design reads without a network. Behind the real build the same paragraph is written by a language model, and the decisions there are as deliberate as any screen.</p>
+          <ul class="dec" style="margin-top:20px">
+            <li><b>The prompt is built from the graph, not the vibe.</b> One pure function turns the real overlaps, mutuals and vouch notes into a facts-only brief — <i>use only these, invent nothing</i> — so the model narrates evidence instead of inventing a person.</li>
+            <li><b>Live, then cached, then composed.</b> It calls the model live; if the quota runs out it serves a saved real run; if that misses it falls back to a deterministic compose. A demo can never break, and it stays honest at each step about which one spoke.</li>
+            <li><b>It says what it cannot prove.</b> The restraint the Trust page argues in pixels is written into the prompt itself: a shared hometown is named as common ground, never as safety, and a missing track record is stated plainly rather than dressed up.</li>
+            <li><b>The key never reaches the browser.</b> The model is reached through a tiny server proxy with the credential held in the server’s environment — the shape the real product would ship, not a key pasted into client code.</li>
+          </ul>
+          <a class="coda-cta" href="/app">See it write one live, in the web app →</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 5 · footer -->
   <footer>
@@ -202,7 +228,7 @@ const ENTRIES = [
     dec:['<b>No phone frame</b> — the app runs full-bleed at 100svh; a mockup would be absurd on a phone.','Decisions arrive in a <b>draggable bottom sheet</b> — Kiki’s own vocabulary (the map’s frosted sheet), not a generic pattern.','Screens change by <b>horizontal swipe</b>, not by scrolling.'] },
   { slug:'sep06-glyphs-map', date:'6 Sep', platform:'both', act:'05 · Craft', title:'Loop glyphs + the living map',
     covered:'The craft pass now shipped in both apps — a custom icon language and an honest, living map.',
-    dec:['<b>22 custom marks</b> replace meaning-carrying emoji; four carry the real logo path verbatim; <b>✨ is retired</b> from the one card whose job is credibility.','A four-layer <b>living map</b> whose motion only ever responds to real coordinates and real degrees — the honesty rule.','Built <b>Expo Go-safe</b> (no Skia), so the demo still runs straight from a QR code.'] },
+    dec:['<b>22 custom marks</b> replace meaning-carrying emoji; four carry the real logo path verbatim; <b>✨ is retired</b> from the one card whose job is credibility.','A four-layer <b>living map</b> whose motion only ever responds to real coordinates and real degrees — the honesty rule.','Built <b>Expo Go-safe</b> (no Skia), so the demo still runs straight from a QR code.','With ✨ gone, the intro stops being decoration: in the real build it is <b>written live by a language model</b> from the same trust facts — the decision is written out in the coda below.'] },
 ];
 
 const ACTS = [

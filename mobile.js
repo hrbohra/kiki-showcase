@@ -6,7 +6,7 @@
   const EXPO_URL = '#';                 // placeholder until the eas update link lands
   const WEB_URL = '/app/';              // the real web build, same as desktop
 
-  const INTRO = 'You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends — Bella and Sophie — who can vouch for Emma in person.';
+  const INTRO = 'You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends — Nina and Sophie — who can vouch for Maia in person.';
 
   const SCREENS = [
     {
@@ -28,16 +28,16 @@
         { kicker: 'Restraint', head: 'The basemap is desaturated on purpose', body: 'Roads and parks are pulled back so faces are the only saturated thing in the frame. Zoom buttons are gone: pinch and double-tap already exist on a phone.' },
         { kicker: 'Encoding', head: 'Ring weight is the data', body: 'Solid teal for one step, thinner for two, dashed hairline for three. You can read your reach across a city without a legend, and colour is never asked to carry it alone.' },
         { kicker: 'Honesty', head: 'The trust chain is never drawn across geography', body: 'Degrees are not spatial — a mutual could be in Auckland. Tapping a face draws the chain as a diagram instead, so the app never implies a coordinate it does not have.' },
-        { kicker: 'Surface', head: 'The preview is a sheet, not a card', body: 'The selected home arrives as frosted glass over the map with the route named — “through Bella” — so the map never loses its place. The sheet you are reading now borrows that same behaviour.' },
+        { kicker: 'Surface', head: 'The preview is a sheet, not a card', body: 'The selected home arrives as frosted glass over the map with the route named — “through Nina” — so the map never loses its place. The sheet you are reading now borrows that same behaviour.' },
       ],
     },
     {
-      key: 'trust', label: 'Emma · Trust', accent: TEAL,
+      key: 'trust', label: 'Maia · Trust', accent: TEAL,
       title: 'The trust page is the product.',
       standfirst: 'Not a star rating. A paragraph a mutual friend could have written, with every claim labelled by where it came from.',
       notes: [
         { kicker: 'Provenance', head: 'Every fact carries its source', body: '“their words”, “a mutual”, “a vouch”. A shared hometown is not evidence of safety and is not dressed up as it — the chips make the difference between a claim and a corroboration visible at a glance.' },
-        { kicker: 'Composition', head: 'The intro types itself, once', body: 'Watch it compose behind this sheet. The box is pre-sized so nothing below it jumps, then the provenance chips settle in. The ✨ chip gets one slow sheen every five seconds — that is the entire AI treatment.' },
+        { kicker: 'Intelligence', head: 'Written by a model, from the facts', body: 'In the real build this paragraph is composed by a language model from the structured trust facts — told to use only what the graph proves and to say plainly what it can’t. It runs live, with a saved run as backstop so a demo never breaks. Here it is replayed; the web app writes one for real.' },
         { kicker: 'Asymmetry', head: 'Host and guest are different questions', body: 'How someone keeps a home and how someone treats a home are separate reputations. The segmented control refuses to average them into one score.' },
         { kicker: 'Closure', head: '“What this answers”', body: 'Ticks naming the questions a host actually has: who they are, how they treat a home, someone accountable. It converts a wall of prose into a decision.' },
       ],
@@ -48,7 +48,7 @@
       standfirst: 'Step three of onboarding is the one no growth team would ship — stated in the flow, while someone can still walk away.',
       notes: [
         { kicker: 'Copy', head: '“Some will say no. That’s the system working.”', body: 'A new member starts with nothing and hosts will see that. Saying it out loud sets an expectation the product can actually meet, instead of a warm welcome followed by silent rejections.' },
-        { kicker: 'Accountability', head: 'The inviter is named, not hidden', body: '“Bella’s name is on yours.” Invite-only networks usually bury the referrer. Kiki puts the cost of vouching on screen, because that cost is what makes a vouch mean anything.' },
+        { kicker: 'Accountability', head: 'The inviter is named, not hidden', body: '“Nina’s name is on yours.” Invite-only networks usually bury the referrer. Kiki puts the cost of vouching on screen, because that cost is what makes a vouch mean anything.' },
         { kicker: 'Form', head: 'A 3px red edge, never a red card', body: 'A hairline rule marks each obligation without turning the screen into a warning. The tone stays calm; the content does the work.' },
         { kicker: 'Progress', head: 'Four steps, no dark patterns', body: 'The stepper is honest about length, Back is always available, and Skip disappears on the final step because there is nothing left to skip past “Start exploring”.' },
       ],
@@ -105,7 +105,7 @@
         { kicker: 'Incentives', head: 'The empty bar is the message', body: 'Hosted sits at zero and stays visibly at zero. Bars fill left-to-right on a stagger so the gap reads as a fact about you rather than a rendering glitch.' },
         { kicker: 'Restraint', head: 'Gold is spent once', body: 'The only gold in the app is your own standing — the ring on your avatar and the tier pill. It never appears on a CTA or another person, so status reads as earned rather than decorative.' },
         { kicker: 'Provenance', head: 'Your own facts are labelled too', body: 'Everything others can see, and how it was established. Nothing is silently inferred, which is the same promise the trust page makes about other people.' },
-        { kicker: 'Origin', head: 'How you got in stays visible', body: 'Bella’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is what your standing is built on.' },
+        { kicker: 'Origin', head: 'How you got in stays visible', body: 'Nina’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is what your standing is built on.' },
       ],
     },
   ];
@@ -234,7 +234,7 @@
     if ((currentX || 0) / max > 0.86) {
       committed = true; currentX = max; paintKnob(1, max);
       if (f) f.style.background = '#17A589';
-      if (l) { l.textContent = 'Yes — Emma’s in'; l.style.color = '#FFFFFF'; l.style.opacity = '1'; }
+      if (l) { l.textContent = 'Yes — Maia’s in'; l.style.color = '#FFFFFF'; l.style.opacity = '1'; }
       setTimeout(() => {
         committed = false; currentX = 0;
         if (f) f.style.background = '#E7F4F0';

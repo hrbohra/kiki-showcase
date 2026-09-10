@@ -5,7 +5,7 @@
 const TEAL = '#17A589';
 const GOLD = '#A08A45';
 
-const INTRO = 'You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends — Bella and Sophie — who can vouch for Emma in person.';
+const INTRO = 'You both moved to London from Mount Eden, studied at Paris, 2017 and are into bouldering at Blok Shoreditch. You share 2 mutual friends — Nina and Sophie — who can vouch for Maia in person.';
 
 const SCREENS = [
   {
@@ -31,11 +31,11 @@ const SCREENS = [
     ],
     right: [
       { kicker: 'Encoding', head: 'Ring weight is the data', body: 'Solid teal for one step, thinner for two, dashed hairline for three. You can read your own reach across a city without a legend, and colour is never asked to carry it alone.' },
-      { kicker: 'Surface', head: 'The preview is a sheet, not a card', body: 'The selected home arrives as frosted glass over the map with the route named — “through Bella” — rather than a panel docked into the layout, so the map never loses its place.' },
+      { kicker: 'Surface', head: 'The preview is a sheet, not a card', body: 'The selected home arrives as frosted glass over the map with the route named — “through Nina” — rather than a panel docked into the layout, so the map never loses its place.' },
     ],
   },
   {
-    key: 'trust', label: 'Emma · Trust', accent: TEAL,
+    key: 'trust', label: 'Maia · Trust', accent: TEAL,
     title: 'The trust page is the product.',
     standfirst: 'Not a star rating. A paragraph a mutual friend could have written, with every claim labelled by where it came from, and the whole thing switchable between how she behaves as a host and as a guest.',
     left: [
@@ -43,7 +43,7 @@ const SCREENS = [
       { kicker: 'Asymmetry', head: 'Host and guest are different questions', body: 'How someone keeps a home and how someone treats a home are separate reputations. The segmented control refuses to average them into one score.' },
     ],
     right: [
-      { kicker: 'Composition', head: 'The intro types itself, once', body: 'Watch it compose on open — the box is pre-sized so nothing below it jumps, then the provenance chips settle in. The ✨ chip gets one slow sheen every five seconds. That is the entire AI treatment.' },
+      { kicker: 'Intelligence', head: 'Written by a model, from the facts', body: 'In the real build the paragraph is composed by a language model from the structured trust facts — told to use only what the graph proves and to say plainly what it can’t. It runs live, with a saved run as backstop so a demo never breaks. Here it is replayed; the web app writes one for real.' },
       { kicker: 'Closure', head: '“What this answers”', body: 'Ticks naming the questions a host actually has: who they are, how they treat a home, someone accountable. It converts a wall of prose into a decision.' },
     ],
   },
@@ -53,7 +53,7 @@ const SCREENS = [
     standfirst: 'Step three of onboarding is the one no growth team would ship. It states the three obligations plainly, in the flow, at the moment someone can still walk away.',
     left: [
       { kicker: 'Copy', head: '“Some will say no. That’s the system working.”', body: 'A new member starts with nothing and hosts will see that. Saying it out loud sets an expectation the product can actually meet, instead of a warm welcome followed by silent rejections.' },
-      { kicker: 'Accountability', head: 'The inviter is named, not hidden', body: '“Bella’s name is on yours.” Invite-only networks usually bury the referrer. Kiki puts the cost of vouching on screen, because that cost is what makes a vouch mean anything.' },
+      { kicker: 'Accountability', head: 'The inviter is named, not hidden', body: '“Nina’s name is on yours.” Invite-only networks usually bury the referrer. Kiki puts the cost of vouching on screen, because that cost is what makes a vouch mean anything.' },
     ],
     right: [
       { kicker: 'Form', head: 'Caveats get a 3px red edge, never a red card', body: 'A hairline rule marks each obligation without turning the screen into a warning. The tone stays calm; the content does the work.' },
@@ -122,7 +122,7 @@ const SCREENS = [
     ],
     right: [
       { kicker: 'Provenance', head: 'Your own facts are labelled too', body: 'Everything others can see, and how it was established. Nothing is silently inferred, which is the same promise the trust page makes about other people.' },
-      { kicker: 'Origin', head: 'How you got in stays visible', body: 'Bella’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is the thing your standing is built on.' },
+      { kicker: 'Origin', head: 'How you got in stays visible', body: 'Nina’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is the thing your standing is built on.' },
     ],
   },
 ];
@@ -284,7 +284,7 @@ function onUp() {
   if ((currentX || 0) / max > 0.86) {
     committed = true; currentX = max; paint(1, max);
     if (f) f.style.background = '#17A589';
-    if (l) { l.textContent = 'Yes — Emma’s in'; l.style.color = '#FFFFFF'; l.style.opacity = '1'; }
+    if (l) { l.textContent = 'Yes — Maia’s in'; l.style.color = '#FFFFFF'; l.style.opacity = '1'; }
     setTimeout(() => {
       committed = false; currentX = 0;
       if (f) f.style.background = '#E7F4F0';
