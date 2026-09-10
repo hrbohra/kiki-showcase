@@ -5,7 +5,7 @@
 //
 // Set the key once:  vercel env add GEMINI_API_KEY production   (paste the value when prompted)
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-3.6-flash';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
