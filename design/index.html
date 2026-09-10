@@ -4,262 +4,360 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kiki — design decisions</title>
-<meta name="description" content="Every Kiki design handoff, in order — each a complete spec with its reasoning, accumulated pass by pass from concept to craft.">
+<meta name="description" content="Every Kiki design handoff, in order — nineteen days, thirteen passes, from concept to craft, each with its decisions and its live prototype.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 68px; }
   html, body { margin: 0; background: #0F1B17; -webkit-font-smoothing: antialiased; }
   body { font-family: -apple-system, 'SF Pro Text', 'Segoe UI', sans-serif; color: #F6F5F1; }
-  a { color: inherit; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
-  /* Header */
-  header.top { position: relative; padding: 96px 0 40px; overflow: hidden; background: radial-gradient(120% 70% at 50% 0%, #1B3A33 0%, #152A24 44%, #0F1B17 82%); }
-  .eyebrow { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 2px; text-transform: uppercase; color: #FFE7A8; }
-  h1.title { margin: 16px 0 0; font: 200 clamp(34px,5vw,56px)/1.06 'Newsreader', Georgia, serif; letter-spacing: -1.5px; color: #F6F5F1; max-width: 20ch; }
-  .lede { margin: 18px 0 0; max-width: 64ch; font: 300 17px/28px 'Newsreader', Georgia, serif; color: #9BB2AA; text-wrap: pretty; }
-  .meta-row { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 26px; font: 400 13px/1.4 -apple-system, sans-serif; color: #6E8880; }
-  .meta-row b { color: #BFD6CE; font-weight: 700; }
-  .backlink { display: inline-flex; align-items: center; gap: 7px; margin-top: 30px; font: 700 12px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #4FBFA6; text-decoration: none; }
-  .howto { margin-top: 30px; display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1px solid rgba(79,191,166,0.28); border-radius: 14px; background: rgba(79,191,166,0.05); max-width: 62ch; }
-  .howto span { font: 400 13.5px/20px -apple-system, sans-serif; color: #A9C2BA; }
+  /* 1 · Sticky spine */
+  .spine { position: sticky; top: 0; z-index: 50; background: rgba(15,27,23,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .spine-inner { max-width: 1180px; margin: 0 auto; padding: 0 28px; height: 52px; display: flex; align-items: center; gap: 20px; }
+  .spine-back { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.6px; text-transform: uppercase; color: #4FBFA6; white-space: nowrap; }
+  .ticks { flex: 1; min-width: 0; display: flex; gap: 5px; }
+  .tick { flex: 1; height: 22px; display: flex; align-items: center; }
+  .tick .bar { width: 100%; height: 2px; border-radius: 2px; opacity: 0.28; transition: height 0.18s ease, opacity 0.18s ease; }
+  .spine-label { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: #8FA8A0; min-width: 132px; text-align: right; white-space: nowrap; }
+
+  /* 2 · Header */
+  .top { position: relative; overflow: hidden; background: radial-gradient(120% 74% at 50% 0%, #1B3A33 0%, #152A24 44%, #0F1B17 84%); }
+  .top .wrap { padding: 88px 28px 0; }
+  .eyebrow { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 2.2px; text-transform: uppercase; color: #FFE7A8; }
+  h1.title { margin: 18px 0 0; max-width: 17ch; font: 200 clamp(38px,6vw,72px)/1.03 'Newsreader', Georgia, serif; letter-spacing: -2.2px; color: #F6F5F1; }
+  .lede { margin: 22px 0 0; max-width: 60ch; font: 300 18px/30px 'Newsreader', Georgia, serif; color: #9BB2AA; text-wrap: pretty; }
+
+  /* 3 · Cadence chart */
+  .cadence .wrap { padding: 52px 28px 0; }
+  .chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chart-cap { font: 700 10px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.8px; text-transform: uppercase; color: #5F7A72; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font: 400 11.5px/1 -apple-system, sans-serif; color: #6E8880; }
+  .swatch { width: 9px; height: 9px; border-radius: 2px; display: block; }
+  .grid20 { display: grid; grid-template-columns: repeat(20, minmax(0,1fr)); gap: 4px; }
+  .chart { align-items: end; height: 118px; }
+  .col { display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; height: 100%; }
+  .col .blk { height: 26px; border-radius: 4px; }
+  .col .empty { height: 3px; border-radius: 3px; background: rgba(255,255,255,0.07); }
+  .phase-band { margin-top: 10px; }
+  .phase-band .pspan { height: 2px; opacity: 0.5; border-radius: 2px; }
+  .phase-labels { margin-top: 8px; }
+  .plabel { font: 700 9.5px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #5F7A72; }
+  .axis { display: flex; justify-content: space-between; margin-top: 14px; font: 400 11.5px/1 -apple-system, sans-serif; color: #4E655E; }
+  .howto-wrap { padding: 44px 28px 64px; }
+  .howto { padding: 15px 18px; border: 1px solid rgba(79,191,166,0.26); border-radius: 14px; background: rgba(79,191,166,0.05); max-width: 70ch; font: 400 13.5px/21px -apple-system, sans-serif; color: #A9C2BA; }
   .howto b { color: #DCEAE4; font-weight: 700; }
 
-  /* Timeline */
-  main { padding: 24px 0 100px; }
-  .phase { margin: 54px 0 18px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-  .phase .pn { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.8px; text-transform: uppercase; color: #E6CD8B; }
-  .phase .pt { font: 200 24px/1.1 'Newsreader', Georgia, serif; color: #F6F5F1; letter-spacing: -0.4px; }
-  .phase .pd { font: 400 12.5px/1 -apple-system, sans-serif; color: #5F7A72; }
-  .phase-line { height: 1px; background: rgba(255,255,255,0.10); margin-top: 8px; }
+  /* 4 · Acts + entries */
+  main { max-width: 1180px; margin: 0 auto; padding: 0 28px 40px; }
+  .act { padding: 64px 0 0; }
+  .act.first { border-top: 1px solid rgba(255,255,255,0.09); }
+  .act-grid { display: grid; grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr); gap: 44px; align-items: baseline; }
+  .act h2 { margin: 0; font: 200 clamp(28px,3.2vw,40px)/1.1 'Newsreader', Georgia, serif; letter-spacing: -1.2px; color: #F6F5F1; }
+  .act h2 .kicker { display: block; margin-bottom: 14px; font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 2px; text-transform: uppercase; }
+  .act .body { font: 300 17px/28px 'Newsreader', Georgia, serif; color: #9BB2AA; text-wrap: pretty; margin: 0; }
 
-  .card { display: grid; grid-template-columns: 1.08fr 1fr; gap: 34px; align-items: center; padding: 44px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .media { display: block; position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 22px 55px rgba(0,0,0,0.4); order: 1; }
-  .media img { width: 100%; display: block; aspect-ratio: 1100 / 719; object-fit: cover; object-position: top center; background: #0b1512; }
-  .media .peek { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; padding: 13px; opacity: 0; transition: opacity 0.2s ease; background: linear-gradient(to top, rgba(6,12,10,0.55), rgba(6,12,10,0) 46%); }
-  .media:hover .peek { opacity: 1; }
-  .media .peek span { font: 700 11px/1 -apple-system, sans-serif; color: #fff; background: rgba(23,165,137,0.92); padding: 8px 12px; border-radius: 9px; }
-  .card .body { min-width: 0; order: 2; }
-  .card.flip .media { order: 2; }
-  .card.flip .body { order: 1; }
-  .strip-wrap { grid-column: 1 / -1; order: 3; }
-  .card .when { font: 700 11.5px/1.4 ui-monospace, Menlo, monospace; color: #8FA8A0; margin-bottom: 9px; }
-  .card .when .yr { color: #5F7A72; }
-  .tagline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
-  .tag { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
-  .tag.ios { color: #4FBFA6; background: rgba(79,191,166,0.13); }
-  .tag.web { color: #E6CD8B; background: rgba(230,205,139,0.13); }
-  .tag.both { color: #C7B3E6; background: rgba(160,130,220,0.14); }
-  h3.ct { margin: 0 0 6px; font: 600 21px/1.25 -apple-system, sans-serif; letter-spacing: -0.4px; color: #F6F5F1; }
-  .covered { margin: 0 0 12px; font: 400 15px/23px -apple-system, sans-serif; color: #A9BDB6; text-wrap: pretty; }
-  ul.dec { margin: 0 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .entry { display: grid; grid-template-columns: 76px minmax(0,1.22fr) minmax(0,1fr); gap: 32px; padding: 48px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .entry.last { border-bottom: 0; }
+  .rail { display: flex; flex-direction: column; gap: 9px; padding-top: 3px; }
+  .ord { font: 200 30px/1 'Newsreader', Georgia, serif; color: #3E5C54; }
+  .edate { font: 700 11px/1.4 ui-monospace, Menlo, monospace; color: #8FA8A0; }
+  .chip { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; align-self: flex-start; }
+  .chip.ios { color: #4FBFA6; background: rgba(79,191,166,0.13); }
+  .chip.web { color: #E6CD8B; background: rgba(230,205,139,0.13); }
+  .chip.both { color: #C7B3E6; background: rgba(160,130,220,0.14); }
+  .media { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 22px 55px rgba(0,0,0,0.42); background: #0b1512; aspect-ratio: 1100 / 719; }
+  .media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: opacity 0.2s ease; }
+  .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .run { padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(79,191,166,0.36); background: rgba(79,191,166,0.08); color: #4FBFA6; font: 700 12.5px/1 -apple-system, sans-serif; cursor: pointer; }
+  .run:hover { background: rgba(79,191,166,0.16); border-color: rgba(79,191,166,0.62); }
+  .run:disabled { cursor: default; }
+  .full { padding: 10px 13px; border-radius: 10px; color: #6E8880; font: 600 12.5px/1 -apple-system, sans-serif; }
+  .full:hover { color: #A9C2BA; }
+  .reason { min-width: 0; }
+  .reason h3 { margin: 0 0 9px; font: 600 21px/1.24 -apple-system, sans-serif; letter-spacing: -0.4px; color: #F6F5F1; }
+  .summary { margin: 0 0 14px; font: 400 15px/23px -apple-system, sans-serif; color: #A9BDB6; text-wrap: pretty; }
+  ul.dec { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
   ul.dec li { position: relative; padding-left: 20px; font: 400 14px/21px -apple-system, sans-serif; color: #93A9A2; text-wrap: pretty; }
   ul.dec li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 6px; background: #2E6A5C; }
   ul.dec li b { color: #D8E6E0; font-weight: 600; }
 
-  .strip-label { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: #5F7A72; margin: 26px 0 10px; }
-  .thumbs { display: flex; gap: 10px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: thin; }
-  .thumbs img { height: 172px; width: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.10); display: block; flex: none; background: #0b1512; }
+  /* 5 · Footer */
+  footer { border-top: 1px solid rgba(255,255,255,0.10); margin-top: 20px; }
+  footer .wrap { padding: 34px 28px 72px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  footer .fline { font: 400 13px/1.4 -apple-system, sans-serif; color: #5F7A72; }
+  footer .fback { font: 700 12px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #4FBFA6; }
 
-  .open { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 11px 16px; border-radius: 11px; border: 1px solid rgba(79,191,166,0.34); background: rgba(79,191,166,0.06); color: #4FBFA6; font: 700 13px/1 -apple-system, sans-serif; text-decoration: none; }
-  .open:hover { border-color: rgba(79,191,166,0.6); background: rgba(79,191,166,0.12); }
-
-  footer { border-top: 1px solid rgba(255,255,255,0.10); padding: 30px 0 60px; margin-top: 30px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-  footer span { font: 400 13px/1.4 -apple-system, sans-serif; color: #5F7A72; }
-
-  @media (max-width: 760px) {
-    .card { grid-template-columns: 1fr; gap: 18px; padding: 30px 0; }
-    .card .media, .card.flip .media { order: 0 !important; }
-    .card .body, .card.flip .body { order: 1 !important; }
-    .strip-wrap { order: 2; }
+  @media (max-width: 900px) {
+    .entry { grid-template-columns: 60px minmax(0,1fr); gap: 20px; }
+    .entry .reason { grid-column: 2 / -1; }
+    .act-grid { grid-template-columns: 1fr; gap: 18px; }
   }
+  @media (max-width: 620px) {
+    .entry { grid-template-columns: 1fr; }
+    .entry .rail { flex-direction: row; align-items: center; gap: 12px; }
+    .entry .reason { grid-column: auto; }
+    .spine-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
+  <!-- 1 · sticky spine -->
+  <nav class="spine">
+    <div class="spine-inner">
+      <a class="spine-back" href="/">‹ Showcase</a>
+      <div class="ticks" id="ticks"></div>
+      <span class="spine-label" data-spine="label">01 · Concept</span>
+    </div>
+  </nav>
+
+  <!-- 2 · header -->
   <header class="top">
     <div class="wrap">
       <span class="eyebrow">The design record</span>
       <h1 class="title">Every design decision, pass by pass.</h1>
-      <p class="lede">Kiki wasn’t designed in one shot. It was built up through a run of design handoffs — each one a complete, self-contained spec that argued its own decisions, from the first concept sketch to the craft details in the shipped app. This page keeps them all in one place, in the order they happened, so you can watch the whole thing take shape.</p>
-      <div class="meta-row">
-        <span><b>13</b> handoffs</span>
-        <span><b>18 Aug → 6 Sep 2026</b></span>
-        <span>Concept → Trust → Web system → iOS → Craft</span>
-      </div>
-      <div class="howto">
-        <span><b>How to read this.</b> Each entry names what it covered and the decisions behind it. <b>“Open the live design”</b> loads the actual interactive prototype that was handed off — the real thing, not a screenshot.</span>
-      </div>
-      <a class="backlink" href="/">‹ Back to the Kiki showcase</a>
+      <p class="lede">Kiki wasn’t designed in one shot. It was built up through a run of design handoffs — each one a complete, self-contained spec that argued its own decisions, from the first concept sketch to the craft details in the shipped app. Nineteen days, thirteen passes, in the order they happened.</p>
     </div>
   </header>
 
-  <main class="wrap"><div id="root"></div></main>
+  <!-- 3 · cadence chart -->
+  <section class="cadence">
+    <div class="wrap">
+      <div class="chart-head">
+        <span class="chart-cap">Cadence · one block per handoff, placed on the day it shipped</span>
+        <div class="legend">
+          <span class="legend-item"><span class="swatch" style="background:#C7B3E6"></span>iOS · Web</span>
+          <span class="legend-item"><span class="swatch" style="background:#4FBFA6"></span>iOS</span>
+          <span class="legend-item"><span class="swatch" style="background:#E6CD8B"></span>Web</span>
+        </div>
+      </div>
+      <div class="grid20 chart" id="chart"></div>
+      <div class="grid20 phase-band" id="phaseBand"></div>
+      <div class="grid20 phase-labels" id="phaseLabels"></div>
+      <div class="axis"><span>18 Aug 2026</span><span>6 Sep 2026</span></div>
+    </div>
+    <div class="wrap howto-wrap">
+      <div class="howto"><b>How to read this.</b> Each pass states what it covered and the decisions behind it. The prototypes run <b>inside this page</b> — press <b>Run it here</b> on any entry and the real handoff loads in place, no tab-hopping.</div>
+    </div>
+  </section>
 
-  <footer class="wrap">
-    <svg width="30" height="18" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#2E4A43" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#5A4E2A" stroke-width="9"></circle></svg>
-    <span>Kiki — the design record. Thirteen handoffs, each a decision with a reason.</span>
-    <span style="flex:1"></span>
-    <a class="backlink" style="margin:0" href="/">‹ Back to the showcase</a>
+  <!-- 4 · acts + entries -->
+  <main id="root"></main>
+
+  <!-- 5 · footer -->
+  <footer>
+    <div class="wrap">
+      <svg width="30" height="18" viewBox="0 0 100 60"><circle cx="38" cy="30" r="21" fill="none" stroke="#2E4A43" stroke-width="9"></circle><circle cx="62" cy="30" r="21" fill="none" stroke="#5A4E2A" stroke-width="9"></circle></svg>
+      <span class="fline">Kiki — the design record. Thirteen handoffs, each a decision with a reason.</span>
+      <span style="flex:1"></span>
+      <a class="fback" href="/">‹ Back to the showcase</a>
+    </div>
   </footer>
 
 <script>
-const H = "/design/handoffs/", T = "/design/thumbs/", HERO = "/design/heroes/";
+const PC = { ios: '#4FBFA6', web: '#E6CD8B', both: '#C7B3E6' };
+const plabel = { ios: 'iOS', web: 'Web', both: 'iOS · Web' };
+
 const ENTRIES = [
-  { phase:"Concept", pd:"18 Aug", date:"18 Aug", yr:"2026", plat:"both", slug:"aug18-concept",
-    title:"The first concept",
-    covered:"The opening articulation of Kiki as a design — trust between strangers given a first visual form, before any screen was real.",
-    dec:["Where the idea starts: prove trust from named people, not star ratings."], thumbs:[], newPhase:true },
-  { phase:"Concept", pd:"18 Aug", date:"18 Aug", yr:"2026", plat:"both", slug:"aug18-connect",
-    title:"Kiki Connect — first prototype",
-    covered:"The first interactive prototype of the web/hybrid demo that everything else grew out of.",
-    dec:["An early, clickable pass at the connect experience — the seed the later handoffs refined."], thumbs:[] },
+  { slug:'aug18-concept', date:'18 Aug', platform:'both', act:'01 · Concept', title:'The first concept',
+    covered:'The opening articulation of Kiki as a design — trust between strangers given a first visual form, before any screen was real.',
+    dec:['Where the idea starts: prove trust from named people, not star ratings.'] },
+  { slug:'aug18-connect', date:'18 Aug', platform:'both', act:'01 · Concept', title:'Kiki Connect — first prototype',
+    covered:'The first interactive prototype of the web/hybrid demo that everything else grew out of.',
+    dec:['An early, clickable pass at the connect experience — the seed the later handoffs refined.'] },
+  { slug:'aug20-trust-showcase', date:'20 Aug', platform:'ios', act:'02 · Trust', title:'The Trust tab (iOS)',
+    covered:'A third profile tab — Room · Profile · Trust — carrying the one decision the whole product exists for: do I let this stranger into my home?',
+    dec:['Answers <b>“can I trust this person?”</b> only from evidence Kiki already holds — and states plainly what it <b>can’t</b> answer.','Designs the <b>cold match</b> (no mutuals, nothing shared) — the common case most trust designs skip.','The same graph read twice: once as the host deciding, once as the guest. Copy changes, evidence doesn’t.'] },
+  { slug:'aug20-trust-web', date:'20 Aug', platform:'web', act:'02 · Trust', title:'The Trust tab (web)',
+    covered:'The desktop counterpart — same question and evidence, using the one thing a phone can’t: the evidence and the graph side by side.',
+    dec:['<b>The decision never scrolls away</b> — a sticky rail holds the person, the stakes, both actions and the unknowns.','<b>Cross-highlighting:</b> point at a vouch and its route lights in the graph while others dim, and the caption rewrites itself in words.'] },
+  { slug:'aug21-web-pages', date:'21 Aug', platform:'web', act:'03 · Web system', title:'The remaining six pages',
+    covered:'Explore, Community, Guest book, Trips, Messages, Me — every other page, behind one shared shell with real navigation.',
+    dec:['Homes sorted by <b>how close someone is to you, never by price</b>.','Three deliberate <b>removals</b> of things the old app did, argued as invariants shared across web and iOS.'] },
+  { slug:'aug24-web', date:'24 Aug', platform:'web', act:'03 · Web system', title:'Web, brought up to the Trust standard',
+    covered:'The whole desktop surface raised to the Trust page’s quality — one system across every screen.',
+    dec:['<b>One card / spacing / type system</b> everywhere, so the product reads as one thing.','A voice that states what it <b>cannot</b> tell you as plainly as what it can.','Reverse-engineered from the real components, so the build prefers the real component over the mock.'] },
+  { slug:'aug26-web-mobile', date:'26 Aug', platform:'web', act:'03 · Web system', title:'Mobile-tuned, plus four new surfaces',
+    covered:'The web set given a mobile layout for every surface — and four surfaces added, each closing a hole in the story.',
+    dec:['Added <b>invite / onboarding</b> — where the named-people trust model actually begins.','Woke the dormant <b>host / guest</b> split and made “no guest evidence yet” impossible to miss.','Added <b>Requests</b> (the host’s home screen) and a mobile layout for every screen, map and modal.'] },
+  { slug:'aug28-web-full', date:'28 Aug', platform:'web', act:'03 · Web system', title:'The full web build',
+    covered:'The culmination of the web line — seven screens, the trip-planner loop completed, and full mobile. 31 designed screens.',
+    dec:['<b>Trip planner completed into a loop:</b> post a trip, receive partial offers, read nights-coverage instead of a yes/no.','Every surface has a mobile layout; copy is final; every value matches the tokens exactly.'] },
+  { slug:'sep02-ios-decisions', date:'2 Sep', platform:'ios', act:'04 · iOS', title:'The iOS design-decisions page',
+    covered:'The native build presented as a body of design work — a scrolling portfolio page around a live phone.',
+    dec:['A <b>life-size interactive iPhone</b> with annotation cards on leader lines and a six-screen picker.','<b>Not a screenshot reel:</b> every claim is pinned to a live screen you can tap, and each annotation names a decision and its reason.'] },
+  { slug:'sep02-ios-hairline', date:'2 Sep', platform:'ios', act:'04 · iOS', title:'Hairline-polish pass',
+    covered:'Twelve phone frames over the existing app, each with its own fix note — the spec for the app-side corrections.',
+    dec:['Per-frame notes on contrast, spacing and hairlines — the small fixes that separate a demo from a build.'] },
+  { slug:'sep02-ios-premium', date:'2 Sep', platform:'ios', act:'04 · iOS', title:'Premium pass',
+    covered:'The four previously-missing screens, plus five premium interaction studies.',
+    dec:['Staggered entrance, map reach diagram, composing intro, slide-to-accept, standing bars — the studies that made it feel native.'] },
+  { slug:'sep03-mobile', date:'3 Sep', platform:'ios', act:'04 · iOS', title:'The portfolio page, re-premised for a phone',
+    covered:'The same design-decisions page, rebuilt on the premise that the visitor is already holding the device.',
+    dec:['<b>No phone frame</b> — the app runs full-bleed at 100svh; a mockup would be absurd on a phone.','Decisions arrive in a <b>draggable bottom sheet</b> — Kiki’s own vocabulary (the map’s frosted sheet), not a generic pattern.','Screens change by <b>horizontal swipe</b>, not by scrolling.'] },
+  { slug:'sep06-glyphs-map', date:'6 Sep', platform:'both', act:'05 · Craft', title:'Loop glyphs + the living map',
+    covered:'The craft pass now shipped in both apps — a custom icon language and an honest, living map.',
+    dec:['<b>22 custom marks</b> replace meaning-carrying emoji; four carry the real logo path verbatim; <b>✨ is retired</b> from the one card whose job is credibility.','A four-layer <b>living map</b> whose motion only ever responds to real coordinates and real degrees — the honesty rule.','Built <b>Expo Go-safe</b> (no Skia), so the demo still runs straight from a QR code.'] },
+];
 
-  { phase:"Trust", pd:"20 Aug", date:"20 Aug", yr:"2026", plat:"ios", slug:"aug20-trust-showcase",
-    title:"The Trust tab (iOS)",
-    covered:"A third profile tab — Room · Profile · Trust — carrying the one decision the whole product exists for: do I let this stranger into my home?",
-    dec:[
-      "Answers <b>“can I trust this person?”</b> only from evidence Kiki already holds — and states plainly what it <b>can’t</b> answer.",
-      "Designs the <b>cold match</b> (no mutuals, nothing shared) — the common case most trust designs skip.",
-      "The same graph read twice: once as the host deciding, once as the guest. Copy changes, evidence doesn’t.",
-    ], thumbs:[], newPhase:true },
-  { phase:"Trust", pd:"20 Aug", date:"20 Aug", yr:"2026", plat:"web", slug:"aug20-trust-web",
-    title:"The Trust tab (web)",
-    covered:"The desktop counterpart — same question and evidence, using the one thing a phone can’t: the evidence and the graph side by side.",
-    dec:[
-      "<b>The decision never scrolls away</b> — a sticky rail holds the person, the stakes, both actions and the unknowns.",
-      "<b>Cross-highlighting:</b> point at a vouch and its route lights in the graph while others dim, and the caption rewrites itself in words.",
-    ], thumbs:[] },
+const ACTS = [
+  { before:0, kicker:'ACT 01 · CONCEPT · 18 AUG', color:'#C7B3E6', h2:'What is this, if it isn’t a booking app?', body:'Answered twice in a single day: once as an argument about where trust comes from, once as something you could click. Nothing here is a screen yet — it is the premise the next twelve passes are accountable to.' },
+  { before:2, kicker:'ACT 02 · TRUST · 20 AUG', color:'#4FBFA6', h2:'Build the one screen the product exists for.', body:'Do I let this stranger into my home? Designed twice on the same day, because a phone and a desktop cannot make that argument the same way — one has to sequence the evidence, the other can hold all of it in view at once.' },
+  { before:4, kicker:'ACT 03 · WEB SYSTEM · 21–28 AUG', color:'#E6CD8B', h2:'One good page is not a product.', body:'Four passes over eight days take the Trust standard across every remaining surface, hold it to one card, spacing and type system, then take the whole set down to mobile. Each pass ends by naming what it still hadn’t covered — which is what the next one opens with.' },
+  { before:8, kicker:'ACT 04 · iOS · 2–3 SEP', color:'#4FBFA6', h2:'Move it onto the device it was always for.', body:'Three passes in one day — the presentation, the hairline corrections, the missing screens — then a fourth that throws out the desktop premise entirely once the visitor is holding a phone.' },
+  { before:12, kicker:'ACT 05 · CRAFT · 6 SEP', color:'#C7B3E6', h2:'What is left when the screens are right.', body:'The last pass touches nothing structural. It replaces the borrowed symbols with a drawn icon language and makes the map move only in response to things that are actually true.' },
+];
 
-  { phase:"Web system", pd:"21–28 Aug", date:"21 Aug", yr:"2026", plat:"web", slug:"aug21-web-pages",
-    title:"The remaining six pages",
-    covered:"Explore, Community, Guest book, Trips, Messages, Me — every other page, behind one shared shell with real navigation.",
-    dec:[
-      "Homes sorted by <b>how close someone is to you, never by price</b>.",
-      "Three deliberate <b>removals</b> of things the old app did, argued as invariants shared across web and iOS.",
-    ], thumbs:[], newPhase:true },
-  { phase:"Web system", pd:"21–28 Aug", date:"24 Aug", yr:"2026", plat:"web", slug:"aug24-web",
-    title:"Web, brought up to the Trust standard",
-    covered:"The whole desktop surface raised to the Trust page’s quality — one system across every screen.",
-    dec:[
-      "<b>One card / spacing / type system</b> everywhere, so the product reads as one thing.",
-      "A voice that states what it <b>cannot</b> tell you as plainly as what it can.",
-      "Reverse-engineered from the real components, so the build prefers the real component over the mock.",
-    ], thumbs:[] },
-  { phase:"Web system", pd:"21–28 Aug", date:"26 Aug", yr:"2026", plat:"web", slug:"aug26-web-mobile",
-    title:"Mobile-tuned, plus four new surfaces",
-    covered:"The web set given a mobile layout for every surface — and four surfaces added, each closing a hole in the story.",
-    dec:[
-      "Added <b>invite / onboarding</b> — where the named-people trust model actually begins.",
-      "Woke the dormant <b>host / guest</b> split and made “no guest evidence yet” impossible to miss.",
-      "Added <b>Requests</b> (the host’s home screen) and a mobile layout for every screen, map and modal.",
-    ], thumbs:[] },
-  { phase:"Web system", pd:"21–28 Aug", date:"28 Aug", yr:"2026", plat:"web", slug:"aug28-web-full",
-    title:"The full web build",
-    covered:"The culmination of the web line — seven screens, the trip-planner loop completed, and full mobile. 31 designed screens.",
-    dec:[
-      "<b>Trip planner completed into a loop:</b> post a trip, receive partial offers, read nights-coverage instead of a yes/no.",
-      "Every surface has a mobile layout; copy is final; every value matches the tokens exactly.",
-    ], thumbs:[] },
-
-  { phase:"iOS", pd:"2–3 Sep", date:"2 Sep", yr:"2026", plat:"ios", slug:"sep02-ios-decisions",
-    title:"The iOS design-decisions page",
-    covered:"The native build presented as a body of design work — a scrolling portfolio page around a live phone.",
-    dec:[
-      "A <b>life-size interactive iPhone</b> with annotation cards on leader lines and a six-screen picker.",
-      "<b>Not a screenshot reel:</b> every claim is pinned to a live screen you can tap, and each annotation names a decision and its reason.",
-    ], thumbs:[], newPhase:true },
-  { phase:"iOS", pd:"2–3 Sep", date:"2 Sep", yr:"2026", plat:"ios", slug:"sep02-ios-hairline",
-    title:"Hairline-polish pass",
-    covered:"Twelve phone frames over the existing app, each with its own fix note — the spec for the app-side corrections.",
-    dec:[
-      "Per-frame notes on contrast, spacing and hairlines — the small fixes that separate a demo from a build.",
-    ], thumbs:[] },
-  { phase:"iOS", pd:"2–3 Sep", date:"2 Sep", yr:"2026", plat:"ios", slug:"sep02-ios-premium",
-    title:"Premium pass",
-    covered:"The four previously-missing screens, plus five premium interaction studies.",
-    dec:[
-      "Staggered entrance, map reach diagram, composing intro, slide-to-accept, standing bars — the studies that made it feel native.",
-    ], thumbs:[] },
-  { phase:"iOS", pd:"2–3 Sep", date:"3 Sep", yr:"2026", plat:"ios", slug:"sep03-mobile",
-    title:"The portfolio page, re-premised for a phone",
-    covered:"The same design-decisions page, rebuilt on the premise that the visitor is already holding the device.",
-    dec:[
-      "<b>No phone frame</b> — the app runs full-bleed at 100svh; a mockup would be absurd on a phone.",
-      "Decisions arrive in a <b>draggable bottom sheet</b> — Kiki’s own vocabulary (the map’s frosted sheet), not a generic pattern.",
-      "Screens change by <b>horizontal swipe</b>, not by scrolling.",
-    ], thumbs:[] },
-
-  { phase:"Craft", pd:"6 Sep", date:"6 Sep", yr:"2026", plat:"both", slug:"sep06-glyphs-map",
-    title:"Loop glyphs + the living map",
-    covered:"The craft pass now shipped in both apps — a custom icon language and an honest, living map.",
-    dec:[
-      "<b>22 custom marks</b> replace meaning-carrying emoji; four carry the real logo path verbatim; <b>✨ is retired</b> from the one card whose job is credibility.",
-      "A four-layer <b>living map</b> whose motion only ever responds to real coordinates and real degrees — the honesty rule.",
-      "Built <b>Expo Go-safe</b> (no Skia), so the demo still runs straight from a QR code.",
-    ], thumbs:[], newPhase:true },
+// 20 calendar days, 18 Aug → 6 Sep. Each: null (empty) or {blocks:[{c,op}], anchor}.
+const V = '#C7B3E6', T = '#4FBFA6', G = '#E6CD8B';
+const CHART = [
+  { blocks:[{c:V},{c:V,op:0.55}], anchor:'aug18-concept' }, // 1 · 18
+  null,                                                     // 2 · 19
+  { blocks:[{c:T},{c:G}], anchor:'aug20-trust-showcase' },  // 3 · 20
+  { blocks:[{c:G}], anchor:'aug21-web-pages' },             // 4 · 21
+  null, null,                                               // 5-6 · 22-23
+  { blocks:[{c:G}], anchor:'aug24-web' },                   // 7 · 24
+  null,                                                     // 8 · 25
+  { blocks:[{c:G}], anchor:'aug26-web-mobile' },            // 9 · 26
+  null,                                                     // 10 · 27
+  { blocks:[{c:G}], anchor:'aug28-web-full' },              // 11 · 28
+  null, null, null, null,                                   // 12-15 · 29-1
+  { blocks:[{c:T},{c:T,op:0.72},{c:T,op:0.45}], anchor:'sep02-ios-decisions' }, // 16 · 2
+  { blocks:[{c:T}], anchor:'sep03-mobile' },                // 17 · 3
+  null, null,                                               // 18-19 · 4-5
+  { blocks:[{c:V}], anchor:'sep06-glyphs-map' },            // 20 · 6
+];
+const PHASES = [
+  { start:1, span:2, c:V, label:'01 Concept' },
+  { start:3, span:1, c:T, label:'02 Trust' },
+  { start:4, span:9, c:G, label:'03 Web system' },
+  { start:13, span:5, c:T, label:'04 iOS' },
+  { start:18, span:3, c:V, label:'05 Craft' },
 ];
 
 function el(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
+// spine ticks
+const ticks = document.getElementById('ticks');
+ENTRIES.forEach((it, i) => {
+  const a = el('a','tick'); a.href = '#'+it.slug; a.dataset.tick = i;
+  const bar = el('span','bar'); bar.style.background = PC[it.platform];
+  a.appendChild(bar); ticks.appendChild(a);
+});
+
+// cadence chart columns
+const chart = document.getElementById('chart');
+CHART.forEach((day) => {
+  if (!day) { const c = el('div','col'); c.appendChild(el('span','empty')); chart.appendChild(c); return; }
+  const a = el('a','col'); a.href = '#'+day.anchor;
+  day.blocks.forEach((b) => { const s = el('span','blk'); s.style.background = b.c; if (b.op != null) s.style.opacity = b.op; a.appendChild(s); });
+  chart.appendChild(a);
+});
+// phase band + labels (place spans on the 20-col grid)
+const band = document.getElementById('phaseBand'), labels = document.getElementById('phaseLabels');
+PHASES.forEach((p) => {
+  const s = el('span','pspan'); s.style.gridColumn = p.start+' / span '+p.span; s.style.background = p.c; band.appendChild(s);
+  const l = el('span','plabel'); l.style.gridColumn = p.start+' / span '+p.span; l.textContent = p.label; labels.appendChild(l);
+});
+
+// acts + entries
 const root = document.getElementById('root');
-let lastPhase = null, idx = 0;
-for (const it of ENTRIES) {
-  if (it.newPhase || it.phase !== lastPhase) {
-    lastPhase = it.phase;
-    const ph = el('div','phase');
-    ph.appendChild(el('span','pn', phaseNum(it.phase)));
-    ph.appendChild(el('span','pt', it.phase));
-    ph.appendChild(el('span','pd', '· ' + it.pd));
-    root.appendChild(ph);
-    root.appendChild(el('div','phase-line'));
+ENTRIES.forEach((it, i) => {
+  const act = ACTS.find((a) => a.before === i);
+  if (act) {
+    const sec = el('section','act' + (i===0 ? ' first' : ''));
+    const grid = el('div','act-grid');
+    const h2 = el('h2', null, '<span class="kicker" style="color:'+act.color+'">'+act.kicker+'</span>'+act.h2);
+    grid.appendChild(h2);
+    grid.appendChild(el('p','body', act.body));
+    sec.appendChild(grid); root.appendChild(sec);
   }
-  const card = el('div','card' + (idx % 2 ? ' flip' : '')); idx++;
+  const art = el('article','entry' + (i===ENTRIES.length-1 ? ' last' : ''));
+  art.id = it.slug; art.dataset.slug = it.slug; art.dataset.idx = i; art.dataset.act = it.act;
 
-  // Media — the live design, as a clickable hero
-  const media = el('a','media');
-  media.href = H+it.slug+'/'; media.target='_blank'; media.rel='noopener';
-  const hero = el('img'); hero.loading='lazy'; hero.src = HERO+it.slug+'.jpg'; hero.alt = it.title+' — design handoff';
-  media.appendChild(hero);
-  media.appendChild(el('div','peek','<span>Open the live design ›</span>'));
-  card.appendChild(media);
+  const rail = el('div','rail');
+  rail.appendChild(el('span','ord', String(i+1).padStart(2,'0')));
+  rail.appendChild(el('span','edate', it.date));
+  rail.appendChild(el('span','chip '+it.platform, plabel[it.platform]));
+  art.appendChild(rail);
 
-  // Body — the reasoning
-  const b = el('div','body');
-  b.appendChild(el('div','when', it.date + ' <span class="yr">'+it.yr+'</span>'));
-  const tl = el('div','tagline');
-  tl.appendChild(el('span','tag '+it.plat, platLabel(it.plat)));
-  b.appendChild(tl);
-  b.appendChild(el('h3','ct', it.title));
-  b.appendChild(el('p','covered', it.covered));
-  if (it.dec && it.dec.length) {
-    const ul = el('ul','dec');
-    for (const d of it.dec) ul.appendChild(el('li',null,d));
-    b.appendChild(ul);
-  }
-  const open = el('a','open', 'Open the live design ›');
-  open.href = H+it.slug+'/'; open.target='_blank'; open.rel='noopener';
-  b.appendChild(open);
-  card.appendChild(b);
+  const mediaCol = el('div');
+  const media = el('div','media'); media.dataset.media = '1';
+  const img = el('img'); img.loading='lazy'; img.src = '/design/heroes/'+it.slug+'.jpg'; img.alt = it.title+' — design handoff';
+  media.appendChild(img); mediaCol.appendChild(media);
+  const actions = el('div','actions');
+  const run = el('button','run','▶ Run it here'); run.dataset.run = '1';
+  const full = el('a','full','Full screen ↗'); full.href = '/design/handoffs/'+it.slug+'/'; full.target='_blank'; full.rel='noopener'; full.dataset.full='1';
+  actions.appendChild(run); actions.appendChild(full); mediaCol.appendChild(actions);
+  art.appendChild(mediaCol);
 
-  // Screenshot strip (spans full width) where a clean set exists
-  if (it.thumbs && it.thumbs.length) {
-    const wrap = el('div','strip-wrap');
-    wrap.appendChild(el('div','strip-label', 'More screens from this handoff'));
-    const strip = el('div','thumbs');
-    const dir = it.thumbSrc || it.slug;
-    for (const t of it.thumbs) {
-      const img = el('img'); img.loading='lazy'; img.src = T+dir+'/'+t; img.alt = it.title+' — screen';
-      strip.appendChild(img);
-    }
-    wrap.appendChild(strip);
-    card.appendChild(wrap);
-  }
-  root.appendChild(card);
+  const reason = el('div','reason');
+  reason.appendChild(el('h3', null, it.title));
+  reason.appendChild(el('p','summary', it.covered));
+  const ul = el('ul','dec');
+  it.dec.forEach((d) => ul.appendChild(el('li', null, d)));
+  reason.appendChild(ul);
+  art.appendChild(reason);
+
+  root.appendChild(art);
+});
+
+// A · run-it-here (in-page iframe embed, scaled from a fixed 1440px design width)
+const DESIGN_W = 1440, DESIGN_H = Math.round(1440 * 719 / 1100); // 941
+const loaded = [];
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-run]');
+  if (!btn) return;
+  const art = btn.closest('article[data-slug]');
+  const surface = art.querySelector('[data-media]');
+  if (surface.dataset.loaded) return;
+  surface.dataset.loaded = '1';
+  const w = surface.clientWidth;
+  const frame = document.createElement('iframe');
+  frame.src = '/design/handoffs/' + art.dataset.slug + '/'; frame.loading = 'lazy'; frame.title = art.dataset.slug;
+  Object.assign(frame.style, { position:'absolute', top:'0', left:'0', border:'0', width:DESIGN_W+'px', height:DESIGN_H+'px', transformOrigin:'top left', transform:'scale('+(w/DESIGN_W)+')', background:'#0F1B17' });
+  const img = surface.querySelector('img');
+  frame.addEventListener('load', () => { if (img) img.style.opacity = '0'; });
+  surface.appendChild(frame);
+  loaded.push({ surface, frame });
+  btn.textContent = '↗ Running live — open full screen for gestures';
+  Object.assign(btn.style, { color:'#8FA8A0', borderColor:'rgba(255,255,255,0.14)', background:'transparent', cursor:'default' });
+  btn.disabled = true;
+});
+let rt;
+window.addEventListener('resize', () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { loaded.forEach(({ surface, frame }) => { frame.style.transform = 'scale('+(surface.clientWidth/DESIGN_W)+')'; }); }, 120);
+});
+
+// B · scroll spy → tick states + act label
+const label = document.querySelector('[data-spine="label"]');
+const tickEls = [...document.querySelectorAll('.tick .bar')];
+let activeIndex = 0;
+function paint(idx) {
+  activeIndex = idx;
+  tickEls.forEach((bar, i) => {
+    if (i === idx) { bar.style.opacity = '1'; bar.style.height = '6px'; }
+    else if (i < idx) { bar.style.opacity = '0.55'; bar.style.height = '2px'; }
+    else { bar.style.opacity = '0.28'; bar.style.height = '2px'; }
+  });
+  const art = document.querySelector('article[data-idx="'+idx+'"]');
+  if (art) label.textContent = art.dataset.act;
 }
-
-function platLabel(p){ return p==='ios'?'iOS':p==='web'?'Web':'iOS · Web'; }
-function phaseNum(p){ const m={Concept:'01 · Concept',Trust:'02 · Trust','Web system':'03 · Web system',iOS:'04 · iOS','Craft':'05 · Craft'}; return m[p]||p; }
+paint(0);
+if ('IntersectionObserver' in window) {
+  const arts = [...document.querySelectorAll('article[data-slug]')];
+  const io = new IntersectionObserver((entries) => {
+    const vis = entries.filter((en) => en.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (vis.length) paint(Number(vis[0].target.dataset.idx));
+  }, { rootMargin: '-52px 0px -55% 0px', threshold: 0 });
+  arts.forEach((a) => io.observe(a));
+}
 </script>
 </body>
 </html>
