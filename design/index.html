@@ -112,6 +112,35 @@
   .coda-cta { display: inline-block; margin-top: 22px; font: 700 12px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #4FBFA6; text-decoration: none; }
   .coda-cta:hover { color: #7FE0CB; }
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+          background: '#0F1B17',
+          primaryColor: '#13241F',
+          primaryTextColor: '#E6EFEB',
+          primaryBorderColor: '#2E6A5C',
+          lineColor: '#4FBFA6',
+          secondaryColor: '#17302A',
+          tertiaryColor: '#13241F',
+          fontSize: '13px',
+          fontFamily: 'ui-monospace, Menlo, monospace',
+        },
+      });
+    }
+  </script>
+  <style>
+    .arch { border-top: 1px solid rgba(255,255,255,0.09); }
+    .arch .wrap { max-width: 1180px; margin: 0 auto; padding: 66px 28px 10px; }
+    .arch .diagram { margin: 22px 0 8px; padding: 18px; background: rgba(79,191,166,0.04); border: 1px solid rgba(79,191,166,0.16); border-radius: 14px; overflow-x: auto; }
+    .arch .diagram pre.mermaid { margin: 0; text-align: center; background: transparent; }
+    .arch .dlabel { font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: #4FBFA6; margin-bottom: 4px; }
+    .arch .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 820px) { .arch .grid2 { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <!-- 1 · sticky spine -->
@@ -170,6 +199,109 @@
             <li><b>The key never reaches the browser.</b> The model is reached through a tiny server proxy with the credential held in the server’s environment — the shape the real product would ship, not a key pasted into client code.</li>
           </ul>
           <a class="coda-cta" href="/app">See it write one live, in the web app →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4c · backend / architecture act — the design decisions behind the full-stack build -->
+  <section class="arch">
+    <div class="wrap">
+      <div class="act-grid">
+        <h2><span class="kicker" style="color:#4FBFA6">ACT · ARCHITECTURE · FULL-STACK</span>What it takes to make it real.</h2>
+        <div>
+          <p class="body">The screens are only half the product. Behind the demo is a real backend on Kiki’s own stack — one React&nbsp;Native source for iOS and web, a NestJS + Postgres API, invite-only auth, real-time messaging, and the mutual-friend AI served from the live graph. These are the decisions that hold it together.</p>
+        </div>
+      </div>
+
+      <div class="dlabel" style="margin-top:26px">System — one source, one backend</div>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+  subgraph One RN source
+    IOS["iOS app<br/>(Expo, native)"]
+    WEB["Web build<br/>(desktop + mobile)"]
+  end
+  DOM["@kiki/domain<br/>pure trust logic"]
+  CLIENT["@kiki/api-client<br/>typed tRPC"]
+  API["NestJS API<br/>tRPC · Prisma · Zod"]
+  DB[("Postgres<br/>Neon")]
+  GEM["Gemini"]
+  RES["Resend"]
+  BLOB["Blob storage"]
+  IOS --> CLIENT
+  WEB --> CLIENT
+  CLIENT -->|HTTP + WebSocket| API
+  API --> DB
+  API --> GEM
+  API --> RES
+  API --> BLOB
+  DOM -.shared verbatim.-> API
+  DOM -.read-only.-> WEB
+        </pre>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <div class="dlabel">Auth — invite → OTP → rotating tokens</div>
+          <div class="diagram">
+            <pre class="mermaid">
+sequenceDiagram
+  participant U as User
+  participant A as API
+  participant DB as Postgres
+  U->>A: requestOtp(email, invite?)
+  A->>DB: validate invite / find user
+  A-->>U: code (emailed · shown in demo)
+  U->>A: verifyOtp(email, code)
+  A->>DB: claim invite · create user
+  A-->>U: access JWT + refresh
+  U->>A: refresh (rotates)
+  A-->>U: new pair · reuse = revoke family
+            </pre>
+          </div>
+        </div>
+        <div>
+          <div class="dlabel">AI — never breaks, never lies</div>
+          <div class="diagram">
+            <pre class="mermaid">
+flowchart TD
+  Q["intro(host)"] --> G["build facts-only<br/>prompt from graph"]
+  G --> L{"live model?"}
+  L -->|ok + plausible| OUT["return · cache it"]
+  L -->|error / quota| C{"cached run?"}
+  C -->|hit| OUT2["return cached"]
+  C -->|miss| B{"baked?"}
+  B -->|yes| OUT3["return baked"]
+  B -->|no| CMP["deterministic compose"]
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="dlabel" style="margin-top:8px">Real-time messaging — persist then fan out</div>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+  S["Sender"] -->|send| API["API"]
+  API --> DB[("messages")]
+  API --> BUS(["pub/sub<br/>in-memory · Redis-ready"])
+  BUS --> WS1["recipient (WS)"]
+  BUS --> WS2["sender's other tabs"]
+        </pre>
+      </div>
+
+      <div class="act-grid" style="margin-top:8px">
+        <div></div>
+        <div>
+          <ul class="dec" style="margin-top:4px">
+            <li><b>The trust brain is shared, not re-implemented.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>) that the server and both apps import — so the demo and the real backend compute the exact same answers.</li>
+            <li><b>One schema, demo or real.</b> Postgres models mirror the domain types 1:1; the seeded demo world and Kiki’s own imported data go through the same tables and a validated import path — point it at a staging DB and it just works.</li>
+            <li><b>Honesty is enforced server-side.</b> The AI reads only what the graph can prove, a guard rejects any model output that leaks or refuses, and the fallback ladder means a demo never shows a broken box.</li>
+            <li><b>Frictionless demo, real security underneath.</b> One tap enters the demo; the real invite + passwordless OTP flow sits one click away, with proper token rotation and reuse detection behind it.</li>
+            <li><b>Built to hand over.</b> Type-safe end to end, integration-tested against a real database, with CI and a written threat model — and clean ports (voice, storage, pub/sub, LLM) so the next team can swap pieces in without a rewrite.</li>
+          </ul>
+          <a class="coda-cta" href="/app">Open the working app →</a>
         </div>
       </div>
     </div>
