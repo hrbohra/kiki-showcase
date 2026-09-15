@@ -3,8 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kiki — native iOS · design decisions</title>
-<meta name="description" content="The Kiki native-iOS build presented as a body of design work — a live, tappable phone with the reasoning behind every screen.">
+<title>Kiki — a working trust-first stay network</title>
+<meta name="description" content="A real, full-stack build of Kiki on its own stack — native iOS + web from one React Native codebase, a NestJS + Postgres backend, invite-only sign-in, live messaging, and AI intros written from the trust graph. Try it, then read the design record.">
+<meta name="author" content="Harsh Bohra">
+<!-- Social share card -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kiki — build & design record">
+<meta property="og:title" content="Kiki — a working trust-first stay network">
+<meta property="og:description" content="A real, full-stack build of Kiki on its own stack — native iOS + web from one React Native codebase, a NestJS + Postgres backend, invite-only sign-in, live messaging, and AI intros from the trust graph.">
+<meta property="og:url" content="https://kiki-portfolio-one.vercel.app/">
+<meta property="og:image" content="https://kiki-portfolio-one.vercel.app/assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kiki — a working trust-first stay network">
+<meta name="twitter:description" content="A real, full-stack build of Kiki on its own stack. Try it, then read the design record.">
+<meta name="twitter:image" content="https://kiki-portfolio-one.vercel.app/assets/og-cover.png">
 <script>
   /* Manual override kept available per the handoff: ?view=desktop / ?view=mobile forces a layout;
      otherwise the media query below decides (phone → mobile; tablet/desktop incl. iPad → desktop).
@@ -616,10 +628,10 @@
             <span style="font:600 20px/1.2 -apple-system,sans-serif; letter-spacing:-0.3px; color:#F6F5F1;">Run the native build from source</span>
             <span style="font:400 14px/21px -apple-system,sans-serif; color:#93A9A2;">The two options above run the app as a web page. To run the <em>actual native iOS app</em>: download the repo, start it with Expo on your computer, then scan the QR that Expo prints — the native build opens in the free Expo Go app on your phone. (A permanent App Store / TestFlight install is the only step that needs a paid Apple Developer account.)</span>
             <span style="font:400 14px/21px -apple-system,sans-serif; color:#B8CFC7; border-left:2px solid rgba(79,191,166,0.5); padding-left:13px;">This is the version to run if you want to judge the craft. The web builds show every screen and flow, but only the native build on a real phone carries the finer work: the <strong style="color:#D8E6E0; font-weight:600;">haptic taps</strong> as a match forms, the native spring animations and gesture physics, real momentum scrolling, and the true on-device typography and timing. It’s the difference between reading the app and feeling it.</span>
-            <span style="font:600 12.5px/1.7 ui-monospace,Menlo,monospace; color:#BFD6CE; background:rgba(0,0,0,0.28); border:1px solid rgba(255,255,255,0.10); border-radius:10px; padding:12px 14px; white-space:pre; overflow-x:auto;">git clone https://github.com/hrbohra/kiki-ios
-cd kiki-ios && npm install
-npx expo start        # then scan the QR with Expo Go</span>
-            <a href="https://github.com/hrbohra/kiki-ios" style="font:700 13.5px/1 -apple-system,sans-serif; color:#BFD6CE;">View the repo on GitHub ›</a>
+            <span style="font:600 12.5px/1.7 ui-monospace,Menlo,monospace; color:#BFD6CE; background:rgba(0,0,0,0.28); border:1px solid rgba(255,255,255,0.10); border-radius:10px; padding:12px 14px; white-space:pre; overflow-x:auto;">git clone https://github.com/hrbohra/kiki
+cd kiki && pnpm install
+pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
+            <a href="https://github.com/hrbohra/kiki" style="font:700 13.5px/1 -apple-system,sans-serif; color:#BFD6CE;">View the full-stack monorepo on GitHub ›</a>
           </span>
         </div>
       </div>
@@ -1071,7 +1083,7 @@ npx expo start        # then scan the QR with Expo Go</span>
         <svg width="9" height="15" viewBox="0 0 10 16" style="flex:none;"><path d="M1.5 1 L8 8 L1.5 15" fill="none" stroke="#4FBFA6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </a>
       <!-- 4 · Engineers: native build from source (lowest) -->
-      <a data-rv="34" href="https://github.com/hrbohra/kiki-ios" style="display:flex; align-items:flex-start; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
+      <a data-rv="34" href="https://github.com/hrbohra/kiki" style="display:flex; align-items:flex-start; gap:15px; padding:20px; background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.14); border-radius:22px;">
         <span style="width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex:none;">
           <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 8 L20 12 L16 16" fill="none" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><line x1="13.5" y1="6" x2="10.5" y2="18" stroke="#BFD6CE" stroke-width="1.7" stroke-linecap="round"></line></svg>
         </span>
