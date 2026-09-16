@@ -709,9 +709,13 @@ function paint(idx) {
 }
 paint(0);
 if ('IntersectionObserver' in window) {
+  // Track the set of sections inside the band and always paint the topmost one — repainting only
+  // from the changed entries leaves a stale label when the topmost section scrolls out.
+  const inBand = new Set();
   const io = new IntersectionObserver((entries) => {
-    const vis = entries.filter((en) => en.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
-    if (vis.length) paint(SECTIONS.indexOf(vis[0].target));
+    entries.forEach((en) => { if (en.isIntersecting) inBand.add(en.target); else inBand.delete(en.target); });
+    const vis = [...inBand].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    if (vis.length) paint(SECTIONS.indexOf(vis[0]));
   }, { rootMargin: '-52px 0px -60% 0px', threshold: 0 });
   SECTIONS.forEach((s) => io.observe(s));
 }
