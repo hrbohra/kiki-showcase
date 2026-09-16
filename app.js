@@ -214,8 +214,11 @@ function fit() {
   const scaler = $('phoneScaler'), wrap = $('phoneWrap');
   if (!scaler || !wrap) return;
   const wide = window.innerWidth > 1040;
+  // Wide: fit the viewport height AND leave both side columns at least 300px (plus gaps/padding),
+  // so the three-column stage never crushes the annotations between ~1040px and ~1400px.
+  const roomForPhone = window.innerWidth - (2 * 300) - (2 * 36) - (2 * 44);
   const scale = wide
-    ? Math.min(1, (window.innerHeight - 40) / 868)
+    ? Math.max(0.55, Math.min(1, (window.innerHeight - 40) / 868, roomForPhone / 410))
     : Math.min(1, (window.innerWidth - 56) / 410);
   scaler.style.transform = 'scale(' + scale + ')';
   wrap.style.width = (410 * scale) + 'px';
