@@ -261,7 +261,7 @@
       </div>
       <div class="wide">
         <div class="dlabel" style="margin-top:26px">The graph at club scale — 5,000 seeded members</div>
-        <p class="ds-note">In the 14-person demo world, “two steps from you” is the normal case. So I generated a club the size Kiki is heading for — an invite tree grown from a founder’s first hundred coffees, events, friendships, and 2,300 completed matches each adding a stay — and measured it from random members. <b>Median degree 5. About 1% of the club is within two steps of you, 6–7% at three, and nearly two-thirds are five or more away;</b> roughly a dozen of 819 hosts sit within two steps, and a second independent route almost never exists.</p>
+        <p class="ds-note">In the 14-person demo world, “two steps from you” is the normal case. So I generated a club the size Kiki is heading for — an invite tree grown from a founder’s first hundred coffees, events, friendships, and 2,300 completed matches each adding a stay — and measured it from random members. <b>Median degree 5. About 1% of the club is within two steps of you, 6–7% at three, and nearly two-thirds are five or more away;</b> roughly a dozen of 819 hosts sit within two steps.</p>
         <p class="ds-note">Three consequences shaped the screens. <b>Three steps is the working unit</b>, so the graph and the copy make three steps legible and two feel like a gift. <b>The vouch graph alone cannot introduce most people</b>, which is the quantitative version of Kiki’s own thesis: real mutual friends are scarce, so the AI mutual friend has to find overlap where the graph runs out. And <b>imported ties change everything</b>:</p>
         <div class="reach"><table>
           <thead><tr><th>Ties added per member</th><th>Median degree</th><th>Club at 2 steps</th><th>Club at 3 steps</th><th>Hosts within 2 steps</th></tr></thead>
@@ -272,7 +272,7 @@
             <tr><td>20</td><td>26</td><td>12.9%</td><td>82.7%</td><td>120</td></tr>
           </tbody>
         </table></div>
-        <p class="ds-note">A “connect your contacts” step is worth more than any ranking algorithm.<span class="see">Proof: packages/domain/src/seedWorld.ts and its test pin the shape · pnpm --filter @kiki/api seed:world · measure:ties reproduces the table.</span></p>
+        <p class="ds-note">A “connect your contacts” step is worth more than any ranking algorithm.<br><span class="see">Proof: packages/domain/src/seedWorld.ts and its test pin the shape · pnpm --filter @kiki/api seed:world · measure:ties reproduces the table.</span></p>
       </div>
       <div class="wide">
         <div class="dlabel" style="margin-top:26px">System — one RN source, one API, one shared domain</div>
