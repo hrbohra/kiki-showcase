@@ -212,7 +212,7 @@
     <div class="wrap">
       <div class="strip">
         <span><span class="dot kx-api-dot" style="color:#8FA8A0">●</span> <span class="kx-api-txt">live backend</span></span>
-        <span class="sep">·</span><span>49 domain tests <span style="color:#17A589">✓</span></span>
+        <span class="sep">·</span><span>73 domain tests <span style="color:#17A589">✓</span></span>
         <span class="sep">·</span><span class="kx-sha"><a href="https://github.com/hrbohra/kiki">github.com/hrbohra/kiki</a></span>
         <span class="sep">·</span><span>built end to end by Harsh Bohra</span>
       </div>
@@ -246,6 +246,7 @@
           <li><b>The match moment.</b> The yes is the emotional peak of the product, so it gets a screen, and the first thing that screen says about Kiki’s side of the deal is “You do nothing.”<span class="see">See it: Requests → slide to match.</span></li>
           <li><b>What Kiki carries, said in the same breath as what joining costs.</b> Three costs, then three covers, in one card grammar. The wording is Kiki’s to set, so every string lives in one file.<span class="see">See it: the fourth onboarding step.</span></li>
           <li><b>Who you brought in.</b> The invite tree is the graph’s backbone, so your branch is visible, with what each person has done since. Tiers read as words; nobody is ranked.<span class="see">See it: Community.</span></li>
+          <li><b>Kiki drafts the awkward message.</b> “You don’t have to decide today” used to be three dead links. Each now opens a message written from what the graph can prove about the two of you — a proper introduction, a call first, a smaller first stay — that you edit and send yourself.<span class="see">See it: Requests → Priya → Trust → the last card.</span></li>
           <li><b>Ask the mutual first.</b> On a route of two or more steps the button says “Ask Nina”, because that message is how a graph learns.<span class="see">See it: any host → Trust → See the route.</span></li>
         </ul>
       </div>
@@ -333,7 +334,7 @@ flowchart LR
         <div class="act-grid" style="margin-top:22px">
           <div></div>
           <ul class="dec">
-            <li><b>One trust brain, shared by the server and both apps.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 49 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
+            <li><b>One trust brain, shared by the server and both apps.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 73 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
             <li><b>One schema, demo or real.</b> Postgres models mirror the domain types 1:1; the seeded world and Kiki’s own data go through the same tables and a validated import path.<span class="see">Proof: apps/api/prisma/schema.prisma + seed.ts.</span></li>
             <li><b>Type-safe end to end.</b> tRPC with Zod on every input; the app compiles against the API’s exported contract, so a changed endpoint fails the build, not the user.<span class="see">Proof: packages/api-client consumes apps/api/dist/contract.d.ts.</span></li>
             <li><b>Frictionless demo, real security underneath.</b> One tap enters the demo; the real invite + passwordless OTP flow sits one click away, with rotating refresh tokens and reuse detection behind it.<span class="see">Proof: “Sign in with a real invite instead” on the entry screen.</span></li>
@@ -350,7 +351,7 @@ flowchart LR
     <div class="wrap">
       <h2><span class="kicker" style="color:#4FBFA6">03 · The intelligence</span>The mutual friend, actually written.</h2>
       <div>
-        <p class="body">The whole product rests on one paragraph a stranger will trust — the introduction a mutual friend could have written. It is written live by a language model, and the decisions there are as deliberate as any screen.</p>
+        <p class="body">The whole product rests on one paragraph a stranger will trust — the introduction a mutual friend could have written. It is written live by a language model, and the decisions there are as deliberate as any screen. Every AI feature added since follows the same contract, so the second one cost a fraction of the first.</p>
       </div>
       <div class="wide">
         <div class="grid2" style="margin-top:22px; align-items:start">
@@ -358,10 +359,10 @@ flowchart LR
             <div class="dlabel">AI — never breaks, never lies</div>
             <div class="diagram"><pre class="mermaid">
 flowchart TD
-  Q["intro(host)"] --> G["build facts-only<br/>prompt from graph"]
+  Q["run(task, facts)"] --> G["voice + task rules<br/>+ facts-only prompt"]
   G --> L{"live model?"}
-  L -->|ok + plausible| OUT["return · cache it"]
-  L -->|error / quota| C{"cached run?"}
+  L -->|ok + passes the task guard| OUT["return · cache it"]
+  L -->|error · quota · rejected| C{"cached run?"}
   C -->|hit| OUT2["return cached"]
   C -->|miss| B{"baked?"}
   B -->|yes| OUT3["return baked"]
@@ -375,6 +376,63 @@ flowchart TD
             <li><b>The key never reaches the browser.</b> The model is called server-side with the credential in the server’s environment — the shape the real product ships.<span class="see">See it: open any host — the intro writes itself, then labels its sources.</span></li>
           </ul>
         </div>
+
+        <div class="dlabel" style="margin-top:34px">One contract for every AI feature</div>
+        <div class="grid2" style="margin-top:6px; align-items:start">
+          <div class="diagram"><pre class="mermaid">
+flowchart LR
+  subgraph DOMAIN["@kiki/domain/ai · pure, unit-tested"]
+    T["AiTask<br/>facts · prompt · guard · compose"]
+  end
+  S["IntroService · DraftService<br/>gather facts, pick a task"] --> R
+  T --> R["AiRunner<br/>the only model call"]
+  V(["VoiceProvider port<br/>tone"]) --> R
+  R --> M(["LlmProvider port<br/>Gemini today"])
+  R --> CACHE[("ai_cache")]
+  R --> UI["text + its source<br/>a person reads, edits, sends"]
+          </pre></div>
+          <ul class="dec">
+            <li><b>Workflows, not an agent.</b> I looked at the options before adding a second AI feature: an agent framework, a call per feature wherever it was needed, or a small contract of my own. Kiki’s AI jobs are well-defined — one call over facts the product already holds — and the published guidance for that shape is to use simple, composable calls against the API directly and add agentic machinery only when a simpler design falls short. So each feature is a predefined workflow, and nothing here directs its own process.</li>
+            <li><b>A task is everything that is not I/O.</b> The <i>facts</i> it may use (typed, built from the graph), the <i>prompt</i>, the <i>guard</i> that accepts or rejects an answer, and a <i>deterministic twin</i> that says the same true thing without a model. All four are pure functions, versioned, and unit-tested; a version bump retires old cached runs.<span class="see">Proof: packages/domain/src/ai — task.ts, drafts.ts, introTask.ts and their tests.</span></li>
+            <li><b>One runner, one ladder.</b> The API calls a model in exactly one place. Every task gets the same behaviour for free: live and guarded, then a saved run of that exact prompt, then baked content, then the twin — and the answer always says which one spoke. A new feature cannot forget its fallback, its cache or its budget, because it never writes them.<span class="see">Proof: apps/api/src/ai/ai-runner.service.ts.</span></li>
+            <li><b>The model proposes; a person acts.</b> The AI returns text and nothing else. It cannot send a message, accept a request or change a record. A draft lands in the composer labelled as a draft, and nothing leaves until the member sends it.</li>
+            <li><b>What members wrote is data.</b> Vouch notes, bios and guest-book entries are fenced off from the instructions in every prompt, the guard rejects links, markup, leaked instructions and any name the facts never mentioned, and a rejected answer is logged by reason, never shown and never cached.</li>
+            <li><b>Two ports that move alone.</b> Voice and model are separate seams. A task never states tone; the voice port never states a task. Swapping Gemini, or swapping the hand-written tone pack for one compiled from Kiki’s own conversations, is one line each.</li>
+          </ul>
+        </div>
+
+        <div class="dlabel" style="margin-top:34px">What runs on it today</div>
+        <div class="reach"><table>
+          <thead><tr><th>Task</th><th>What it writes</th><th>Facts it may use</th><th>Where</th></tr></thead>
+          <tbody>
+            <tr><td>intro</td><td>The mutual-friend introduction</td><td>Overlaps with their source, consenting mutuals, the inviter, what is unknown</td><td>Any host → the intro card</td></tr>
+            <tr><td>draft.introduce</td><td>A proper first message between two people with nobody in common</td><td>Shared ground, the route, the inviter, the ask, the unknowns</td><td>Trust → “Let us introduce you properly”</td></tr>
+            <tr><td>draft.call</td><td>A ten-minute call before anyone decides</td><td>The same, plus the stay being discussed</td><td>Trust → “Have a quick call…”</td></tr>
+            <tr><td>draft.shorter</td><td>A smaller first stay, computed from the real ask</td><td>The ask and its half, in weeks</td><td>Trust → “Offer them 1 week instead of 2 weeks”</td></tr>
+          </tbody>
+        </table></div>
+        <p class="ds-note"><b>Similarity reads what people wrote.</b> Matching used to compare typed profile facts only. It now also reads bios and guest-book entries as canonical topics, after the exact matches and never instead of them, and every overlap says where it was found: “your own words” for a bio, “we worked it out” for what guests wrote. It is phrased as what two people <i>mention</i>, never as who they are. The extractor is a small tested lexicon today; an embedding model replaces it behind the same function without a screen changing.<br><span class="see">See it: Community → People like you · any host → How you’re connected.</span></p>
+        <p class="ds-note">Informed by <a href="https://www.anthropic.com/research/building-effective-agents" rel="noopener">Anthropic, Building effective agents</a> (workflows before agents, call the API directly, keep it simple), the <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" rel="noopener">OWASP Top 10 for LLM applications 2025</a> (prompt injection, excessive agency: segregate untrusted content, treat output as a proposal, keep a person in the loop) and current <a href="https://mlflow.org/articles/llm-application-architecture-a-2026-engineers-guide/" rel="noopener">LLM application architecture practice</a> (a model layer behind a port with caching and fallbacks, prompts versioned apart from orchestration).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03b · where the AI goes next -->
+  <section class="chapter" data-spine="03b · AI next" id="ai-next">
+    <div class="wrap">
+      <h2><span class="kicker" style="color:#4FBFA6">03b · What comes next</span>From one paragraph to a mutual friend you can talk to.</h2>
+      <div>
+        <p class="body">Nothing below is built. It is the path I would take, in order, and each step reuses the contract above rather than replacing it. The rule that does not move: the graph supplies the facts, Kiki’s own words supply the voice, and a person makes every decision.</p>
+      </div>
+      <div class="wide craft" style="margin-top:26px">
+        <div class="ccard"><span class="k" style="color:#4FBFA6">Step 1 · more tasks</span><p class="t">The same contract, wherever a blank box is the hard part.</p><p class="b">Reply suggestions inside a thread, a guest-book helper (“two lines is plenty”), a one-paragraph summary of a request for a busy host, translation between two members. Each is a task file and a call to the runner. Each ships with its deterministic twin first, so the feature exists before a model does.</p></div>
+        <div class="ccard"><span class="k" style="color:#4FBFA6">Step 2 · meaning, not keywords</span><p class="t">Embeddings behind the similarity function.</p><p class="b">Replace the topic lexicon with sentence embeddings stored beside the rows they describe (pgvector in the same Postgres). The function’s signature, the provenance labels and the “mention, never are” phrasing stay. It earns its place only if it beats the lexicon on a labelled set of pairs, so that set comes first.</p></div>
+        <div class="ccard"><span class="k" style="color:#4FBFA6">Step 3 · the concierge</span><p class="t">A chatbot that answers from Kiki’s facts, not from its memory.</p><p class="b">A <b>router</b> sorts each message: a question about how Kiki works, a question about a person or a place, something only the team should handle. How-Kiki-works is <b>retrieval</b> over Kiki’s own help and policy text, quoted with its source, because policies change weekly and a retrained model cannot. People and places are <b>read-only tools</b> that call the same domain selectors the screens use, under the asking member’s own permissions, so the bot can never see a graph the member cannot. Follow-ups are rewritten into standalone questions before retrieval.</p></div>
+        <div class="ccard"><span class="k" style="color:#4FBFA6">Step 3 · its limits</span><p class="t">It hands over before it guesses.</p><p class="b">Money, safety, a complaint, or low confidence goes to a person at Kiki with a summary of the conversation, and the member is told that is what happened. The bot never takes an action with consequences: it can draft, explain and find, and anything that changes a record is a button the member presses. Every answer passes the same guard and data fencing as a task.</p></div>
+        <div class="ccard"><span class="k" style="color:#E6CD8B">Step 4 · Kiki’s 10,000 conversations</span><p class="t">The corpus teaches it how Kiki talks. Nothing else.</p><p class="b">Kiki’s team has had some ten thousand real conversations with members. When they choose to use them, the path is already a package in the repo: isolate the corpus from the app database, <b>anonymise</b> it before anything reads it, extract a content-free <b>style profile</b> and a handful of de-identified exemplars, compile a tone pack, and swap the voice port. One line changes; no task, guard or prompt does. A style adapter is trained only if prompt-side tone measurably falls short.</p><span class="see">Proof: packages/voice · VOICE_PIPELINE.md (a documented stub; Kiki’s data is not in this project).</span></div>
+        <div class="ccard"><span class="k" style="color:#E6CD8B">Step 4 · what it is never used for</span><p class="t">Voice only. Never facts, matching, ranking, or training on what members said.</p><p class="b">A conversation is a record of how Kiki sounded, and members did not write to Kiki to become a model’s knowledge. So the corpus shapes tone and is the yardstick for it: held-out replies become the test of “would Kiki have said it like this”, scored for style similarity and spot-checked by the people who wrote the originals. What the bot <i>knows</i> always comes from the graph and from Kiki’s published policies.</p></div>
+        <div class="ccard"><span class="k" style="color:#C7B3E6">Step 5 · proof it works</span><p class="t">Evals in CI, and traces without text.</p><p class="b">The deterministic half of every task is already tested on every push. Next: a golden set per task run against the live model nightly, scored for faithfulness to the facts and for the guard’s false rejections; a judge model only offline, never in the request path. Traces carry the task, its version, the source that spoke and the guard’s reason, and never the text or the people in it.</p></div>
+        <div class="ccard"><span class="k" style="color:#C7B3E6">Step 5 · cost and drift</span><p class="t">The cheap model by default, the better one by exception.</p><p class="b">The model port becomes a router: short drafts and classification on a small model, the intro and the concierge’s harder turns on a larger one, with the per-member budget that already exists. Prompts stay in git beside their tests, so a change that makes answers worse is a revert, not an investigation.</p></div>
       </div>
     </div>
   </section>
