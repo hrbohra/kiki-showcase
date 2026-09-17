@@ -87,12 +87,12 @@ const SCREENS = [
     ],
   },
   {
-    key: 'trips', label: 'Away', accent: TEAL,
-    title: 'Away is a loop, not a transaction.',
-    standfirst: 'Your place while you’re away, your stays, and — the part no booking app shows — the guest-book entry you still owe. Closing that loop is what keeps the network warm.',
+    key: 'trips', label: 'Trips', accent: TEAL,
+    title: 'A trip is a loop, not a transaction.',
+    standfirst: 'Dates away, matches, and — the part no booking app shows — the guest-book entry you still owe. Closing that loop is what keeps the network warm.',
     left: [
-      { kicker: 'Reciprocity', head: 'A stay leaves something behind', body: 'Away isn’t a bookings list; it surfaces the entry you owe your last host, because what you write is how the next host will come to know you.' },
-      { kicker: 'Coverage', head: 'Offers are partial by default', body: 'Looking for a Kikier is built around weeks of rent covered, not a yes/no — someone can take five of your six weeks and you cover the rest from your network.' },
+      { kicker: 'Reciprocity', head: 'A stay leaves something behind', body: 'Trips isn’t a bookings list; it surfaces the entry you owe your last host, because what you write is how the next host will come to know you.' },
+      { kicker: 'Coverage', head: 'Offers are partial by default', body: 'Dates away are built around weeks covered, not a yes/no — someone can take five of your six weeks and you cover the rest from your network.' },
     ],
     right: [
       { kicker: 'Honesty', head: 'The owed entry is shown, not nagged', body: '“You owe Danica an entry” states the obligation once, plainly — no red badge, no countdown, no guilt mechanics. Then it gets out of the way.' },
