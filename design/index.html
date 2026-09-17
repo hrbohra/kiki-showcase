@@ -206,9 +206,9 @@
   <section class="proof" data-spine="Proof" id="proof">
     <div class="wrap">
       <div class="strip">
-        <span><span class="dot kx-api-dot" style="color:#8FA8A0">●</span> <span class="kx-api-txt">checking API…</span></span>
+        <span><span class="dot kx-api-dot" style="color:#8FA8A0">●</span> <span class="kx-api-txt">live backend</span></span>
         <span class="sep">·</span><span>49 domain tests <span style="color:#17A589">✓</span></span>
-        <span class="sep">·</span><span class="kx-sha">latest commit …</span>
+        <span class="sep">·</span><span class="kx-sha"><a href="https://github.com/hrbohra/kiki">github.com/hrbohra/kiki</a></span>
         <span class="sep">·</span><span>built end to end by Harsh Bohra</span>
       </div>
       <div class="doors">
@@ -230,6 +230,14 @@
           <li><b>The Trust page is the product.</b> Not a rating: a paragraph a mutual friend could have written, with every claim labelled by where it came from, and a plain statement of what Kiki <i>cannot</i> tell you.<span class="see">See it: any host → Trust. Read it as the host, then as the guest.</span></li>
           <li><b>Hosting reviews describe how someone keeps their own flat — not how they treat yours.</b> So the Trust page has a guest side, and when there is no guest evidence it says so rather than padding the page.<span class="see">See it: Requests → “Read their trust page” → “As a guest”.</span></li>
           <li><b>Mint only ever means “someone can vouch”.</b> One colour carries one meaning across the whole app; a third-degree pill never borrows it.</li>
+        </ul>
+        <div class="dlabel" style="margin-top:34px">Beyond the roadmap — what I added, and why</div>
+        <ul class="dec" style="margin-top:10px">
+          <li><b>Partial-cover offers.</b> A Kikier can take five of your six weeks, because a sublet that covers most of the rent beats no sublet at all.<span class="see">See it: Away → Italy for Mum’s 60th.</span></li>
+          <li><b>A host side and a guest side to every trust page.</b> How someone keeps their own flat says little about how they treat yours, so the page answers the question you are actually asking.<span class="see">See it: Requests → Maia → “As a guest”.</span></li>
+          <li><b>No timers on requests.</b> A countdown turns a yes into a reflex; Kiki wants the yes to be a decision.<span class="see">See it: Requests — nothing counts down.</span></li>
+          <li><b>“What this costs you” in onboarding.</b> A vouch is a debt, and people vouch more carefully when they can see the bill.<span class="see">See it: the third onboarding step.</span></li>
+          <li><b>Your own facts, editable.</b> The overlaps people are matched on come from what you say about yourself, so you can change them, and the other side updates at once.<span class="see">See it: Me → “+ Add a fact”.</span></li>
         </ul>
       </div>
     </div>
@@ -284,6 +292,7 @@ sequenceDiagram
   U->>A: refresh (rotates)
   A-->>U: new pair · reuse = revoke family
             </pre></div>
+            <p class="ds-note" style="margin-top:10px">Demo entry skips OTP; the real flow is one tap away on the entry screen.</p>
           </div>
           <div>
             <div class="dlabel">Real-time messaging — persist, then fan out</div>
@@ -300,7 +309,7 @@ flowchart LR
         <div class="act-grid" style="margin-top:22px">
           <div></div>
           <ul class="dec">
-            <li><b>The trust brain is shared, not re-implemented.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 49 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
+            <li><b>One trust brain, shared by the server and both apps.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 49 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
             <li><b>One schema, demo or real.</b> Postgres models mirror the domain types 1:1; the seeded world and Kiki’s own data go through the same tables and a validated import path.<span class="see">Proof: apps/api/prisma/schema.prisma + seed.ts.</span></li>
             <li><b>Type-safe end to end.</b> tRPC with Zod on every input; the app compiles against the API’s exported contract, so a changed endpoint fails the build, not the user.<span class="see">Proof: packages/api-client consumes apps/api/dist/contract.d.ts.</span></li>
             <li><b>Frictionless demo, real security underneath.</b> One tap enters the demo; the real invite + passwordless OTP flow sits one click away, with rotating refresh tokens and reuse detection behind it.<span class="see">Proof: “Sign in with a real invite instead” on the entry screen.</span></li>
@@ -335,7 +344,7 @@ flowchart TD
             </pre></div>
           </div>
           <ul class="dec" style="padding-top:22px">
-            <li><b>The prompt is built from the graph, not the vibe.</b> One pure function turns the real overlaps, mutuals and vouch notes into a facts-only brief — <i>use only these, invent nothing</i> — so the model narrates evidence instead of inventing a person.</li>
+            <li><b>The prompt is built from the graph.</b> One pure function turns the real overlaps, mutuals and vouch notes into a facts-only brief — <i>use only these, invent nothing</i> — so the model narrates evidence instead of inventing a person.</li>
             <li><b>Live, then cached, then composed.</b> If the quota runs out it serves a saved real run; if that misses it composes deterministically. A demo can never show a broken box, and it stays honest about which one spoke.</li>
             <li><b>It says what it cannot prove.</b> A shared hometown is named as common ground, never as safety; a missing track record is stated plainly. A guard rejects any output that leaks or refuses.</li>
             <li><b>The key never reaches the browser.</b> The model is called server-side with the credential in the server’s environment — the shape the real product ships.<span class="see">See it: open any host — the intro writes itself, then labels its sources.</span></li>
@@ -348,13 +357,13 @@ flowchart TD
   <!-- 04 · the craft -->
   <section class="chapter" data-spine="04 · Craft" id="craft">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#C7B3E6">04 · The craft</span>What makes it feel native, not merely responsive.</h2>
+      <h2><span class="kicker" style="color:#C7B3E6">04 · The craft</span>What makes it feel native.</h2>
       <div>
-        <p class="body">The design handoffs specified a set of interactions that separate a demo from a build. On 16 Sep every handoff was audited against the app; what the move to the monorepo had dropped was restored, and what had never been built was built. These are the ones that carry meaning.</p>
+        <p class="body">The design handoffs specified a set of interactions that separate a demo from a build. These are the ones that carry meaning.</p>
       </div>
       <div class="wide craft" style="margin-top:26px">
-        <div class="ccard"><span class="k">Decisions</span><p class="t">Weight on the yes, nothing on the no.</p><p class="b">Accepting a stranger into your home takes a deliberate gesture: a <b>slide to accept</b> whose travel is eased so the last third takes real effort, committing past 86% with a success haptic. Declining is a quiet link — Kiki never counts down and never punishes a no.</p><span class="see">See it: Requests, on a phone.</span></div>
-        <div class="ccard"><span class="k">Haptics</span><p class="t">A tick only when something means something.</p><p class="b">Four semantic tiers, not a buzz on every tap: a <b>selection</b> when a toggle or tab changes, a <b>tap</b> when a message sends, a medium <b>landing</b> when the intro finishes writing, <b>success</b> when a request or offer is accepted. Native goes through the Taptic engine; the web falls back to the Vibration API.</p><span class="see">See it: on a real phone — the emulator can’t vibrate.</span></div>
+        <div class="ccard"><span class="k">Decisions</span><p class="t">Weight on the yes, nothing on the no.</p><p class="b">Accepting a stranger into your home takes a deliberate gesture: a <b>slide to match</b> whose travel is eased so the last third takes real effort, committing past 86% with a success haptic. Declining is a quiet link — Kiki never counts down and never punishes a no.</p><span class="see">See it: Requests, on a phone.</span></div>
+        <div class="ccard"><span class="k">Haptics</span><p class="t">A tick when something means something.</p><p class="b">Four semantic tiers, not a buzz on every tap: a <b>selection</b> when a toggle or tab changes, a <b>tap</b> when a message sends, a medium <b>landing</b> when the intro finishes writing, <b>success</b> when a request or offer is accepted. Native goes through the Taptic engine; the web falls back to the Vibration API.</p><span class="see">See it: on a real phone — the emulator can’t vibrate.</span></div>
         <div class="ccard"><span class="k">Trust</span><p class="t">Read as the host, read as the guest.</p><p class="b">Arriving from Requests you are the host, so the page opens on their <b>guest side</b> — how they treat someone else’s flat. Arriving from a listing you are the guest, so it opens on their hosting record. No toggle to find; the entry decides the voice.</p><span class="see">See it: Requests → Maia → “As a guest”.</span></div>
         <div class="ccard"><span class="k">Continuity</span><p class="t">One person, two tabs, one header.</p><p class="b">Profile and Trust share the same hero card, back affordance and tab bar, so moving between them reads as a tab switch on one page — and every action leads somewhere real: message the host, ask the voucher, accept, decline.</p><span class="see">See it: any host → Profile ⇄ Trust.</span></div>
         <div class="ccard"><span class="k">Motion</span><p class="t">The list assembles itself.</p><p class="b">Explore cards rise on a 110ms stagger with an iOS spring. One thing pulses: a slow <b>halo on a one-step host</b> — the only animated element on screen is the strongest trust signal.</p><span class="see">See it: Explore — Danica.</span></div>
@@ -368,19 +377,19 @@ flowchart TD
     <div class="wrap">
       <h2><span class="kicker" style="color:#E6CD8B">05 · The design system</span>One palette, one type scale, twenty-two marks.</h2>
       <div>
-        <p class="body">The tokens were reverse-engineered from Kiki’s own product, then corrected where they failed accessibility, and every value below is the authored one the app ships. What you see here is drawn from the same source files the app imports — not a mood board.</p>
+        <p class="body">The tokens were taken from Kiki’s own product, and every value below is the one the app ships. What you see here is drawn from the same source files the app imports.</p>
       </div>
 
       <div class="wide">
         <div class="ds-block">
           <div class="dlabel">Colour — three accents, three meanings</div>
-          <p class="ds-note"><b>Teal is trust, gold is standing, rust is cost</b> — each accent appears only where its meaning does, so colour never needs a legend. Kiki’s original teal (<b>#0F8D74</b>) fails AA as text on mint at 3.66:1, so it survives only as a pressed fill; teal <i>text</i> uses <b>#0E4E42</b> (9.6:1). The faint ink was likewise corrected from #8A9099 (3.21:1) to #626C75 (4.84:1).</p>
+          <p class="ds-note"><b>Teal is trust, gold is standing, rust is cost</b> — each accent appears only where its meaning does, so colour never needs a legend. I kept Kiki’s teal (<b>#0F8D74</b>) for fills. For text I’d propose <b>#0E4E42</b>: same hue, 9.6:1 on mint where the original is 3.66:1. The same goes for the faint ink: #626C75 (4.84:1) where #8A9099 sits at 3.21:1.</p>
           <div class="swatches" id="swatches"></div>
         </div>
 
         <div class="ds-block">
           <div class="dlabel">Type — the system face, one scale</div>
-          <p class="ds-note">SF Pro on iOS, the system sans on the web. Weights top out at <b>700</b>: SF at 800 is Heavy, and iOS titles are Bold — a hairline fix from the Sep 2 handoff, now applied throughout. The serif on this page is the record’s voice, not the product’s.</p>
+          <p class="ds-note">SF Pro on iOS, the system sans on the web. Weights top out at <b>700</b>, since SF at 800 is Heavy and iOS titles are Bold. The serif on this page is the record’s voice, not the product’s.</p>
           <div class="type" id="type"></div>
         </div>
 
@@ -402,8 +411,8 @@ flowchart TD
         </div>
 
         <div class="ds-block">
-          <div class="dlabel">Avatars — a light source, not a flat disc</div>
-          <p class="ds-note">Every avatar and photo placeholder is a two-stop gradient of its own hue (lightened 38% → the hue), with the nationality flag as a small badge. Portraits are the members’ own; the ring is used only on the profile hero.</p>
+          <div class="dlabel">Avatars — a light source</div>
+          <p class="ds-note">Every avatar and photo placeholder is a two-stop gradient of its own hue (lightened 38% → the hue), with the nationality as a small two-letter badge. Portraits are the members’ own; the ring is used only on the profile hero.</p>
           <div class="avatars" id="avatars"></div>
         </div>
       </div>
@@ -471,9 +480,9 @@ flowchart TD
   const h = (tag, cls, inner) => { const e = document.createElement(tag); if (cls) e.className = cls; if (inner != null) e.innerHTML = inner; return e; };
 
   const SWATCHES = [
-    ['brand', '#17A589', 'fill only · buttons, active tab'], ['brandDark', '#0F8D74', 'pressed fill · <em>fails AA as text</em>'], ['brandTint', '#E7F4F0', 'behind trust elements'],
+    ['brand', '#17A589', 'fill only · buttons, active tab'], ['brandDark', '#0F8D74', 'Kiki’s teal · pressed fill'], ['brandTint', '#E7F4F0', 'behind trust elements'],
     ['textOnMint', '#0E4E42', '9.6:1 · all teal text'], ['textOnMintSoft', '#2C6559', '5.98:1 · secondary teal'], ['caveat', '#C15B5B', 'the one rust mark · cost'],
-    ['gold', '#C9A227', 'standing · your own voice'], ['ink', '#1A1A1A', 'headings'], ['inkSoft', '#4B5563', '7.0:1 · body'], ['inkFaint', '#626C75', '4.84:1 · <em>was #8A9099</em>'],
+    ['gold', '#C9A227', 'standing · your own voice'], ['ink', '#1A1A1A', 'headings'], ['inkSoft', '#4B5563', '7.0:1 · body'], ['inkFaint', '#626C75', '4.84:1 · proposed for #8A9099'],
     ['bg', '#F7F7F5', 'screen'], ['surface', '#FFFFFF', 'cards'], ['hairline', '#ECECE8', 'borders, dividers'],
     ['trust1', '#17A589', '1st degree'], ['trust2', '#4FBFA6', '2nd degree'], ['trust3', '#9BCFC3', '3rd degree · dashed'],
     ['Newcomer', '#8A9099', 'tier'], ['Trusted', '#17A589', 'tier'], ['Pillar', '#3B7DD8', 'tier'], ['Legend', '#C98A2B', 'tier'],
@@ -541,7 +550,7 @@ flowchart TD
     ['Explore', '<circle cx="11" cy="11" r="6" ' + tab(T) + '/><line x1="20" y1="20" x2="15.5" y2="15.5" ' + tab(T) + '/>'],
     ['Requests', '<path d="M4 13 h4 l1.5 2.5 h5 L16 13 h4" ' + tab(K) + '/><path d="M4 13 l2.2-6.2 A2 2 0 0 1 8.1 5.5 h7.8 a2 2 0 0 1 1.9 1.3 L20 13 v4 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 z" ' + tab(K) + '/>'],
     ['Community', '<circle cx="9" cy="8.5" r="3" ' + tab(K) + '/><path d="M3.5 19 v-1 c0-2.5 2.2-4 5.5-4 s5.5 1.5 5.5 4 v1" ' + tab(K) + '/><circle cx="17.5" cy="9.5" r="2.3" ' + tab(K) + '/><path d="M16 14.2 c3 0 4.5 1.5 4.5 3.8 v1" ' + tab(K) + '/>'],
-    ['Trips', '<rect x="4" y="5" width="16" height="15" rx="2.5" ' + tab(K) + '/><line x1="4" y1="9.5" x2="20" y2="9.5" ' + tab(K) + '/><line x1="8" y1="3" x2="8" y2="6" ' + tab(K) + '/><line x1="16" y1="3" x2="16" y2="6" ' + tab(K) + '/>'],
+    ['Away', '<rect x="4" y="5" width="16" height="15" rx="2.5" ' + tab(K) + '/><line x1="4" y1="9.5" x2="20" y2="9.5" ' + tab(K) + '/><line x1="8" y1="3" x2="8" y2="6" ' + tab(K) + '/><line x1="16" y1="3" x2="16" y2="6" ' + tab(K) + '/>'],
     ['Messages', '<path d="M5 5 h14 a1.5 1.5 0 0 1 1.5 1.5 v8 a1.5 1.5 0 0 1 -1.5 1.5 H10 l-4 3 v-3 H5 a1.5 1.5 0 0 1 -1.5 -1.5 v-8 A1.5 1.5 0 0 1 5 5 z" ' + tab(K) + '/>'],
     ['Me/Home', '<circle cx="12" cy="8" r="4" ' + tab(K) + '/><path d="M4 20 c0-4 3.6-6 8-6 s8 2 8 6" ' + tab(K) + '/>'],
   ];
@@ -569,7 +578,7 @@ const ENTRIES = [
     covered:'The desktop counterpart — same question and evidence, using the one thing a phone can’t: the evidence and the graph side by side.',
     dec:['<b>The decision never scrolls away</b> — a sticky rail holds the person, the stakes, both actions and the unknowns.','<b>Cross-highlighting:</b> point at a vouch and its route lights in the graph while others dim, and the caption rewrites itself in words.'] },
   { slug:'aug21-web-pages', date:'21 Aug', platform:'web', act:'02 · Web system', title:'The remaining six pages',
-    covered:'Explore, Community, Guest book, Trips, Messages, Me — every other page, behind one shared shell with real navigation.',
+    covered:'Explore, Community, Guest book, Away, Messages, Me — every other page, behind one shared shell with real navigation.',
     dec:['Homes sorted by <b>how close someone is to you, never by price</b>.','Three deliberate <b>removals</b> of things the old app did, argued as invariants shared across web and iOS.'] },
   { slug:'aug24-web', date:'24 Aug', platform:'web', act:'02 · Web system', title:'Web, brought up to the Trust standard',
     covered:'The whole desktop surface raised to the Trust page’s quality — one system across every screen.',
@@ -579,10 +588,10 @@ const ENTRIES = [
     dec:['Added <b>invite / onboarding</b> — where the named-people trust model actually begins.','Woke the dormant <b>host / guest</b> split and made “no guest evidence yet” impossible to miss.','Added <b>Requests</b> — the host’s home screen.'] },
   { slug:'aug28-web-full', date:'28 Aug', platform:'web', act:'02 · Web system', title:'The full web build',
     covered:'The culmination of the web line — seven screens, the trip planner completed, and full mobile. 31 designed screens.',
-    dec:['<b>Trip planner completed:</b> post a trip, receive partial offers, read nights-coverage instead of a yes/no.','Every surface has a mobile layout; copy is final; every value matches the tokens exactly.'] },
+    dec:['<b>Trip planner completed:</b> post a trip, receive partial offers, read weeks-of-rent coverage instead of a yes/no.','Every surface has a mobile layout; copy is final; every value matches the tokens exactly.'] },
   { slug:'sep02-ios-decisions', date:'2 Sep', platform:'ios', act:'03 · iOS', title:'The iOS design-decisions page',
     covered:'The native build presented as a body of design work — a scrolling portfolio page around a live phone.',
-    dec:['A <b>life-size interactive iPhone</b> with annotation cards on leader lines and a six-screen picker.','<b>Not a screenshot reel:</b> every claim is pinned to a live screen you can tap.'] },
+    dec:['A <b>life-size interactive iPhone</b> with annotation cards on leader lines and a six-screen picker.','Every claim is pinned to a live screen you can tap.'] },
   { slug:'sep02-ios-hairline', date:'2 Sep', platform:'ios', act:'03 · iOS', title:'Hairline-polish pass',
     covered:'Twelve phone frames over the existing app, each with its own fix note — the spec for the app-side corrections, all of which now ship.',
     dec:['Per-frame notes on contrast, spacing, weights and hairlines — the small fixes that separate a demo from a build.'] },

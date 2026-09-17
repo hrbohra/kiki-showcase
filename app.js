@@ -87,16 +87,16 @@ const SCREENS = [
     ],
   },
   {
-    key: 'trips', label: 'Trips', accent: TEAL,
-    title: 'A trip is a loop, not a transaction.',
-    standfirst: 'Out for offers, coming up, and — the part no booking app shows — the guest-book entry you still owe. Closing that loop is what keeps the network warm.',
+    key: 'trips', label: 'Away', accent: TEAL,
+    title: 'Away is a loop, not a transaction.',
+    standfirst: 'Your place while you’re away, your stays, and — the part no booking app shows — the guest-book entry you still owe. Closing that loop is what keeps the network warm.',
     left: [
-      { kicker: 'Reciprocity', head: 'A trip leaves something behind', body: 'Trips isn’t a bookings list; it surfaces the entry you owe your last host, because what you write is how the next host will come to know you.' },
-      { kicker: 'Coverage', head: 'Offers are partial by default', body: 'Out-for-offers is built around nights covered, not a yes/no — a host can take some of your nights and you stitch the rest together from your network.' },
+      { kicker: 'Reciprocity', head: 'A stay leaves something behind', body: 'Away isn’t a bookings list; it surfaces the entry you owe your last host, because what you write is how the next host will come to know you.' },
+      { kicker: 'Coverage', head: 'Offers are partial by default', body: 'Looking for a Kikier is built around weeks of rent covered, not a yes/no — someone can take five of your six weeks and you cover the rest from your network.' },
     ],
     right: [
       { kicker: 'Honesty', head: 'The owed entry is shown, not nagged', body: '“You owe Danica an entry” states the obligation once, plainly — no red badge, no countdown, no guilt mechanics. Then it gets out of the way.' },
-      { kicker: 'Unchained', head: 'Two trips for the price of one', body: 'A stay needn’t be chained to a single host. Posting your dates invites partial offers from people you’re connected to — the graph plans the trip.' },
+      { kicker: 'Unchained', head: 'Two trips cost the same as one', body: 'Every week someone covers your rent is a week you can be somewhere else. Posting the weeks you’re away invites partial offers from people you’re connected to.' },
     ],
   },
   {
