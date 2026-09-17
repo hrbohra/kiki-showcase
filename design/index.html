@@ -46,6 +46,11 @@
   .strip .dot { font-size: 9px; }
   .strip .sep { color: #3E5750; }
   .strip a { color: #4FBFA6; }
+  .reach { overflow-x: auto; margin: 14px 0 6px; }
+  .reach table { border-collapse: collapse; width: 100%; max-width: 760px; font: 500 13px/1.4 ui-monospace, Menlo, monospace; color: #BFD6CE; }
+  .reach th { text-align: left; font: 700 10.5px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: #8FA8A0; padding: 8px 14px 8px 0; border-bottom: 1px solid rgba(255,255,255,0.14); }
+  .reach td { padding: 9px 14px 9px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .reach tr:last-child td { color: #F6F5F1; }
   .doors { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 22px; }
   .door { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.035); transition: border-color .15s ease, background .15s ease; }
   .door:hover { border-color: rgba(79,191,166,0.5); background: rgba(79,191,166,0.06); }
@@ -238,6 +243,10 @@
           <li><b>No timers on requests.</b> A countdown turns a yes into a reflex; Kiki wants the yes to be a decision.<span class="see">See it: Requests — nothing counts down.</span></li>
           <li><b>“What this costs you” in onboarding.</b> A vouch is a debt, and people vouch more carefully when they can see the bill.<span class="see">See it: the third onboarding step.</span></li>
           <li><b>Your own facts, editable.</b> The overlaps people are matched on come from what you say about yourself, so you can change them, and the other side updates at once.<span class="see">See it: Me → “+ Add a fact”.</span></li>
+          <li><b>The match moment.</b> The yes is the emotional peak of the product, so it gets a screen, and the first thing that screen says about Kiki’s side of the deal is “You do nothing.”<span class="see">See it: Requests → slide to match.</span></li>
+          <li><b>What Kiki carries, said in the same breath as what joining costs.</b> Three costs, then three covers, in one card grammar. The wording is Kiki’s to set, so every string lives in one file.<span class="see">See it: the fourth onboarding step.</span></li>
+          <li><b>Who you brought in.</b> The invite tree is the graph’s backbone, so your branch is visible, with what each person has done since. Tiers read as words; nobody is ranked.<span class="see">See it: Community.</span></li>
+          <li><b>Ask the mutual first.</b> On a route of two or more steps the button says “Ask Nina”, because that message is how a graph learns.<span class="see">See it: any host → Trust → See the route.</span></li>
         </ul>
       </div>
     </div>
@@ -249,6 +258,21 @@
       <h2><span class="kicker" style="color:#4FBFA6">02 · The system</span>One source, one backend, one trust brain.</h2>
       <div>
         <p class="body">The screens are half the product. Behind them is a real backend on Kiki’s own stack — the same stack their job description names — built so they could point it at their own data and real users without touching the app.</p>
+      </div>
+      <div class="wide">
+        <div class="dlabel" style="margin-top:26px">The graph at club scale — 5,000 seeded members</div>
+        <p class="ds-note">In the 14-person demo world, “two steps from you” is the normal case. So I generated a club the size Kiki is heading for — an invite tree grown from a founder’s first hundred coffees, events, friendships, and 2,300 completed matches each adding a stay — and measured it from random members. <b>Median degree 5. About 1% of the club is within two steps of you, 6–7% at three, and nearly two-thirds are five or more away;</b> roughly a dozen of 819 hosts sit within two steps, and a second independent route almost never exists.</p>
+        <p class="ds-note">Three consequences shaped the screens. <b>Three steps is the working unit</b>, so the graph and the copy make three steps legible and two feel like a gift. <b>The vouch graph alone cannot introduce most people</b>, which is the quantitative version of Kiki’s own thesis: real mutual friends are scarce, so the AI mutual friend has to find overlap where the graph runs out. And <b>imported ties change everything</b>:</p>
+        <div class="reach"><table>
+          <thead><tr><th>Ties added per member</th><th>Median degree</th><th>Club at 2 steps</th><th>Club at 3 steps</th><th>Hosts within 2 steps</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>5</td><td>1.0%</td><td>7.0%</td><td>12</td></tr>
+            <tr><td>4</td><td>9</td><td>2.2%</td><td>20.3%</td><td>25</td></tr>
+            <tr><td>10</td><td>16</td><td>5.2%</td><td>52.4%</td><td>52</td></tr>
+            <tr><td>20</td><td>26</td><td>12.9%</td><td>82.7%</td><td>120</td></tr>
+          </tbody>
+        </table></div>
+        <p class="ds-note">A “connect your contacts” step is worth more than any ranking algorithm.<span class="see">Proof: packages/domain/src/seedWorld.ts and its test pin the shape · pnpm --filter @kiki/api seed:world · measure:ties reproduces the table.</span></p>
       </div>
       <div class="wide">
         <div class="dlabel" style="margin-top:26px">System — one RN source, one API, one shared domain</div>
@@ -314,6 +338,7 @@ flowchart LR
             <li><b>Type-safe end to end.</b> tRPC with Zod on every input; the app compiles against the API’s exported contract, so a changed endpoint fails the build, not the user.<span class="see">Proof: packages/api-client consumes apps/api/dist/contract.d.ts.</span></li>
             <li><b>Frictionless demo, real security underneath.</b> One tap enters the demo; the real invite + passwordless OTP flow sits one click away, with rotating refresh tokens and reuse detection behind it.<span class="see">Proof: “Sign in with a real invite instead” on the entry screen.</span></li>
             <li><b>Built to hand over.</b> Clean ports for voice, storage, pub/sub and the model, so the next team swaps pieces without a rewrite; a free-tier deploy kept warm by a cron so the public demo is always instant.<span class="see">Proof: packages/voice/VOICE_PIPELINE.md · .github/workflows/keepalive.yml.</span></li>
+            <li><b>What the phone gets, what the server keeps.</b> At 14 people the app can hold the whole world; at 5,000 it must not. The contract is written: your own ring on the device, routes to one host per request with consenting intermediates only, listings within three steps per viewport, and never the member list or anyone else’s connections. The demo still ships the small snapshot; moving route-finding behind one endpoint is the first server-side change.<span class="see">Status: specified, not yet built.</span></li>
           </ul>
         </div>
       </div>
@@ -367,6 +392,9 @@ flowchart TD
         <div class="ccard"><span class="k">Trust</span><p class="t">Read as the host, read as the guest.</p><p class="b">Arriving from Requests you are the host, so the page opens on their <b>guest side</b> — how they treat someone else’s flat. Arriving from a listing you are the guest, so it opens on their hosting record. No toggle to find; the entry decides the voice.</p><span class="see">See it: Requests → Maia → “As a guest”.</span></div>
         <div class="ccard"><span class="k">Continuity</span><p class="t">One person, two tabs, one header.</p><p class="b">Profile and Trust share the same hero card, back affordance and tab bar, so moving between them reads as a tab switch on one page — and every action leads somewhere real: message the host, ask the voucher, accept, decline.</p><span class="see">See it: any host → Profile ⇄ Trust.</span></div>
         <div class="ccard"><span class="k">Motion</span><p class="t">The list assembles itself.</p><p class="b">Explore cards rise on a 110ms stagger with an iOS spring. One thing pulses: a slow <b>halo on a one-step host</b> — the only animated element on screen is the strongest trust signal.</p><span class="see">See it: Explore — Danica.</span></div>
+        <div class="ccard"><span class="k">The match</span><p class="t">The headline is the fact.</p><p class="b">After the slide, a held full screen instead of a toast: the two of you joined <b>through the mutual</b>, because that is how the match exists. No confetti. Three lines of what happens now, the first ending “You do nothing.” The line draws once both avatars land; the success haptic fires when it arrives.</p><span class="see">See it: Requests → slide to match.</span></div>
+        <div class="ccard"><span class="k">Routes</span><p class="t">Every route, weighted, never all at once.</p><p class="b">The connection graph draws <b>all shortest routes</b> on rings at one and two steps. A hop’s width is its measured tie — stays, events, how it began, an 18-month half-life — and a tie with nothing measured is dashed, not hidden. Your other people and the host’s next ring arrive on tap, a count before a drawing.</p><span class="see">See it: any host → Trust → See the route.</span></div>
+        <div class="ccard"><span class="k">Access</span><p class="t">The same facts without the picture or the motion.</p><p class="b">The route list is the graph’s accessible twin; a listing card reads as one sentence; the slider takes a double-tap “Match”. Under Reduce Motion the stagger becomes a fade, the halo a still ring, the slider snaps and the match line appears whole with a single haptic.</p><span class="see">See it: turn on Reduce Motion and reload.</span></div>
         <div class="ccard"><span class="k">Fit</span><p class="t">Every phone, not one phone.</p><p class="b">Layouts are shrinkable and wrapping rather than sized for a single device, verified from 320px up. Dates in the seeded world are relative to today, and a demo-only reset keeps the shared demo evergreen after visitors accept the seeded requests.</p><span class="see">See it: scan the QR on any phone you have.</span></div>
       </div>
     </div>
