@@ -212,7 +212,7 @@
     <div class="wrap">
       <div class="strip">
         <span><span class="dot kx-api-dot" style="color:#8FA8A0">●</span> <span class="kx-api-txt">live backend</span></span>
-        <span class="sep">·</span><span>73 domain tests <span style="color:#17A589">✓</span></span>
+        <span class="sep">·</span><span>75 domain tests <span style="color:#17A589">✓</span></span>
         <span class="sep">·</span><span class="kx-sha"><a href="https://github.com/hrbohra/kiki">github.com/hrbohra/kiki</a></span>
         <span class="sep">·</span><span>built end to end by Harsh Bohra</span>
       </div>
@@ -334,7 +334,7 @@ flowchart LR
         <div class="act-grid" style="margin-top:22px">
           <div></div>
           <ul class="dec">
-            <li><b>One trust brain, shared by the server and both apps.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 73 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
+            <li><b>One trust brain, shared by the server and both apps.</b> The graph, similarity and trust-story logic live in one pure package (<i>@kiki/domain</i>, 75 tests) that the server and both apps import — so the demo and the real backend compute the exact same answers.<span class="see">Proof: packages/domain — no React, no IO, unit-tested in Node.</span></li>
             <li><b>One schema, demo or real.</b> Postgres models mirror the domain types 1:1; the seeded world and Kiki’s own data go through the same tables and a validated import path.<span class="see">Proof: apps/api/prisma/schema.prisma + seed.ts.</span></li>
             <li><b>Type-safe end to end.</b> tRPC with Zod on every input; the app compiles against the API’s exported contract, so a changed endpoint fails the build, not the user.<span class="see">Proof: packages/api-client consumes apps/api/dist/contract.d.ts.</span></li>
             <li><b>Frictionless demo, real security underneath.</b> One tap enters the demo; the real invite + passwordless OTP flow sits one click away, with rotating refresh tokens and reuse detection behind it.<span class="see">Proof: “Sign in with a real invite instead” on the entry screen.</span></li>
@@ -400,6 +400,9 @@ flowchart LR
             <li><b>Two ports that move alone.</b> Voice and model are separate seams. A task never states tone; the voice port never states a task. Swapping Gemini, or swapping the hand-written tone pack for one compiled from Kiki’s own conversations, is one line each.</li>
           </ul>
         </div>
+
+        <div class="dlabel" style="margin-top:34px">What the contract caught on its first day</div>
+        <p class="ds-note">Running the live model through the guards, rather than reading its answers by eye, found three faults the old one-off intro call had been hiding. <b>Answers were arriving cut off mid-sentence</b>: the output ceiling was being spent on the model’s own reasoning, and a half-sentence is long enough to look like an intro. The provider now sets a reasoning budget and treats a generation that hits the ceiling as no answer at all. <b>The intro could introduce the wrong person</b>: Nina’s note about Maia mentions Iris, and the model wrote “You and Iris share a good deal of common ground”. The prompt now says who is who, and the guard rejects any intro that never names the host. <b>A draft used a fact its task did not need</b>: the introduction message offered a shorter stay because the facts mentioned one, so each task is now handed only what it is for. Each has a test.<br><span class="see">Proof: packages/domain/src/__tests__/aiTasks.test.ts · apps/api/src/ai/llm.provider.ts.</span></p>
 
         <div class="dlabel" style="margin-top:34px">What runs on it today</div>
         <div class="reach"><table>
