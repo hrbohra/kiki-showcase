@@ -72,7 +72,8 @@
   ul.dec li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 6px; background: #2E6A5C; }
   ul.dec li b { color: #D8E6E0; font-weight: 600; }
   ul.dec li .see { display: block; margin-top: 3px; font: 600 11.5px/1.5 ui-monospace, Menlo, monospace; color: #4FBFA6; letter-spacing: 0.2px; }
-  .wide { grid-column: 1 / -1; }
+  .wide { grid-column: 1 / -1; min-width: 0; }
+  .chapter .wrap > * { min-width: 0; }
 
   /* diagrams */
   .dlabel { font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: #4FBFA6; margin-bottom: 4px; }
@@ -203,7 +204,7 @@
     <div class="wrap">
       <span class="eyebrow">The design record · Kiki</span>
       <h1 class="title">The decisions that make Kiki real.</h1>
-      <p class="lede">Kiki is a working product: one React&nbsp;Native source for the native iOS app and the web, a NestJS&nbsp;+&nbsp;Postgres backend, invite-only sign-in, real-time messaging, and an AI that writes each introduction from the trust graph. This page is the reasoning behind it, in order of what matters — and <b>every decision carries its proof</b>: a live screen you can open, a diagram of the system, or the code itself.</p>
+      <p class="lede">Kiki is a working product: one React&nbsp;Native source for the native iOS app and the web, a NestJS&nbsp;+&nbsp;Postgres backend, invite-only sign-in, real-time messaging, and an AI that writes each introduction from the trust graph. This page is the reasoning behind it, starting with the design system every screen is built from, then the product decision and the stack beneath it — and <b>every decision carries its proof</b>: a live screen you can open, a diagram of the system, or the code itself.</p>
     </div>
   </header>
 
@@ -224,10 +225,57 @@
     </div>
   </section>
 
-  <!-- 01 · the product decision -->
-  <section class="chapter first" data-spine="01 · Product" id="product" style="margin-top:0">
+  <!-- 01 · the design system -->
+  <section class="chapter first" data-spine="01 · Design system" id="tokens" style="margin-top:0">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#E6CD8B">01 · The product</span>It isn’t a booking app. It’s a way of proving you are worth letting in.</h2>
+      <h2><span class="kicker" style="color:#E6CD8B">01 · The design system</span>One palette, one type scale, twenty-two marks.</h2>
+      <div>
+        <p class="body">The tokens were taken from Kiki’s own product, and every value below is the one the app ships. What you see here is drawn from the same source files the app imports.</p>
+      </div>
+
+      <div class="wide">
+        <div class="ds-block">
+          <div class="dlabel">Colour — three accents, three meanings</div>
+          <p class="ds-note"><b>Teal is trust, gold is standing, rust is cost</b> — each accent appears only where its meaning does, so colour never needs a legend. I kept Kiki’s teal (<b>#0F8D74</b>) for fills. For text I’d propose <b>#0E4E42</b>: same hue, 9.6:1 on mint where the original is 3.66:1. The same goes for the faint ink: #626C75 (4.84:1) where #8A9099 sits at 3.21:1.</p>
+          <div class="swatches" id="swatches"></div>
+        </div>
+
+        <div class="ds-block">
+          <div class="dlabel">Type — the system face, one scale</div>
+          <p class="ds-note">SF Pro on iOS, the system sans on the web. Weights top out at <b>700</b>, since SF at 800 is Heavy and iOS titles are Bold. The serif on this page is the record’s voice, not the product’s.</p>
+          <div class="type" id="type"></div>
+        </div>
+
+        <div class="ds-block">
+          <div class="dlabel">Space, radius, shadow</div>
+          <div class="scale" id="space"></div>
+          <div class="rad" id="radius"></div>
+          <p class="ds-note">Cards carry a <b>5% shadow at 4/14</b>; sheets a <b>12% at 10/30</b>; a brand-tinted glow is reserved for the one primary action on a screen. The 22px card radius is the default; 24 is the profile hero only; 999 is every pill.</p>
+        </div>
+
+        <div class="ds-block">
+          <div class="dlabel">The Loop glyph set — 22 marks, drawn, not borrowed</div>
+          <p class="ds-note">Emoji that carried meaning were retired and replaced with a monoline icon language: <b>1.9px strokes</b> (2.2 at chip scale, where 1.9 optically vanishes), never rendered below 16px, one accent element per mark. Four marks carry the <b>real logo path verbatim</b> — a filled outline that is never stroked or re-traced. The ✨ is gone from the one card whose job is credibility.</p>
+          <div class="gk">Trust</div><div class="glyphs" id="g-trust"></div>
+          <div class="gk">Standing · Cost</div><div class="glyphs" id="g-standing"></div>
+          <div class="gk">Life facts — what people are matched on</div><div class="glyphs" id="g-life"></div>
+          <div class="gk">Home — amenities and dates</div><div class="glyphs" id="g-home"></div>
+          <div class="gk">Tab bar</div><div class="glyphs" id="g-tabs"></div>
+        </div>
+
+        <div class="ds-block">
+          <div class="dlabel">Avatars — a light source</div>
+          <p class="ds-note">Every avatar and photo placeholder is a two-stop gradient of its own hue (lightened 38% → the hue), with the nationality as a small two-letter badge. Portraits are the members’ own; the ring is used only on the profile hero.</p>
+          <div class="avatars" id="avatars"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · the product decision -->
+  <section class="chapter" data-spine="02 · Product" id="product">
+    <div class="wrap">
+      <h2><span class="kicker" style="color:#E6CD8B">02 · The product</span>It isn’t a booking app. It’s a way of proving you are worth letting in.</h2>
       <div>
         <p class="body">Every other stay platform starts with the room and bolts trust on afterwards as a star rating. Kiki inverts it: the person comes first, the room is a consequence, and the only currency is who will put their name next to yours. That one premise decides everything below.</p>
         <ul class="dec" style="margin-top:20px">
@@ -253,10 +301,10 @@
     </div>
   </section>
 
-  <!-- 02 · the system -->
-  <section class="chapter" data-spine="02 · System" id="system">
+  <!-- 03 · the system -->
+  <section class="chapter" data-spine="03 · System" id="system">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#4FBFA6">02 · The system</span>One source, one backend, one trust brain.</h2>
+      <h2><span class="kicker" style="color:#4FBFA6">03 · The system</span>One source, one backend, one trust brain.</h2>
       <div>
         <p class="body">The screens are half the product. Behind them is a real backend on Kiki’s own stack — the same stack their job description names — built so they could point it at their own data and real users without touching the app.</p>
       </div>
@@ -346,10 +394,10 @@ flowchart LR
     </div>
   </section>
 
-  <!-- 03 · the intelligence -->
-  <section class="chapter" data-spine="03 · Intelligence" id="intelligence">
+  <!-- 04 · the intelligence -->
+  <section class="chapter" data-spine="04 · Intelligence" id="intelligence">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#4FBFA6">03 · The intelligence</span>The mutual friend, actually written.</h2>
+      <h2><span class="kicker" style="color:#4FBFA6">04 · The intelligence</span>The mutual friend, actually written.</h2>
       <div>
         <p class="body">The whole product rests on one paragraph a stranger will trust — the introduction a mutual friend could have written. It is written live by a language model, and the decisions there are as deliberate as any screen. Every AI feature added since follows the same contract, so the second one cost a fraction of the first.</p>
       </div>
@@ -420,10 +468,10 @@ flowchart LR
     </div>
   </section>
 
-  <!-- 03b · where the AI goes next -->
-  <section class="chapter" data-spine="03b · AI next" id="ai-next">
+  <!-- 05 · where the AI goes next -->
+  <section class="chapter" data-spine="05 · AI next" id="ai-next">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#4FBFA6">03b · What comes next</span>From one paragraph to a mutual friend you can talk to.</h2>
+      <h2><span class="kicker" style="color:#4FBFA6">05 · What comes next</span>From one paragraph to a mutual friend you can talk to.</h2>
       <div>
         <p class="body">Nothing below is built. It is the path I would take, in order, and each step reuses the contract above rather than replacing it. The rule that does not move: the graph supplies the facts, Kiki’s own words supply the voice, and a person makes every decision.</p>
       </div>
@@ -441,9 +489,9 @@ flowchart LR
   </section>
 
   <!-- 04 · the craft -->
-  <section class="chapter" data-spine="04 · Craft" id="craft">
+  <section class="chapter" data-spine="06 · Craft" id="craft">
     <div class="wrap">
-      <h2><span class="kicker" style="color:#C7B3E6">04 · The craft</span>What makes it feel native.</h2>
+      <h2><span class="kicker" style="color:#C7B3E6">06 · The craft</span>What makes it feel native.</h2>
       <div>
         <p class="body">The design handoffs specified a set of interactions that separate a demo from a build. These are the ones that carry meaning.</p>
       </div>
@@ -461,58 +509,11 @@ flowchart LR
     </div>
   </section>
 
-  <!-- 05 · the design system -->
-  <section class="chapter" data-spine="05 · Design system" id="tokens">
-    <div class="wrap">
-      <h2><span class="kicker" style="color:#E6CD8B">05 · The design system</span>One palette, one type scale, twenty-two marks.</h2>
-      <div>
-        <p class="body">The tokens were taken from Kiki’s own product, and every value below is the one the app ships. What you see here is drawn from the same source files the app imports.</p>
-      </div>
-
-      <div class="wide">
-        <div class="ds-block">
-          <div class="dlabel">Colour — three accents, three meanings</div>
-          <p class="ds-note"><b>Teal is trust, gold is standing, rust is cost</b> — each accent appears only where its meaning does, so colour never needs a legend. I kept Kiki’s teal (<b>#0F8D74</b>) for fills. For text I’d propose <b>#0E4E42</b>: same hue, 9.6:1 on mint where the original is 3.66:1. The same goes for the faint ink: #626C75 (4.84:1) where #8A9099 sits at 3.21:1.</p>
-          <div class="swatches" id="swatches"></div>
-        </div>
-
-        <div class="ds-block">
-          <div class="dlabel">Type — the system face, one scale</div>
-          <p class="ds-note">SF Pro on iOS, the system sans on the web. Weights top out at <b>700</b>, since SF at 800 is Heavy and iOS titles are Bold. The serif on this page is the record’s voice, not the product’s.</p>
-          <div class="type" id="type"></div>
-        </div>
-
-        <div class="ds-block">
-          <div class="dlabel">Space, radius, shadow</div>
-          <div class="scale" id="space"></div>
-          <div class="rad" id="radius"></div>
-          <p class="ds-note">Cards carry a <b>5% shadow at 4/14</b>; sheets a <b>12% at 10/30</b>; a brand-tinted glow is reserved for the one primary action on a screen. The 22px card radius is the default; 24 is the profile hero only; 999 is every pill.</p>
-        </div>
-
-        <div class="ds-block">
-          <div class="dlabel">The Loop glyph set — 22 marks, drawn, not borrowed</div>
-          <p class="ds-note">Emoji that carried meaning were retired and replaced with a monoline icon language: <b>1.9px strokes</b> (2.2 at chip scale, where 1.9 optically vanishes), never rendered below 16px, one accent element per mark. Four marks carry the <b>real logo path verbatim</b> — a filled outline that is never stroked or re-traced. The ✨ is gone from the one card whose job is credibility.</p>
-          <div class="gk">Trust</div><div class="glyphs" id="g-trust"></div>
-          <div class="gk">Standing · Cost</div><div class="glyphs" id="g-standing"></div>
-          <div class="gk">Life facts — what people are matched on</div><div class="glyphs" id="g-life"></div>
-          <div class="gk">Home — amenities and dates</div><div class="glyphs" id="g-home"></div>
-          <div class="gk">Tab bar</div><div class="glyphs" id="g-tabs"></div>
-        </div>
-
-        <div class="ds-block">
-          <div class="dlabel">Avatars — a light source</div>
-          <p class="ds-note">Every avatar and photo placeholder is a two-stop gradient of its own hue (lightened 38% → the hue), with the nationality as a small two-letter badge. Portraits are the members’ own; the ring is used only on the profile hero.</p>
-          <div class="avatars" id="avatars"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 06 · the record -->
-  <section class="chapter record" data-spine="06 · Record" id="record">
+  <section class="chapter record" data-spine="07 · Record" id="record">
     <div class="wrap">
       <div class="record-intro">
-        <h2><span class="kicker" style="color:#8FA8A0">06 · The record</span>Eleven handoffs, in the order they happened.</h2>
+        <h2><span class="kicker" style="color:#8FA8A0">07 · The record</span>Eleven handoffs, in the order they happened.</h2>
         <div>
           <p class="body">None of the above arrived in one shot. It was built up through a run of design handoffs — each a complete spec that argued its own decisions. The early concept sketches are superseded and left out; what follows is the record from the Trust page onward. Each prototype runs <b>inside this page</b>.</p>
         </div>
@@ -685,7 +686,7 @@ const ENTRIES = [
     covered:'Twelve phone frames over the existing app, each with its own fix note — the spec for the app-side corrections, all of which now ship.',
     dec:['Per-frame notes on contrast, spacing, weights and hairlines — the small fixes that separate a demo from a build.'] },
   { slug:'sep02-ios-premium', date:'2 Sep', platform:'ios', act:'03 · iOS', title:'Premium pass',
-    covered:'The four previously-missing screens, plus five premium interaction studies — the source of chapter 04.',
+    covered:'The four previously-missing screens, plus five premium interaction studies — the source of chapter 06.',
     dec:['Staggered entrance, map reach diagram, composing intro, <b>slide-to-accept</b>, standing bars — the studies that make it feel native.'] },
   { slug:'sep03-mobile', date:'3 Sep', platform:'ios', act:'03 · iOS', title:'The portfolio page, re-premised for a phone',
     covered:'The same design-decisions page, rebuilt on the premise that the visitor is already holding the device.',
