@@ -176,7 +176,7 @@
               <div id="scr0" style="position:absolute; inset:0; display:block;">
                 <div style="padding:66px 16px 10px; display:flex; flex-direction:column; gap:6px;">
                   <div style="display:flex; align-items:center; justify-content:space-between;">
-                    <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span>
+                    <span style="display:flex; align-items:center; gap:4px;"><span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span><span data-goto="9" title="Notifications" style="position:relative; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16 v-5 a6 6 0 0 1 12 0 v5 l1.5 2 H4.5 z"></path><path d="M10 20 a2 2 0 0 0 4 0"></path></svg><span style="position:absolute; top:0; right:0; min-width:16px; height:16px; border-radius:8px; padding:0 4px; background:#17A589; color:#fff; font:700 10px/16px -apple-system,sans-serif; text-align:center;">3</span></span></span>
                     <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
                       <span style="background:#fff; border-radius:999px; padding:6px 16px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Homes</span>
                       <span data-goto="1" style="border-radius:999px; padding:6px 16px; font:600 13px/1 -apple-system,sans-serif; color:#626C75; cursor:pointer;">Map</span>
@@ -230,7 +230,7 @@
               <!-- 1 · MAP -->
               <div id="scr1" style="position:absolute; inset:0; display:none;">
                 <div style="padding:66px 16px 10px; display:flex; align-items:center; justify-content:space-between;">
-                  <span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span>
+                  <span style="display:flex; align-items:center; gap:4px;"><span style="font:700 30px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.6px; color:#1A1A1A;">Explore</span><span data-goto="9" title="Notifications" style="position:relative; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16 v-5 a6 6 0 0 1 12 0 v5 l1.5 2 H4.5 z"></path><path d="M10 20 a2 2 0 0 0 4 0"></path></svg><span style="position:absolute; top:0; right:0; min-width:16px; height:16px; border-radius:8px; padding:0 4px; background:#17A589; color:#fff; font:700 10px/16px -apple-system,sans-serif; text-align:center;">3</span></span></span>
                   <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
                     <span data-goto="0" style="border-radius:999px; padding:6px 16px; font:600 13px/1 -apple-system,sans-serif; color:#626C75; cursor:pointer;">Homes</span>
                     <span style="background:#fff; border-radius:999px; padding:6px 16px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Map</span>
@@ -406,7 +406,7 @@
                     <div style="margin-top:12px; display:flex; flex-direction:column;">
                       <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
                         <img src="assets/avatars/maia.jpg" alt="Maia" style="width:38px; height:38px; border-radius:19px; object-fit:cover; display:block; flex:none;">
-                        <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Maia</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">🌏 Mount Eden · 🎓 Paris 2017</span></span>
+                        <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Maia</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">Mount Eden · 🎓 Paris 2017</span></span>
                         <span style="flex:none; text-align:center; background:#E7F4F0; border-radius:12px; padding:6px 10px;"><span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#0E4E42;">3</span><span style="display:block; font:700 9px/1 -apple-system,sans-serif; color:#2C6559;">in common</span></span>
                       </div>
                       <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
@@ -417,26 +417,32 @@
                     </div>
                   </div>
                   <div style="background:#fff; border-radius:22px; padding:16px; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
-                    <span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Giving back</span>
-                    <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">Ranked by recent contribution — hosting, vouching, showing up.</span>
+                    <span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Who you brought in</span>
+                    <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">1 person · 1 stay</span>
                     <div style="margin-top:12px; display:flex; flex-direction:column;">
                       <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
-                        <span style="width:18px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">1</span>
+                        <img src="assets/avatars/amy.jpg" alt="Amy" style="width:38px; height:38px; border-radius:19px; object-fit:cover; display:block; flex:none;">
+                        <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Amy</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">Stayed once.</span></span>
+                        <span style="flex:none; background:#F0F0EC; border-radius:999px; padding:4px 9px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">New</span>
+                      </div>
+                    </div>
+                    <span style="display:block; margin-top:10px; font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">Your name is on each of them. When they host well, it shows up here and on your standing.</span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:16px; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
+                    <span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Giving back</span>
+                    <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">Hosting, vouching, showing up. Recent counts more; nobody is ranked.</span>
+                    <div style="margin-top:12px; display:flex; flex-direction:column;">
+                      <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
                         <img src="assets/avatars/nate.jpg" alt="Nate" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;">
                         <span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nate</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#3B7DD8; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Pillar</span></span></span>
-                        <span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">128</span>
                       </div>
                       <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
-                        <span style="width:18px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">2</span>
                         <img src="assets/avatars/nina.jpg" alt="Nina" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;">
                         <span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nina</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#17A589; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Trusted</span></span></span>
-                        <span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">96</span>
                       </div>
                       <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
-                        <span style="width:18px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">3</span>
                         <img src="assets/avatars/you.jpg" alt="You" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;">
                         <span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">You</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#8A9099; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Newcomer</span></span></span>
-                        <span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">22</span>
                       </div>
                     </div>
                   </div>
@@ -537,7 +543,7 @@
                     <div style="display:flex; align-items:center; gap:12px;">
                       <img src="assets/avatars/nina.jpg" alt="Nina" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block; flex:none;">
                       <span style="flex:1;">
-                        <span style="display:block; font:700 15.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">🇬🇧 Nina invited you</span>
+                        <span style="display:block; font:700 15.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nina invited you</span>
                         <span style="display:block; margin-top:1px; font:400 12.5px/1.3 -apple-system,sans-serif; color:#626C75;">4 days ago · KIKI·NINA·3F2A</span>
                       </span>
                     </div>
@@ -545,10 +551,114 @@
                   </div>
                   <div style="background:#fff; border-radius:22px; padding:16px; display:flex; flex-direction:column; gap:12px;">
                     <span style="font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">What other people can see</span>
-                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🌏 Mount Eden</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
-                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">🎓 Paris, 2017</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Mount Eden</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
+                    <span style="display:flex; align-items:center; gap:10px;"><span style="flex:1; font:600 14.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Paris, 2017</span><span style="background:#F7F7F5; border-radius:999px; padding:4px 10px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Your words</span></span>
                   </div>
                 </div>
+              </div>
+
+              <!-- 9 · NOTIFICATIONS -->
+              <div id="scr9" style="position:absolute; inset:0; overflow-y:auto; display:none;">
+  <div style="padding:60px 16px 6px; display:flex; flex-direction:column; gap:8px;">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <span data-goto="0" style="font:700 15px/1 -apple-system,sans-serif; color:#17A589; cursor:pointer;">‹  Back</span>
+      <span style="font:600 14px/1 -apple-system,sans-serif; color:#17A589;">Mark all as read</span>
+    </div>
+    <span style="font:700 26px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">Notifications</span>
+  </div>
+  <div style="padding:8px 16px 96px; display:flex; flex-direction:column; gap:12px;">
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">NEEDS YOU</span>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/priya.jpg" alt="Priya" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Priya wants to stay 2 weeks</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">3 steps from you, through Amy. £644 for the stay.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">2 hrs ago</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Read their trust page</span>
+    <span style="border:1.5px solid #C9CBC8; border-radius:12px; padding:10px 14px; font:700 14px/1 -apple-system,sans-serif; color:#4B5563;">Later</span>
+  </div>
+</div>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/maia.jpg" alt="Maia" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Maia wants to stay 4 weeks</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Nina vouches for Maia. £1,288 for the stay.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">2 hrs ago</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Read their trust page</span>
+    <span style="border:1.5px solid #C9CBC8; border-radius:12px; padding:10px 14px; font:700 14px/1 -apple-system,sans-serif; color:#4B5563;">Later</span>
+  </div>
+</div>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/danica.jpg" alt="Danica" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">You owe Danica a guest-book entry</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Your stay in Tooting. Two lines is plenty; it’s how her next guest knows her.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">since your stay</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Write it</span>
+    
+  </div>
+</div>
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">TODAY</span>
+    <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; border:1px solid #ECECE8; padding:12px 14px;">
+  <img src="assets/avatars/amy.jpg" alt="Amy" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block; flex:none;">
+  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;">
+    <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Amy used your invite code</span>
+    <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">One step from you now. Nothing yet, that’s normal.</span>
+    <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">18 hrs ago</span>
+  </span>
+</div>
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">YESTERDAY</span>
+    <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; border:1px solid #ECECE8; padding:12px 14px;">
+  <span style="width:44px; height:44px; border-radius:12px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 16px/1 -apple-system,sans-serif; color:#0E4E42; flex:none;">3</span>
+  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;">
+    <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">3 rooms fit your dates</span>
+    <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Danica, Maia, Katelin. 1 is one step from you.</span>
+    <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">yesterday · grouped</span>
+  </span>
+</div>
+  </div>
+              </div>
+
+              <!-- 10 · THE MATCH -->
+              <div id="scr10" style="position:absolute; inset:0; overflow-y:auto; display:none; background:#F7F7F5;">
+  <div style="padding:62px 20px 100px; display:flex; flex-direction:column; gap:18px; min-height:100%;">
+    <div style="display:flex; justify-content:flex-end;"><span data-goto="4" style="font:700 15px/1 -apple-system,sans-serif; color:#17A589; cursor:pointer;">Done</span></div>
+    <div style="display:flex; align-items:center; margin-top:6px;">
+      <img src="assets/avatars/you.jpg" alt="You" style="width:84px; height:84px; border-radius:42px; object-fit:cover; display:block; flex:none; border:3px solid #fff; box-shadow:0 4px 14px rgba(26,26,26,0.08);">
+      <span style="flex:1; position:relative; height:84px; display:flex; align-items:center; justify-content:center;">
+        <span style="position:absolute; left:0; right:0; height:3px; border-radius:2px; background:#17A589;"></span>
+        <span style="position:relative; display:flex; flex-direction:column; align-items:center; gap:4px;"><img src="assets/avatars/nina.jpg" alt="Nina" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block; border:3px solid #fff;"><span style="font:700 11px/1 -apple-system,sans-serif; color:#4B5563;">Nina</span></span>
+      </span>
+      <img src="assets/avatars/maia.jpg" alt="Maia" style="width:84px; height:84px; border-radius:42px; object-fit:cover; display:block; flex:none; border:3px solid #fff; box-shadow:0 4px 14px rgba(26,26,26,0.08);">
+    </div>
+    <span style="font:700 29px/34px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Maia stays at yours, 21 Sep – 19 Oct.</span>
+    <span style="font:400 15px/22px -apple-system,sans-serif; color:#4B5563; margin-top:-8px;">Nina’s name is on this. So is Kiki’s. That’s the match.</span>
+    <div style="background:#fff; border-radius:22px; border:1px solid #ECECE8; padding:16px; display:flex; flex-direction:column; gap:12px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+      <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">WHAT HAPPENS NOW</span>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">1</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">Kiki confirms Maia’s ID and payment. You do nothing.</span></div>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">2</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">£1,288 lands in your account on Monday 14 September, the week before Maia arrives.</span></div>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">3</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">After Maia leaves, you write the guest-book entry. It’s how the next host knows Maia.</span></div>
+    </div>
+    <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+      <span style="background:#17A589; border-radius:14px; padding:16px; text-align:center; font:700 16px/1 -apple-system,sans-serif; color:#fff; box-shadow:0 6px 16px rgba(23,165,137,0.28);">Say hi to Maia</span>
+      <span style="background:#fff; border:1px solid #ECECE8; border-radius:14px; padding:15px; text-align:center; font:700 15.5px/1 -apple-system,sans-serif; color:#0E4E42;">Tell Nina</span>
+    </div>
+  </div>
               </div>
 
               <!-- tab bar -->
@@ -704,7 +814,7 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
     <div id="mScr0" style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:176px; display:block;">
       <div style="padding:58px 18px 10px; display:flex; flex-direction:column; gap:5px;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <span style="font:700 31px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Explore</span>
+          <span style="display:flex; align-items:center; gap:4px;"><span style="font:700 31px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Explore</span><span data-goto="9" title="Notifications" style="position:relative; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16 v-5 a6 6 0 0 1 12 0 v5 l1.5 2 H4.5 z"></path><path d="M10 20 a2 2 0 0 0 4 0"></path></svg><span style="position:absolute; top:0; right:0; min-width:16px; height:16px; border-radius:8px; padding:0 4px; background:#17A589; color:#fff; font:700 10px/16px -apple-system,sans-serif; text-align:center;">3</span></span></span>
           <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
             <span style="background:#fff; border-radius:999px; padding:6px 15px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Homes</span>
             <span data-goto="1" style="border-radius:999px; padding:6px 15px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Map</span>
@@ -758,7 +868,7 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
     <!-- 1 · MAP -->
     <div id="mScr1" style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:176px; display:none;">
       <div style="padding:58px 18px 10px; display:flex; align-items:center; justify-content:space-between;">
-        <span style="font:700 31px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Explore</span>
+        <span style="display:flex; align-items:center; gap:4px;"><span style="font:700 31px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Explore</span><span data-goto="9" title="Notifications" style="position:relative; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16 v-5 a6 6 0 0 1 12 0 v5 l1.5 2 H4.5 z"></path><path d="M10 20 a2 2 0 0 0 4 0"></path></svg><span style="position:absolute; top:0; right:0; min-width:16px; height:16px; border-radius:8px; padding:0 4px; background:#17A589; color:#fff; font:700 10px/16px -apple-system,sans-serif; text-align:center;">3</span></span></span>
         <span style="display:flex; background:#ECECE8; border-radius:999px; padding:3px;">
           <span data-goto="0" style="border-radius:999px; padding:6px 15px; font:600 13px/1 -apple-system,sans-serif; color:#626C75;">Homes</span>
           <span style="background:#fff; border-radius:999px; padding:6px 15px; font:700 13px/1 -apple-system,sans-serif; color:#1A1A1A;">Map</span>
@@ -892,7 +1002,7 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
           <div style="margin-top:10px; display:flex; flex-direction:column;">
             <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
               <img src="assets/avatars/maia.jpg" alt="Maia" style="width:38px; height:38px; border-radius:19px; object-fit:cover; display:block; flex:none;">
-              <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Maia</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">🌏 Mount Eden · 🎓 Paris 2017</span></span>
+              <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Maia</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">Mount Eden · 🎓 Paris 2017</span></span>
               <span style="flex:none; text-align:center; background:#E7F4F0; border-radius:12px; padding:6px 10px;"><span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#0E4E42;">3</span><span style="display:block; font:700 9px/1 -apple-system,sans-serif; color:#2C6559;">in common</span></span>
             </div>
             <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
@@ -903,12 +1013,24 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
           </div>
         </div>
         <div style="background:#fff; border-radius:22px; padding:15px; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
+                    <span style="display:block; font:700 16px/1 -apple-system,sans-serif; color:#1A1A1A;">Who you brought in</span>
+                    <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">1 person · 1 stay</span>
+                    <div style="margin-top:12px; display:flex; flex-direction:column;">
+                      <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;">
+                        <img src="assets/avatars/amy.jpg" alt="Amy" style="width:38px; height:38px; border-radius:19px; object-fit:cover; display:block; flex:none;">
+                        <span style="flex:1; min-width:0;"><span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Amy</span><span style="display:block; font:400 12px/1.3 -apple-system,sans-serif; color:#4B5563;">Stayed once.</span></span>
+                        <span style="flex:none; background:#F0F0EC; border-radius:999px; padding:4px 9px; font:700 11px/1 -apple-system,sans-serif; color:#626C75;">New</span>
+                      </div>
+                    </div>
+                    <span style="display:block; margin-top:10px; font:400 12.5px/18px -apple-system,sans-serif; color:#626C75;">Your name is on each of them. When they host well, it shows up here and on your standing.</span>
+                  </div>
+                  <div style="background:#fff; border-radius:22px; padding:15px; box-shadow:0 8px 24px rgba(26,26,26,0.06);">
           <span style="display:block; font:700 15.5px/1 -apple-system,sans-serif; color:#1A1A1A;">Giving back</span>
-          <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">Ranked by recent contribution — hosting, vouching, showing up.</span>
+          <span style="display:block; margin-top:3px; font:400 12.5px/1.4 -apple-system,sans-serif; color:#626C75;">Hosting, vouching, showing up. Recent counts more; nobody is ranked.</span>
           <div style="margin-top:10px; display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><span style="width:16px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">1</span><img src="assets/avatars/nate.jpg" alt="Nate" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nate</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#3B7DD8; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Pillar</span></span></span><span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">128</span></div>
-            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><span style="width:16px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">2</span><img src="assets/avatars/nina.jpg" alt="Nina" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nina</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#17A589; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Trusted</span></span></span><span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">96</span></div>
-            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><span style="width:16px; text-align:center; font:700 14px/1 -apple-system,sans-serif; color:#626C75;">3</span><img src="assets/avatars/you.jpg" alt="You" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">You</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#8A9099; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Newcomer</span></span></span><span style="flex:none; font:700 15px/1 -apple-system,sans-serif; color:#1A1A1A;">22</span></div>
+            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><img src="assets/avatars/nate.jpg" alt="Nate" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nate</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#3B7DD8; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Pillar</span></span></span></div>
+            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><img src="assets/avatars/nina.jpg" alt="Nina" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nina</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#17A589; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Trusted</span></span></span></div>
+            <div style="display:flex; align-items:center; gap:11px; padding:10px 0; border-top:1px solid #F0F0EC;"><img src="assets/avatars/you.jpg" alt="You" style="width:34px; height:34px; border-radius:17px; object-fit:cover; display:block; flex:none;"><span style="flex:1; min-width:0;"><span style="display:block; font:700 14.5px/1.2 -apple-system,sans-serif; color:#1A1A1A;">You</span><span style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:7px; height:7px; border-radius:4px; background:#8A9099; display:block;"></span><span style="font:700 11px/1 -apple-system,sans-serif; color:#626C75;">Newcomer</span></span></span></div>
           </div>
         </div>
       </div>
@@ -1008,7 +1130,7 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
           <div style="display:flex; align-items:center; gap:11px;">
             <img src="assets/avatars/nina.jpg" alt="Nina" style="width:40px; height:40px; border-radius:20px; object-fit:cover; display:block; flex:none;">
             <span style="flex:1; min-width:0;">
-              <span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">🇬🇧 Nina invited you</span>
+              <span style="display:block; font:700 15px/1.2 -apple-system,sans-serif; color:#1A1A1A;">Nina invited you</span>
               <span style="display:block; margin-top:1px; font:400 12px/1.3 -apple-system,sans-serif; color:#626C75;">4 days ago · KIKI·NINA·3F2A</span>
             </span>
           </div>
@@ -1023,6 +1145,110 @@ pnpm --filter @kiki/app start   # then scan the QR with Expo Go</span>
       <span style="font:700 8.5px/1 ui-monospace,Menlo,monospace; letter-spacing:1.2px; text-transform:uppercase; color:#8A9099;">Swipe</span>
       <svg width="14" height="9" viewBox="0 0 16 10"><path d="M1 5 H14" stroke="#8A9099" stroke-width="1.6" stroke-linecap="round"></path><path d="M10.5 1.5 L14.5 5 L10.5 8.5" fill="none" stroke="#8A9099" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </span>
+
+    <!-- 9 · NOTIFICATIONS -->
+    <div id="mScr9" style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:176px; display:none;">
+  <div style="padding:58px 18px 6px; display:flex; flex-direction:column; gap:8px;">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <span data-goto="0" style="font:700 15px/1 -apple-system,sans-serif; color:#17A589; cursor:pointer;">‹  Back</span>
+      <span style="font:600 14px/1 -apple-system,sans-serif; color:#17A589;">Mark all as read</span>
+    </div>
+    <span style="font:700 26px/1 -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.5px; color:#1A1A1A;">Notifications</span>
+  </div>
+  <div style="padding:8px 16px 96px; display:flex; flex-direction:column; gap:12px;">
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">NEEDS YOU</span>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/priya.jpg" alt="Priya" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Priya wants to stay 2 weeks</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">3 steps from you, through Amy. £644 for the stay.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">2 hrs ago</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Read their trust page</span>
+    <span style="border:1.5px solid #C9CBC8; border-radius:12px; padding:10px 14px; font:700 14px/1 -apple-system,sans-serif; color:#4B5563;">Later</span>
+  </div>
+</div>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/maia.jpg" alt="Maia" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Maia wants to stay 4 weeks</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Nina vouches for Maia. £1,288 for the stay.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">2 hrs ago</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Read their trust page</span>
+    <span style="border:1.5px solid #C9CBC8; border-radius:12px; padding:10px 14px; font:700 14px/1 -apple-system,sans-serif; color:#4B5563;">Later</span>
+  </div>
+</div>
+    <div style="position:relative; overflow:hidden; background:#fff; border-radius:18px; padding:14px 14px 14px 17px; box-shadow:0 8px 24px rgba(26,26,26,0.06); display:flex; flex-direction:column; gap:12px;">
+  <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#17A589;"></span>
+  <div style="display:flex; gap:12px; align-items:flex-start;">
+    <img src="assets/avatars/danica.jpg" alt="Danica" style="width:48px; height:48px; border-radius:24px; object-fit:cover; display:block; flex:none;">
+    <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+      <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">You owe Danica a guest-book entry</span>
+      <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Your stay in Tooting. Two lines is plenty; it’s how her next guest knows her.</span>
+      <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">since your stay</span>
+    </span>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span style="background:#17A589; border-radius:12px; padding:11px 14px; font:700 14px/1 -apple-system,sans-serif; color:#fff;">Write it</span>
+    
+  </div>
+</div>
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">TODAY</span>
+    <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; border:1px solid #ECECE8; padding:12px 14px;">
+  <img src="assets/avatars/amy.jpg" alt="Amy" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block; flex:none;">
+  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;">
+    <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">Amy used your invite code</span>
+    <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">One step from you now. Nothing yet, that’s normal.</span>
+    <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">18 hrs ago</span>
+  </span>
+</div>
+    <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">YESTERDAY</span>
+    <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; border:1px solid #ECECE8; padding:12px 14px;">
+  <span style="width:44px; height:44px; border-radius:12px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 16px/1 -apple-system,sans-serif; color:#0E4E42; flex:none;">3</span>
+  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;">
+    <span style="font:700 15px/1.25 -apple-system,sans-serif; color:#1A1A1A;">3 rooms fit your dates</span>
+    <span style="font:400 13.5px/19px -apple-system,sans-serif; color:#4B5563;">Danica, Maia, Katelin. 1 is one step from you.</span>
+    <span style="font:400 12px/1 -apple-system,sans-serif; color:#8A9099;">yesterday · grouped</span>
+  </span>
+</div>
+  </div>
+    </div>
+
+    <!-- 10 · THE MATCH -->
+    <div id="mScr10" style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:176px; display:none; background:#F7F7F5;">
+  <div style="padding:56px 20px 100px; display:flex; flex-direction:column; gap:18px; min-height:100%;">
+    <div style="display:flex; justify-content:flex-end;"><span data-goto="4" style="font:700 15px/1 -apple-system,sans-serif; color:#17A589; cursor:pointer;">Done</span></div>
+    <div style="display:flex; align-items:center; margin-top:6px;">
+      <img src="assets/avatars/you.jpg" alt="You" style="width:84px; height:84px; border-radius:42px; object-fit:cover; display:block; flex:none; border:3px solid #fff; box-shadow:0 4px 14px rgba(26,26,26,0.08);">
+      <span style="flex:1; position:relative; height:84px; display:flex; align-items:center; justify-content:center;">
+        <span style="position:absolute; left:0; right:0; height:3px; border-radius:2px; background:#17A589;"></span>
+        <span style="position:relative; display:flex; flex-direction:column; align-items:center; gap:4px;"><img src="assets/avatars/nina.jpg" alt="Nina" style="width:44px; height:44px; border-radius:22px; object-fit:cover; display:block; border:3px solid #fff;"><span style="font:700 11px/1 -apple-system,sans-serif; color:#4B5563;">Nina</span></span>
+      </span>
+      <img src="assets/avatars/maia.jpg" alt="Maia" style="width:84px; height:84px; border-radius:42px; object-fit:cover; display:block; flex:none; border:3px solid #fff; box-shadow:0 4px 14px rgba(26,26,26,0.08);">
+    </div>
+    <span style="font:700 29px/34px -apple-system,'SF Pro Display',sans-serif; letter-spacing:-0.7px; color:#1A1A1A;">Maia stays at yours, 21 Sep – 19 Oct.</span>
+    <span style="font:400 15px/22px -apple-system,sans-serif; color:#4B5563; margin-top:-8px;">Nina’s name is on this. So is Kiki’s. That’s the match.</span>
+    <div style="background:#fff; border-radius:22px; border:1px solid #ECECE8; padding:16px; display:flex; flex-direction:column; gap:12px; box-shadow:0 4px 14px rgba(26,26,26,0.05);">
+      <span style="font:700 11px/1 -apple-system,sans-serif; letter-spacing:.8px; color:#626C75;">WHAT HAPPENS NOW</span>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">1</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">Kiki confirms Maia’s ID and payment. You do nothing.</span></div>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">2</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">£1,288 lands in your account on Monday 14 September, the week before Maia arrives.</span></div>
+      <div style="display:flex; gap:12px; align-items:flex-start;"><span style="width:22px; height:22px; border-radius:11px; background:#E7F4F0; display:flex; align-items:center; justify-content:center; font:700 11px/1 -apple-system,sans-serif; color:#0E4E42; flex:none; margin-top:1px;">3</span><span style="flex:1; font:400 14.5px/20px -apple-system,sans-serif; color:#1A1A1A;">After Maia leaves, you write the guest-book entry. It’s how the next host knows Maia.</span></div>
+    </div>
+    <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+      <span style="background:#17A589; border-radius:14px; padding:16px; text-align:center; font:700 16px/1 -apple-system,sans-serif; color:#fff; box-shadow:0 6px 16px rgba(23,165,137,0.28);">Say hi to Maia</span>
+      <span style="background:#fff; border:1px solid #ECECE8; border-radius:14px; padding:15px; text-align:center; font:700 15.5px/1 -apple-system,sans-serif; color:#0E4E42;">Tell Nina</span>
+    </div>
+  </div>
+    </div>
 
     <!-- ══ THE DECISION SHEET ══ -->
     <div id="mSheet" style="position:absolute; left:0; right:0; z-index:30; height:82svh; border-radius:26px 26px 0 0; background:rgba(15,27,23,0.92); backdrop-filter:blur(24px) saturate(1.5); box-shadow:0 -20px 50px rgba(3,12,9,0.45), 0 -1px 0 rgba(255,255,255,0.14) inset; display:flex; flex-direction:column; touch-action:none;">

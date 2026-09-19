@@ -18,7 +18,7 @@ const SCREENS = [
     ],
     right: [
       { kicker: 'Motion', head: 'The list assembles itself', body: 'Cards rise on a 110ms stagger with an iOS spring curve. Danica carries a slow halo because she is one step away — the only animated thing on screen is the strongest trust signal.' },
-      { kicker: 'Identity', head: 'Flags blend into place', body: '🇦🇺 Tooting, London reads as a person from somewhere, living somewhere. The earlier version floated a two-letter badge on the avatar, which felt like a passport stamp on a warm app.' },
+      { kicker: 'Identity', head: 'Nationality as a small badge', body: 'A two-letter “AU” on the avatar instead of a flag emoji: it matches at every size, renders the same on every platform, and states the fact without the bunting. The design record retired emoji; the app agrees.' },
     ],
   },
   {
@@ -110,6 +110,32 @@ const SCREENS = [
     right: [
       { kicker: 'Order', head: 'By last activity, not unread count', body: 'The inbox sorts on the recency of real exchange — no manufactured urgency, no unread-badge pressure engineered to pull you back.' },
       { kicker: 'Reach', head: 'The step-distance rides along', body: 'Each thread shows how near the person is to you, so the trust context travels with the conversation rather than being left behind on a profile.' },
+    ],
+  },
+  {
+    key: 'notifications', label: 'Notifications', accent: TEAL,
+    title: 'Only what needs you counts.',
+    standfirst: 'A refinement of Kiki’s own screen, not a redesign. Anything with a person waiting comes first with its action inline; identical alerts fold into one row; the badge counts the first section and nothing else.',
+    left: [
+      { kicker: 'Triage', head: 'Needs you, then the rest', body: 'A request and an owed guest-book entry are the two things that hold up someone else, so they sit at the top with the action in the card. Everything below is information.' },
+      { kicker: 'Grouping', head: 'Identical alerts become one row', body: 'Three new rooms that fit your dates are one line with a count, named, and the degree of the closest. Seven separate “New listing matched your search!” cards taught people to swipe them all away.' },
+    ],
+    right: [
+      { kicker: 'Copy', head: 'The fact, once, with the degree', body: '“One step from you now.” No exclamation marks anywhere on the screen. A notification that shouts is asking to be muted.' },
+      { kicker: 'Badge', head: 'A number you can trust', body: 'The bell shows how many things need you, and only that. “9+” on a bell trains people to ignore it; “3” is a to-do list.' },
+    ],
+  },
+  {
+    key: 'match', label: 'The match', accent: TEAL,
+    title: 'The yes gets a screen, not a toast.',
+    standfirst: 'The emotional peak of the product, held until you dismiss it. The two of you are joined through Nina, not directly, because that is literally how the match exists.',
+    left: [
+      { kicker: 'Structure', head: 'Through the mutual, not around her', body: 'The line runs from you to Maia by way of Nina’s avatar. On a route of three steps it still runs through the person you know, and the copy says the distance instead of pretending a vouch.' },
+      { kicker: 'Promise', head: '“You do nothing.”', body: 'The first line of what happens now is Kiki’s side of the deal: ID and payment are confirmed for you. It is the same promise as the fourth onboarding card, said again at the moment it matters.' },
+    ],
+    right: [
+      { kicker: 'Motion', head: 'The line draws when both have landed', body: 'Avatars settle in on the app’s spring; the line draws left to right over 420ms once they have; the success haptic fires when it reaches Maia. Under Reduce Motion the line appears whole and there is one haptic.' },
+      { kicker: 'Growth', head: '“Tell Nina” is how the graph grows', body: 'The secondary action sends a one-line thank-you to the person who connected you. That message is what makes vouching feel good, and vouching is the only way Kiki gets bigger.' },
     ],
   },
   {

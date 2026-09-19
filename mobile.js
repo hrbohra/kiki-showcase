@@ -17,7 +17,7 @@
         { kicker: 'Hierarchy', head: 'The host is inside the photograph', body: 'Name and place sit on a bottom scrim rather than a floating chip, so the person reads as part of the home instead of a label stuck on top of it.' },
         { kicker: 'Sorting', head: 'Degrees, never price', body: 'Order comes from the graph: one step, then two, then three. A cheaper room further from you appears lower. This is the single decision that stops Kiki collapsing into a marketplace.' },
         { kicker: 'Motion', head: 'The list assembles itself', body: 'Cards rise on a 110ms stagger. Danica carries a slow halo because she is one step away — the only animated thing on screen is the strongest trust signal.' },
-        { kicker: 'Identity', head: 'Flags blend into place', body: '🇦🇺 Tooting, London reads as a person from somewhere, living somewhere. The earlier version floated a two-letter badge on the avatar, which felt like a passport stamp on a warm app.' },
+        { kicker: 'Identity', head: 'Nationality as a small badge', body: 'A two-letter “AU” on the avatar instead of a flag emoji: it matches at every size, renders the same on every platform, and states the fact without the bunting. The design record retired emoji; the app agrees.' },
       ],
     },
     {
@@ -95,6 +95,28 @@
         { kicker: 'Optimistic', head: 'Instant as an iMessage', body: 'A sent bubble lands the moment you hit send — “as instant as an Instagram DM.” The local store mirrors what a real backend would hydrate.' },
         { kicker: 'Order', head: 'By last activity, not unread count', body: 'The inbox sorts on the recency of real exchange — no manufactured urgency, no unread-badge pressure engineered to pull you back.' },
         { kicker: 'Reach', head: 'The step-distance rides along', body: 'Each thread shows how near the person is to you, so the trust context travels with the conversation rather than being left behind on a profile.' },
+      ],
+    },
+    {
+      key: 'notifications', label: 'Notifications', accent: TEAL,
+      title: 'Only what needs you counts.',
+      standfirst: 'Anything with a person waiting comes first with its action inline; identical alerts fold into one row; the badge counts the first section only.',
+      notes: [
+        { kicker: 'Triage', head: 'Needs you, then the rest', body: 'A request and an owed guest-book entry hold up someone else, so they sit at the top with the action in the card. Everything below is information.' },
+        { kicker: 'Grouping', head: 'Identical alerts become one row', body: 'Three new rooms that fit your dates are one line with a count and the degree of the closest.' },
+        { kicker: 'Copy', head: 'The fact, once, with the degree', body: '“One step from you now.” No exclamation marks on the screen. A notification that shouts is asking to be muted.' },
+        { kicker: 'Badge', head: 'A number you can trust', body: 'The bell counts what needs you, and only that. “9+” trains people to ignore it; “3” is a to-do list.' },
+      ],
+    },
+    {
+      key: 'match', label: 'The match', accent: TEAL,
+      title: 'The yes gets a screen, not a toast.',
+      standfirst: 'The emotional peak of the product, held until you dismiss it. The two of you are joined through Nina, because that is how the match exists.',
+      notes: [
+        { kicker: 'Structure', head: 'Through the mutual, not around her', body: 'The line runs from you to Maia by way of Nina. On a three-step route it still runs through the person you know, and the copy says the distance.' },
+        { kicker: 'Promise', head: '“You do nothing.”', body: 'The first line of what happens now is Kiki’s side of the deal, the same promise as the fourth onboarding card, said again when it matters.' },
+        { kicker: 'Motion', head: 'The line draws when both have landed', body: 'Spring in, a 420ms draw, a success haptic when it reaches Maia. Under Reduce Motion: the whole line at once, one haptic.' },
+        { kicker: 'Growth', head: '“Tell Nina” is how the graph grows', body: 'A one-line thank-you to the person who connected you. That message is what makes vouching feel good.' },
       ],
     },
     {
