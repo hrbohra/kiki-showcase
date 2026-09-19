@@ -113,6 +113,19 @@ const SCREENS = [
     ],
   },
   {
+    key: 'me', label: 'Me', accent: GOLD,
+    title: 'Standing you cannot buy, and cannot fake.',
+    standfirst: 'Contribution, not consumption. Hosting is weighted highest and shown empty when it is empty — the profile is willing to tell you that you have not earned anything yet.',
+    left: [
+      { kicker: 'Incentives', head: 'The empty bar is the message', body: 'Hosted sits at zero and stays visibly at zero. Bars fill left-to-right on a stagger so the gap reads as a fact about you rather than a rendering glitch.' },
+      { kicker: 'Restraint', head: 'Gold is spent once', body: 'The only gold in the app is your own standing — the ring on your avatar and the tier pill. It never appears on a CTA or another person, so status reads as earned rather than decorative.' },
+    ],
+    right: [
+      { kicker: 'Provenance', head: 'Your own facts are labelled too', body: 'Everything others can see, and how it was established. Nothing is silently inferred, which is the same promise the trust page makes about other people.' },
+      { kicker: 'Origin', head: 'How you got in stays visible', body: 'Nina’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is the thing your standing is built on.' },
+    ],
+  },
+  {
     key: 'notifications', label: 'Notifications', accent: TEAL,
     title: 'Only what needs you counts.',
     standfirst: 'A refinement of Kiki’s own screen, not a redesign. Anything with a person waiting comes first with its action inline; identical alerts fold into one row; the badge counts the first section and nothing else.',
@@ -136,19 +149,6 @@ const SCREENS = [
     right: [
       { kicker: 'Motion', head: 'The line draws when both have landed', body: 'Avatars settle in on the app’s spring; the line draws left to right over 420ms once they have; the success haptic fires when it reaches Maia. Under Reduce Motion the line appears whole and there is one haptic.' },
       { kicker: 'Growth', head: '“Tell Nina” is how the graph grows', body: 'The secondary action sends a one-line thank-you to the person who connected you. That message is what makes vouching feel good, and vouching is the only way Kiki gets bigger.' },
-    ],
-  },
-  {
-    key: 'me', label: 'Me', accent: GOLD,
-    title: 'Standing you cannot buy, and cannot fake.',
-    standfirst: 'Contribution, not consumption. Hosting is weighted highest and shown empty when it is empty — the profile is willing to tell you that you have not earned anything yet.',
-    left: [
-      { kicker: 'Incentives', head: 'The empty bar is the message', body: 'Hosted sits at zero and stays visibly at zero. Bars fill left-to-right on a stagger so the gap reads as a fact about you rather than a rendering glitch.' },
-      { kicker: 'Restraint', head: 'Gold is spent once', body: 'The only gold in the app is your own standing — the ring on your avatar and the tier pill. It never appears on a CTA or another person, so status reads as earned rather than decorative.' },
-    ],
-    right: [
-      { kicker: 'Provenance', head: 'Your own facts are labelled too', body: 'Everything others can see, and how it was established. Nothing is silently inferred, which is the same promise the trust page makes about other people.' },
-      { kicker: 'Origin', head: 'How you got in stays visible', body: 'Nina’s invite and her exact words remain on your profile. The obligation does not expire once you are inside — it is the thing your standing is built on.' },
     ],
   },
 ];
