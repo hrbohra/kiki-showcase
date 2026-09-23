@@ -151,6 +151,19 @@ const SCREENS = [
       { kicker: 'Growth', head: '“Tell Nina” is how the graph grows', body: 'The secondary action sends a one-line thank-you to the person who connected you. That message is what makes vouching feel good, and vouching is the only way Kiki gets bigger.' },
     ],
   },
+  {
+    key: 'houselist', label: 'House list', accent: TEAL,
+    title: 'What a host asks of you, agreed before the key changes hands.',
+    standfirst: 'Every host has rules, small kindnesses they would love, and things a guest would be looking after: a cat to feed, plants, the post. Kiki keeps them apart because they mean different things, and the last kind is a commitment the guest ticks when asking.',
+    left: [
+      { kicker: 'Structure', head: 'Three sections, three meanings', body: 'Rules are what the host needs (rust, a cost). Things they would love are kindness, not terms (gold, the host’s own voice). What you would be looking after carries the one check a guest ticks. One grammar, learned once.' },
+      { kicker: 'Honesty', head: 'The host sees what you agreed to', body: 'On the host’s Requests card the guest’s request says, in words, “Agreed to look after: water the plants twice a week”. Not a checkbox buried in terms: a line a person reads before they decide.' },
+    ],
+    right: [
+      { kicker: 'Full stack', head: 'The same rule in the app and the API', body: 'The send button and the server run one shared function: every care item agreed, nothing that isn’t one. The request stores the words agreed to, so a host editing the list later cannot change what a guest said yes to.' },
+      { kicker: 'Boundaries', head: 'Beside the graph, never inside it', body: 'House lists live in their own table and their own query. Editing one cannot move a degree, a route or an overlap, and a test proves the trust graph is untouched by what a host asks.' },
+    ],
+  },
 ];
 
 const $ = (id) => document.getElementById(id);
@@ -399,3 +412,24 @@ if (window.matchMedia) {
 
 render(0);
 armReveals();
+
+// House list screen: ticking every care item unlocks Send, the same rule the app and the API share.
+document.addEventListener('click', (e) => {
+  const care = e.target.closest('.hl-care');
+  if (!care) return;
+  const scope = care.getAttribute('data-hl');
+  care.classList.toggle('on');
+  const on = care.classList.contains('on');
+  care.style.borderColor = on ? '#17A589' : '#ECECE8';
+  care.style.background = on ? '#E7F4F0' : '#fff';
+  const box = care.querySelector('.hl-box');
+  box.style.background = on ? '#17A589' : 'transparent';
+  box.style.borderColor = on ? '#17A589' : '#ECECE8';
+  box.textContent = on ? '✓' : '';
+  const all = [...document.querySelectorAll('.hl-care[data-hl="' + scope + '"]')];
+  const done = all.every((c) => c.classList.contains('on'));
+  const send = document.querySelector('.hl-send[data-hl="' + scope + '"]');
+  const why = document.querySelector('.hl-why[data-hl="' + scope + '"]');
+  if (send) send.style.background = done ? '#17A589' : '#ECECE8';
+  if (why) why.textContent = done ? 'Asking doesn’t commit you to anything until you both say yes.' : 'Agree to the one thing you’d be looking after first.';
+});

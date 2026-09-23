@@ -130,6 +130,17 @@
         { kicker: 'Growth', head: '“Tell Nina” is how the graph grows', body: 'A one-line thank-you to the person who connected you. That message is what makes vouching feel good.' },
       ],
     },
+    {
+      key: 'houselist', label: 'House list', accent: TEAL,
+      title: 'What a host asks of you, agreed before the key changes hands.',
+      standfirst: 'Rules, small kindnesses the host would love, and what you would be looking after. The last kind is a commitment you tick when asking, and the host sees that you did.',
+      notes: [
+        { kicker: 'Structure', head: 'Three sections, three meanings', body: 'Rules in rust (a cost), would-love in gold (the host’s own voice), and the care items carry the one check a guest ticks.' },
+        { kicker: 'Honesty', head: 'The host sees what you agreed to', body: 'The request card says in words what the guest agreed to look after. Not a checkbox buried in terms.' },
+        { kicker: 'Full stack', head: 'One rule in the app and the API', body: 'The send button and the server run the same function; the request stores the words agreed to, so a later edit cannot change them.' },
+        { kicker: 'Boundaries', head: 'Beside the graph, never inside it', body: 'Its own table and its own query: editing a house list cannot move a degree, a route or an overlap.' },
+      ],
+    },
   ];
 
   const PEEK = 168;
