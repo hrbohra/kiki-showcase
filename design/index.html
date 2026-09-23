@@ -326,7 +326,7 @@
             <tr><td>20</td><td>26</td><td>12.9%</td><td>82.7%</td><td>120</td></tr>
           </tbody>
         </table></div>
-        <p class="ds-note">Ranking by degree only works if there is a degree. The seed world says most pairs have none, so the feed falls back to similarity and the mutual-friend AI, and a contacts step comes before any ranking work.</p>
+        <p class="ds-note">Ranking by degree only works where degree tells people apart. In the seed world everyone is connected, but most pairs sit five or more steps away, where one candidate looks like the next, so a contacts step comes before any ranking work.</p>
         <p class="ds-note">A “connect your contacts” step is worth more than any ranking algorithm.<br><span class="see">Proof: packages/domain/src/seedWorld.ts and its test pin the shape · pnpm --filter @kiki/api seed:world · measure:ties reproduces the table.</span></p>
       </div>
       <div class="wide">
