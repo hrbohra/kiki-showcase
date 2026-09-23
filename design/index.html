@@ -71,6 +71,10 @@
   ul.dec li { position: relative; padding-left: 20px; font: 400 14.5px/22px -apple-system, sans-serif; color: #93A9A2; text-wrap: pretty; }
   ul.dec li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 6px; background: #2E6A5C; }
   ul.dec li b { color: #D8E6E0; font-weight: 600; }
+  ul.dec li .instead { display: block; margin-top: 4px; font: 400 13.5px/1.55 -apple-system, 'Segoe UI', sans-serif; color: #7F958E; }
+  ul.dec li .instead b { color: #C9A227; font-weight: 600; }
+  .method { margin: 14px 0 0; max-width: 62ch; font: 400 13.5px/1.6 ui-monospace, Menlo, monospace; color: #7F958E; letter-spacing: 0.1px; }
+  .method b { color: #E6CD8B; font-weight: 600; }
   ul.dec li .see { display: block; margin-top: 3px; font: 600 11.5px/1.5 ui-monospace, Menlo, monospace; color: #4FBFA6; letter-spacing: 0.2px; }
   .wide { grid-column: 1 / -1; min-width: 0; }
   .chapter .wrap > * { min-width: 0; }
@@ -205,6 +209,7 @@
       <span class="eyebrow">The design record · Kiki</span>
       <h1 class="title">The decisions that make Kiki real.</h1>
       <p class="lede">Kiki is a working product: one React&nbsp;Native source for the native iOS app and the web, a NestJS&nbsp;+&nbsp;Postgres backend, invite-only sign-in, real-time messaging, and an AI that writes each introduction from the trust graph. This page is the reasoning behind it, starting with the design system every screen is built from, then the product decision and the stack beneath it — and <b>every decision carries its proof</b>: a live screen you can open, a diagram of the system, or the code itself.</p>
+      <p class="method"><b>How this page was made.</b> Premise first, then measurement, then decisions, then proof. Each decision names the obvious build it replaces and why that build breaks the premise; where I did not know, I generated the data and measured.</p>
     </div>
   </header>
 
@@ -279,17 +284,17 @@
       <div>
         <p class="body">Every other stay platform starts with the room and bolts trust on afterwards as a star rating. Kiki inverts it: the person comes first, the room is a consequence, and the only currency is who will put their name next to yours. That one premise decides everything below.</p>
         <ul class="dec" style="margin-top:20px">
-          <li><b>Homes are sorted by how close someone is to you in people, never by price.</b> Degrees of separation are the ranking; the price is a detail on the card.<span class="see">See it: Explore — “You know Danica directly · 1st degree” sits above the price.</span></li>
-          <li><b>The Trust page is the product.</b> Not a rating: a paragraph a mutual friend could have written, with every claim labelled by where it came from, and a plain statement of what Kiki <i>cannot</i> tell you.<span class="see">See it: any host → Trust. Read it as the host, then as the guest.</span></li>
-          <li><b>Hosting reviews describe how someone keeps their own flat — not how they treat yours.</b> So the Trust page has a guest side, and when there is no guest evidence it says so rather than padding the page.<span class="see">See it: Requests → “Read their trust page” → “As a guest”.</span></li>
-          <li><b>Mint only ever means “someone can vouch”.</b> One colour carries one meaning across the whole app; a third-degree pill never borrows it.</li>
+          <li><b>Homes are sorted by how close someone is to you in people, never by price.</b> Degrees of separation are the ranking; the price is a detail on the card.<span class="instead"><b>The obvious build:</b> sort by price, like every marketplace. It breaks the premise because a cheaper stranger is still a stranger; price answers a question Kiki is not asking.</span><span class="see">See it: Explore — “You know Danica directly · 1st degree” sits above the price.</span></li>
+          <li><b>The Trust page is the product.</b> Not a rating: a paragraph a mutual friend could have written, with every claim labelled by where it came from, and a plain statement of what Kiki <i>cannot</i> tell you.<span class="instead"><b>The obvious build:</b> star ratings and a review count. They break the premise because a rating is what strangers say about a stranger; Kiki’s whole claim is that you are not strangers, so the page has to show the people between you, not a score.</span><span class="see">See it: any host → Trust. Read it as the host, then as the guest.</span></li>
+          <li><b>Hosting reviews describe how someone keeps their own flat — not how they treat yours.</b> So the Trust page has a guest side, and when there is no guest evidence it says so rather than padding the page.<span class="instead"><b>The obvious build:</b> one review stream per person. It breaks the premise because it lets a great host pass as a great guest on evidence that never tested that.</span><span class="see">See it: Requests → “Read their trust page” → “As a guest”.</span></li>
+          <li><b>Mint only ever means “someone can vouch”.</b> One colour carries one meaning across the whole app; a third-degree pill never borrows it.<span class="instead"><b>The obvious build:</b> colour for emphasis wherever a screen wants attention. It breaks the premise because the one thing the eye must be able to trust on sight is who can vouch.</span></li>
         </ul>
         <div class="dlabel" style="margin-top:34px">Beyond the roadmap — what I added, and why</div>
         <ul class="dec" style="margin-top:10px">
           <li><b>Partial-cover offers.</b> A Kikier can take five of your six weeks, because a sublet that covers most of the rent beats no sublet at all.<span class="see">See it: Trips → Italy for Mum’s 60th.</span></li>
           <li><b>A host side and a guest side to every trust page.</b> How someone keeps their own flat says little about how they treat yours, so the page answers the question you are actually asking.<span class="see">See it: Requests → Maia → “As a guest”.</span></li>
-          <li><b>No timers on requests.</b> A countdown turns a yes into a reflex; Kiki wants the yes to be a decision.<span class="see">See it: Requests — nothing counts down.</span></li>
-          <li><b>“What this costs you” in onboarding.</b> A vouch is a debt, and people vouch more carefully when they can see the bill.<span class="see">See it: the third onboarding step.</span></li>
+          <li><b>No timers on requests.</b> A countdown turns a yes into a reflex; Kiki wants the yes to be a decision.<span class="instead"><b>The obvious build:</b> a 24-hour timer to lift acceptance rates. It breaks the premise because the product is the host’s judgement of a person, and pressure is the one thing that makes judgement worse.</span><span class="see">See it: Requests — nothing counts down.</span></li>
+          <li><b>“What this costs you” in onboarding.</b> A vouch is a debt, and people vouch more carefully when they can see the bill.<span class="instead"><b>The obvious build:</b> hide the cost to lift sign-ups. It breaks the premise because a vouch nobody paid for is worth nothing to the person reading it.</span><span class="see">See it: the third onboarding step.</span></li>
           <li><b>Your own facts, editable.</b> The overlaps people are matched on come from what you say about yourself, so you can change them, and the other side updates at once.<span class="see">See it: Me → “+ Add a fact”.</span></li>
           <li><b>The match moment.</b> The yes is the emotional peak of the product, so it gets a screen, and the first thing that screen says about Kiki’s side of the deal is “You do nothing.”<span class="see">See it: Requests → slide to match.</span></li>
           <li><b>What Kiki carries, said in the same breath as what joining costs.</b> Three costs, then three covers, in one card grammar. The wording is Kiki’s to set, so every string lives in one file.<span class="see">See it: the fourth onboarding step.</span></li>
@@ -321,6 +326,7 @@
             <tr><td>20</td><td>26</td><td>12.9%</td><td>82.7%</td><td>120</td></tr>
           </tbody>
         </table></div>
+        <p class="ds-note">Ranking by degree only works if there is a degree. The seed world says most pairs have none, so the feed falls back to similarity and the mutual-friend AI, and a contacts step comes before any ranking work.</p>
         <p class="ds-note">A “connect your contacts” step is worth more than any ranking algorithm.<br><span class="see">Proof: packages/domain/src/seedWorld.ts and its test pin the shape · pnpm --filter @kiki/api seed:world · measure:ties reproduces the table.</span></p>
       </div>
       <div class="wide">
