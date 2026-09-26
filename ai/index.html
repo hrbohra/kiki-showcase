@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiki's AI</title>
+<meta name="description" content="How Kiki's AI writes each introduction today, and how Voiceprint will give it Kiki's own voice from ten thousand conversations: architecture, system specs, decisions, scope and a step-by-step guide, with measured results.">
+<meta name="author" content="Harsh Bohra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kiki's AI — how it writes, and how it will sound like Kiki">
+<meta property="og:description" content="The AI contract behind every introduction, and the voice engine that learns Kiki's tone from its own conversations. Measured, verified, voice-only.">
+<meta property="og:url" content="https://kiki-portfolio-one.vercel.app/ai">
+<meta property="og:image" content="https://kiki-portfolio-one.vercel.app/assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1B17; --ink: #F6F5F1; --ink-2: #D8E6E0; --body: #9BB2AA; --muted: #8FA8A0; --faint: #5F7A72;
+    --teal: #4FBFA6; --gold: #E6CD8B; --gold-deep: #C9A227; --line: rgba(255,255,255,0.09);
+    /* chart series: validated for CVD, contrast and lightness on --bg (dataviz validator, dark mode) */
+    --s1: #2FA38A; --s2: #B58F1E; --s0: #3E5750;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+  html, body { margin: 0; background: var(--bg); -webkit-font-smoothing: antialiased; }
+  body { font-family: -apple-system, 'SF Pro Text', 'Segoe UI', sans-serif; color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  /* sticky spine */
+  .spine { position: sticky; top: 0; z-index: 50; background: rgba(15,27,23,0.84); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .spine-inner { max-width: 1180px; margin: 0 auto; padding: 0 28px; height: 52px; display: flex; align-items: center; gap: 20px; }
+  .spine-back { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.6px; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .spine-links { flex: 1; min-width: 0; display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+  .spine-links::-webkit-scrollbar { display: none; }
+  .spine-links a { font: 700 10px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.3px; text-transform: uppercase; color: var(--faint); white-space: nowrap; padding: 6px 0; border-bottom: 2px solid transparent; }
+  .spine-links a.on { color: var(--gold); border-bottom-color: var(--gold); }
+  .spine-links a:hover { color: var(--ink-2); }
+
+  /* header */
+  .top { position: relative; overflow: hidden; background: radial-gradient(120% 74% at 50% 0%, #1B3A33 0%, #152A24 44%, var(--bg) 84%); }
+  .top .wrap { padding: 88px 28px 0; }
+  .eyebrow { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 2.2px; text-transform: uppercase; color: #FFE7A8; }
+  h1.title { margin: 18px 0 0; max-width: 17ch; font: 200 clamp(38px,6vw,70px)/1.04 'Newsreader', Georgia, serif; letter-spacing: -2.2px; }
+  .lede { margin: 22px 0 0; max-width: 64ch; font: 300 18px/30px 'Newsreader', Georgia, serif; color: var(--body); text-wrap: pretty; }
+  .lede b { color: var(--ink-2); font-weight: 500; }
+
+  .proof .wrap { padding: 40px 28px 0; }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+  .kpi { padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); min-width: 0; }
+  .kpi .v { display: block; font: 300 30px/1 'Newsreader', Georgia, serif; color: var(--ink); letter-spacing: -0.8px; }
+  .kpi .l { display: block; margin-top: 8px; font: 700 9.5px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1.3px; text-transform: uppercase; color: var(--teal); }
+  .kpi .s { display: block; margin-top: 5px; font: 400 12.5px/17px -apple-system, sans-serif; color: var(--muted); }
+  .doors { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 18px; }
+  .door { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.035); transition: border-color .15s ease, background .15s ease; }
+  .door:hover { border-color: rgba(79,191,166,0.5); background: rgba(79,191,166,0.06); }
+  .door .k { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.3px; text-transform: uppercase; color: var(--teal); }
+  .door .t { font: 600 16px/1.25 -apple-system, sans-serif; color: var(--ink); letter-spacing: -0.2px; }
+  .door .s { font: 400 12.5px/18px -apple-system, sans-serif; color: var(--muted); }
+  .door.gold .k { color: var(--gold); } .door.gold:hover { border-color: rgba(230,205,139,0.5); background: rgba(230,205,139,0.06); }
+
+  /* chapters */
+  .chapter { padding: 74px 0 0; border-top: 1px solid var(--line); margin-top: 64px; }
+  .chapter .wrap { display: grid; grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr); gap: 44px; align-items: baseline; }
+  .chapter .wrap > * { min-width: 0; }
+  .chapter h2 { margin: 0; font: 200 clamp(28px,3.2vw,42px)/1.1 'Newsreader', Georgia, serif; letter-spacing: -1.2px; }
+  .kicker { display: block; margin-bottom: 14px; font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .body { font: 300 17px/28px 'Newsreader', Georgia, serif; color: var(--body); text-wrap: pretty; margin: 0; }
+  .body + .body { margin-top: 14px; }
+  .body b { color: var(--ink-2); font-weight: 500; }
+  .wide { grid-column: 1 / -1; }
+  h3.sub { margin: 30px 0 12px; font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.6px; text-transform: uppercase; color: var(--teal); }
+  ul.dec { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  ul.dec li { position: relative; padding-left: 20px; font: 400 14.5px/22px -apple-system, sans-serif; color: #93A9A2; text-wrap: pretty; }
+  ul.dec li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 6px; background: #2E6A5C; }
+  ul.dec li b { color: var(--ink-2); font-weight: 600; }
+  ul.dec li .instead { display: block; margin-top: 4px; font: 400 13.5px/1.55 -apple-system, 'Segoe UI', sans-serif; color: #7F958E; }
+  ul.dec li .instead b { color: var(--gold-deep); font-weight: 600; }
+  ul.dec li .see { display: block; margin-top: 3px; font: 600 11.5px/1.5 ui-monospace, Menlo, monospace; color: var(--teal); }
+
+  /* tables */
+  .tbl { overflow-x: auto; margin: 6px 0 0; }
+  .tbl table { border-collapse: collapse; width: 100%; font: 400 13.5px/1.45 -apple-system, sans-serif; color: #BFD6CE; }
+  .tbl th { text-align: left; font: 700 10px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 9px 16px 9px 0; border-bottom: 1px solid rgba(255,255,255,0.14); white-space: nowrap; }
+  .tbl td { padding: 10px 16px 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); vertical-align: top; }
+  .tbl td:first-child { color: var(--ink-2); font-weight: 600; }
+  .tbl code, .body code, li code { font: 500 12.5px/1 ui-monospace, Menlo, monospace; color: var(--gold); background: rgba(230,205,139,0.08); padding: 2px 5px; border-radius: 5px; }
+
+  /* diagrams */
+  .diagram { margin: 10px 0 8px; padding: 18px; background: rgba(79,191,166,0.04); border: 1px solid rgba(79,191,166,0.16); border-radius: 14px; overflow-x: auto; }
+  .diagram pre.mermaid { margin: 0; text-align: center; background: transparent; }
+  .dlabel { font: 700 11px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; }
+
+  /* charts */
+  .fig { margin: 8px 0 0; padding: 20px 20px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.025); }
+  .fig + .fig { margin-top: 16px; }
+  .fig-cap { font: 700 10.5px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1.3px; text-transform: uppercase; color: var(--ink-2); }
+  .fig-sub { margin: 6px 0 0; font: 400 13px/1.5 -apple-system, sans-serif; color: var(--muted); }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 14px 0 4px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; font: 400 12px/1 -apple-system, sans-serif; color: var(--body); }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: block; }
+  /* charts are HTML: positioned by percentage, text at normal size on every screen */
+  .hbars { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
+  .hb-lab { font: 600 12.5px/1.3 -apple-system, sans-serif; color: var(--body); margin-bottom: 6px; }
+  .hb { display: grid; grid-template-columns: minmax(0,1fr) 44px; align-items: center; gap: 10px; }
+  .hb + .hb { margin-top: 3px; }
+  .hb-track { position: relative; height: 12px; border-radius: 4px; background: rgba(255,255,255,0.05); }
+  .hb-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+  .hb-chance { position: absolute; left: 10%; top: -3px; bottom: -3px; border-left: 1px dashed #8FA8A0; }
+  .hb-v { font: 600 12px/1 ui-monospace, Menlo, monospace; color: var(--ink-2); text-align: right; }
+  .hb:hover .hb-fill { opacity: 0.8; }
+  .hb-axis { position: relative; display: flex; justify-content: space-between; margin-right: 54px; font: 400 10.5px/1 ui-monospace, Menlo, monospace; color: var(--faint); }
+  .hb-axis-chance { position: absolute; left: 10%; transform: translateX(-50%); top: 14px; white-space: nowrap; }
+  .hb-axis span:nth-child(3) { position: absolute; left: 50%; transform: translateX(-50%); }
+  .hb-axis { padding-bottom: 16px; }
+  .cols { margin-top: 18px; height: 190px; display: flex; align-items: flex-end; gap: 8px; }
+  .col { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+  .col-v { font: 600 11.5px/1 ui-monospace, Menlo, monospace; color: var(--ink-2); }
+  .col-bar { width: 100%; max-width: 46px; border-radius: 4px 4px 0 0; background: var(--s1); }
+  .col:hover .col-bar { opacity: 0.8; }
+  .col-x { font: 400 10.5px/1 ui-monospace, Menlo, monospace; color: var(--faint); padding-top: 4px; }
+  .dp { margin-top: 12px; display: flex; flex-direction: column; gap: 16px; }
+  .dp-lab { font: 600 12.5px/1.3 -apple-system, sans-serif; color: var(--body); margin-bottom: 8px; }
+  .dp-track { position: relative; height: 16px; margin: 0 8px; border-top: 1px solid rgba(255,255,255,0.10); top: 8px; }
+  .dot { position: absolute; top: -8px; width: 15px; height: 15px; margin-left: -7.5px; border-radius: 50%; border: 2px solid var(--bg); }
+  .dot:hover { transform: scale(1.2); }
+  .dp-vals { margin-top: 4px; font: 500 11.5px/1.4 ui-monospace, Menlo, monospace; color: var(--muted); }
+  .dp-axis { display: flex; justify-content: space-between; margin: 0 8px; font: 400 10.5px/1 ui-monospace, Menlo, monospace; color: var(--faint); }
+  .fig-foot { margin: 10px 0 0; font: 400 12.5px/1.55 -apple-system, sans-serif; color: #7F958E; }
+
+  /* steps */
+  ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 22px; }
+  ol.steps > li { counter-increment: s; position: relative; padding-left: 46px; }
+  ol.steps > li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: -2px; font: 200 26px/1 'Newsreader', Georgia, serif; color: #3E5C54; }
+  ol.steps .st { font: 600 15.5px/1.35 -apple-system, sans-serif; color: var(--ink); letter-spacing: -0.2px; }
+  ol.steps .sd { margin: 5px 0 0; font: 400 14px/21px -apple-system, sans-serif; color: #93A9A2; text-wrap: pretty; }
+  pre.code { margin: 10px 0 0; padding: 14px 16px; border-radius: 12px; background: #0A1411; border: 1px solid rgba(255,255,255,0.08); overflow-x: auto; font: 500 12.5px/1.65 ui-monospace, Menlo, monospace; color: #CFE3DC; }
+  pre.code .c { color: #5F7A72; }
+  pre.code .k { color: var(--gold); }
+
+  /* scope */
+  .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .scard { padding: 18px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); }
+  .scard .k { font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: 1.3px; text-transform: uppercase; color: var(--teal); }
+  .scard.no .k { color: #D98C7A; }
+  .scard ul { margin: 10px 0 0; padding-left: 18px; font: 400 13.5px/21px -apple-system, sans-serif; color: #93A9A2; }
+  .scard li + li { margin-top: 5px; }
+  .scard li b { color: var(--ink-2); font-weight: 600; }
+
+  .note { margin-top: 18px; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(230,205,139,0.28); background: rgba(230,205,139,0.05); font: 400 13.5px/1.6 -apple-system, sans-serif; color: #BFD6CE; }
+  .note b { color: var(--gold); font-weight: 600; }
+
+  footer { margin-top: 90px; padding: 36px 0 60px; border-top: 1px solid var(--line); }
+  footer p { margin: 0; font: 400 13px/1.7 -apple-system, sans-serif; color: var(--faint); }
+  footer a { color: var(--teal); }
+
+  @media (max-width: 900px) {
+    .chapter .wrap { grid-template-columns: 1fr; gap: 22px; }
+    .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .doors { grid-template-columns: 1fr; }
+    .scope { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .wrap, .top .wrap, .proof .wrap, .spine-inner { padding-left: 16px; padding-right: 16px; }
+    .top .wrap { padding-top: 56px; }
+    h1.title { letter-spacing: -1.4px; }
+    .kpi .v { font-size: 26px; }
+    .spine-back { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+      background: '#0F1B17', primaryColor: '#13241F', primaryTextColor: '#E6EFEB', primaryBorderColor: '#2E6A5C',
+      lineColor: '#4FBFA6', secondaryColor: '#17302A', tertiaryColor: '#13241F', fontSize: '13px', fontFamily: 'ui-monospace, Menlo, monospace',
+    } });
+  }
+</script>
+</head>
+<body>
+<nav class="spine" aria-label="Sections">
+  <div class="spine-inner">
+    <a class="spine-back" href="/">‹ Kiki</a>
+    <div class="spine-links">
+      <a href="#today">01 · Today</a>
+      <a href="#voice">02 · Voice engine</a>
+      <a href="#decisions">03 · Decisions</a>
+      <a href="#evidence">04 · Evidence</a>
+      <a href="#scope">05 · Scope</a>
+      <a href="#guide">06 · How to run it</a>
+      <a href="#limits">07 · Limits</a>
+    </div>
+  </div>
+</nav>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Kiki · the AI</div>
+    <h1 class="title">It writes from the facts. It will sound like Kiki.</h1>
+    <p class="lede">Every introduction on Kiki is written by a language model from the trust graph, never from its imagination. That part runs today. This page covers it and the part that comes next: <b>giving it Kiki's own voice, learned from roughly ten thousand real conversations</b>, without letting those conversations become anything but a tone of voice. The voice engine, Voiceprint, is built, published and measured. Below are the architecture, the system as it stands, the decisions and why, the scope it will never leave, and the steps to run it on Kiki's data.</p>
+  </div>
+  <div class="proof"><div class="wrap">
+    <div class="kpis">
+      <div class="kpi"><span class="v">4</span><span class="l">AI tasks live</span><span class="s">one contract, one runner, one fallback ladder</span></div>
+      <div class="kpi"><span class="v">6 / 6</span><span class="l">planted rules found</span><span class="s">and 0 false rules on a control with nothing planted</span></div>
+      <div class="kpi"><span class="v">~400</span><span class="l">messages for a stable voice</span><span class="s">Kiki has about ten thousand conversations</span></div>
+      <div class="kpi"><span class="v">0.04 → 0.77</span><span class="l">on-voice score</span><span class="s">a model's replies without and with the voice pack</span></div>
+    </div>
+    <div class="doors">
+      <a class="door gold" href="https://github.com/hrbohra/voiceprint"><span class="k">The engine ›</span><span class="t">Voiceprint on GitHub</span><span class="s">Code, 53 recorded decisions, and every result reproducible</span></a>
+      <a class="door" href="/design#intelligence"><span class="k">The contract ›</span><span class="t">The design record, chapter 04</span><span class="s">How the introduction is written and guarded today</span></a>
+      <a class="door" href="/try"><span class="k">See it ›</span><span class="t">Open the app</span><span class="s">Open any host and the introduction writes itself</span></a>
+    </div>
+  </div></div>
+</header>
+
+<main>
+<!-- 01 · TODAY -->
+<section class="chapter" id="today">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">01 · The system today</span>One contract, one runner, and it never breaks or lies.</h2>
+    </div>
+    <div>
+      <p class="body">Kiki's AI jobs are well defined: one call over facts the product already holds. So there is no agent framework. There is a small contract of my own. Each AI feature is a <b>task</b>: the typed facts it may use, a prompt, a guard that accepts or rejects the answer, and a deterministic twin that says the same true thing without a model. All four are pure functions in <code>@kiki/domain</code>, versioned and unit-tested.</p>
+      <p class="body">The API calls a model in exactly one place, the <b>AiRunner</b>. Every task inherits the same fallback ladder, so a demo can never show a broken box, and every answer says which rung produced it.</p>
+    </div>
+    <div class="wide">
+      <div class="dlabel">The ladder every task gets for free</div>
+      <div class="diagram"><pre class="mermaid">
+flowchart LR
+  F["facts from the graph"] --> P["voice + task rules + facts-only prompt"]
+  P --> L{"live model"}
+  L -->|"answer passes the task guard"| OUT["return · cache by prompt hash"]
+  L -->|"error · quota · guard rejects"| C{"cached run?"}
+  C -->|hit| O2["return cached"]
+  C -->|miss| B{"prepared answer?"}
+  B -->|yes| O3["return prepared"]
+  B -->|no| D["deterministic twin"]
+</pre></div>
+    </div>
+    <div class="wide">
+      <h3 class="sub">System specification</h3>
+      <div class="tbl"><table>
+        <tr><th>Part</th><th>What it is</th><th>Where</th></tr>
+        <tr><td>Model</td><td>Gemini through REST, called server-side with the key in the server's environment. The model is set by <code>GEMINI_MODEL</code> (default <code>gemini-3.6-flash</code>) behind an <code>LlmProvider</code> port, so switching to Claude or anything else is one line.</td><td><code>apps/api/src/ai/llm.provider.ts</code></td></tr>
+        <tr><td>Tasks</td><td><code>intro</code> v3 (the mutual-friend introduction), plus <code>draft.introduce</code>, <code>draft.call</code> and <code>draft.shorter</code> v2 (first messages between strangers). A version bump retires old cached runs.</td><td><code>packages/domain/src/ai</code></td></tr>
+        <tr><td>Guard</td><td>Rejects answers that are too short or too long, leak instructions or markup, open with "Sure," or "Here's", contain links, spam exclamation marks, or name anyone the facts never mention. A rejected answer is logged by reason, never shown and never cached.</td><td><code>task.ts</code></td></tr>
+        <tr><td>Cache</td><td>Every accepted live answer is stored in Postgres (<code>ai_cache</code>), keyed by the prompt's hash.</td><td><code>ai-runner.service.ts</code></td></tr>
+        <tr><td>Prepared answers</td><td>48 drafts and 6 introductions written ahead of time from the same facts, each held by a test to the live model's own guard. When the free quota runs out, the demo still tells the truth.</td><td><code>ai/bakedDrafts.ts</code></td></tr>
+        <tr><td>Voice</td><td>A separate <code>VoiceProvider</code> port. Today it holds a hand-distilled tone pack built from Kiki's public writing; next, a pack Voiceprint compiles from Kiki's own conversations. A task never states tone, and the voice port never states a task.</td><td><code>voice.provider.ts</code> · <code>@kiki/voice</code></td></tr>
+        <tr><td>Safety</td><td>The model proposes and a person acts: the AI returns text and nothing else. Everything members wrote is fenced off from the instructions as data.</td><td>OWASP LLM Top 10 (2025)</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · VOICE ENGINE -->
+<section class="chapter" id="voice">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">02 · The voice engine</span>Measure how Kiki writes, prove each habit, then hand it to the model.</h2>
+    </div>
+    <div>
+      <p class="body">Giving a model "Kiki's voice" usually means someone writes "be warm and friendly" into a prompt. That describes every brand, so it describes none. <b>Voiceprint</b> works from evidence instead. It reads the conversations, measures about 155 properties of every message, finds where Kiki differs from comparable brands, turns each difference into a plain-language rule, and keeps a rule only if it holds on conversations it has never seen.</p>
+      <p class="body">What comes out is a small set of files. <code>@kiki/voice</code> loads them with one call, and the rest of the AI layer does not change.</p>
+    </div>
+    <div class="wide">
+      <div class="dlabel">Architecture</div>
+      <div class="diagram"><pre class="mermaid">
+flowchart TD
+  A["Kiki's Instagram export<br/>~10,000 conversations"] --> B["Anonymise on this machine<br/>names → placeholders · k-anonymity"]
+  R["Public replies from<br/>comparable brands"] --> D
+  B --> C["Split by conversation<br/>80% learn · 20% held out"]
+  C --> D["Measure every message<br/>~155 features · GPU"]
+  D --> E["Contrast with the reference<br/>effect sizes · confidence intervals"]
+  E --> F["Statistical rules"]
+  E --> G["Frontier model reads a compressed brief<br/>proposes rules"]
+  G --> H["Blind check on held-out conversations<br/>Fisher exact test"]
+  F --> I["Voice pack · scorer · fine-tuning files"]
+  H --> I
+  I --> J["@kiki/voice<br/>fromVoiceprint()"]
+  J --> K["VoiceProvider port → AiRunner"]
+</pre></div>
+    </div>
+    <div class="wide">
+      <h3 class="sub">What it measures in every message</h3>
+      <div class="tbl"><table>
+        <tr><th>Family</th><th>Examples</th><th>How</th></tr>
+        <tr><td>Surface</td><td>Length, rhythm, punctuation, where emoji sit, casing, contractions, hedges ("I think"), boosters, chat slang, UK or US spelling, pronouns, readability</td><td>exact, no model</td></tr>
+        <tr><td>Syntax</td><td>Part-of-speech profile, formality score, sentence depth, clauses, passive voice, commands, modals, negation</td><td>spaCy transformer on the GPU</td></tr>
+        <tr><td>Affect</td><td>Sentiment, 28 emotions</td><td>RoBERTa classifiers</td></tr>
+        <tr><td>Dialogue acts</td><td>Asks, answers, acknowledges, promises (judged against the message being answered)</td><td>DeBERTa trained on dialogue</td></tr>
+        <tr><td>Social acts</td><td>Greets, thanks, apologises, offers, reassures, refuses, empathises, closes</td><td>natural-language inference per sentence, with strict cue phrases</td></tr>
+        <tr><td>Conversation</td><td>How long a reply is compared with the message, style mirroring, asking back, reply speed, bursts of messages, openers and closers</td><td>conversation structure</td></tr>
+        <tr><td>Situations</td><td>What Kiki was replying to (a booking question, a thank-you, a problem), so a rule can apply only where it belongs</td><td>embeddings and clustering</td></tr>
+      </table></div>
+    </div>
+    <div class="wide">
+      <h3 class="sub">What leaves the machine</h3>
+      <div class="tbl"><table>
+        <tr><th>Tier</th><th>Sent to a model provider</th><th>For Kiki</th></tr>
+        <tr><td>Local-first (default)</td><td>Only a statistical summary and a small sample of anonymised messages, and only phrases that appear in at least three separate conversations</td><td><b style="color:var(--teal)">This one.</b> Everything else stays on the laptop.</td></tr>
+        <tr><td>Hybrid</td><td>Every anonymised message, for bulk labelling</td><td>Only with a zero-retention agreement</td></tr>
+        <tr><td>Frontier-direct</td><td>Raw text. Refused unless the configuration explicitly acknowledges a data-processing agreement</td><td>Not used</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · DECISIONS -->
+<section class="chapter" id="decisions">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">03 · Decisions</span>Each one made for Kiki's constraints, with what was rejected.</h2>
+      <p class="body" style="margin-top:18px">All 53 are recorded with their reasons in the build log. These are the ones that shape Kiki.</p>
+    </div>
+    <div>
+      <ul class="dec">
+        <li><b>The conversations shape tone and nothing else.</b> Never facts, matching, ranking or search. The content of every introduction still comes only from the trust graph.<span class="instead">Instead of <b>fine-tuning on members' messages</b>, which would turn private conversations into model knowledge.</span></li>
+        <li><b>Kiki is compared with other brands, never with its members.</b> Public replies from comparable hospitality, travel and community accounts are the reference. Members' messages stay in only as context: what Kiki was replying to.<span class="instead">Instead of <b>Kiki vs its own members</b>, which measures "company vs customer", not voice. I caught exactly this mistake in my own evaluation and corrected it.</span></li>
+        <li><b>Measure first; the frontier model reads a compressed brief.</b> The statistics and a few hundred anonymised messages cost a few thousand tokens, and every claim carries a number.<span class="instead">Instead of <b>pasting the corpus into a model</b>: about 30× the tokens, private text leaving the machine, and impressions nobody can check.</span></li>
+        <li><b>A rule is kept only if it is distinctive on unseen conversations.</b> A blind judge labels held-out messages from Kiki and from the reference, shuffled together, and the difference must pass a one-sided Fisher exact test.<span class="instead">Instead of <b>trusting the model's first draft of rules</b>. On a control corpus it proposed five plausible rules that were equally true of everyone, and the check rejected all five.</span></li>
+        <li><b>Style-only rules for Kiki.</b> Some verified habits change what is said ("move this to a private link", "promise a follow-up"). Kiki's content must come only from facts, so only style-only rules go into Kiki's pack.<span class="instead">Instead of <b>shipping every verified rule</b>, which let the voice add claims the graph never made.</span></li>
+        <li><b>The scorer runs in the app with no model.</b> A logistic model over exact surface features, generated as dependency-free TypeScript and tested to match the Python version to 1e-6.<span class="instead">Instead of <b>an embedding model in the request path</b>: slower, costlier, and a second thing to host.</span></li>
+        <li><b>Built for the machine it runs on.</b> One Windows laptop with an 8 GB GPU. Models load per stage and are released, every stage is checkpointed, and a low-power mode with a thermal guard keeps the laptop usable and below its throttle point.<span class="instead">Instead of <b>assuming a cloud GPU</b>. Kiki's team can run it on an ordinary laptop, and the data never needs to leave it.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · EVIDENCE -->
+<section class="chapter" id="evidence">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">04 · Evidence</span>Tested where the right answer is known, then on real brands.</h2>
+      <p class="body" style="margin-top:18px">Kiki's conversations are private, so every test uses public or synthetic data with the same shape: <b>one account answering many different people.</b> The closest public match is ten brands' customer-support replies on Twitter.</p>
+      <p class="body">The first test plants six habits in a synthetic host's replies and asks whether the engine finds them. It finds all six, and on a control with nothing planted it finds nothing.</p>
+    </div>
+    <div>
+      <div class="fig" id="fig-attr">
+        <div class="fig-cap">Can the measurements tell ten brands apart?</div>
+        <p class="fig-sub">Share of held-out tweets attributed to the right brand. Chance is 10%. "Stripped" removes the agents' sign-offs (like <code>^TN</code>) to test whether the result depends on them.</p>
+        <div class="legend"><span><i style="background:var(--s1)"></i>With sign-offs</span><span><i style="background:var(--s2)"></i>Sign-offs stripped</span></div>
+        <div class="hbars" role="img" aria-label="Single-tweet attribution. Voiceprint features: 75% with sign-offs, 67% stripped. Surface features: 62% and 52%. Generic style model: 62% and 36%. Chance is 10%."><div class="hb-group"><div class="hb-lab">Voiceprint features</div><div class="hb" title="Voiceprint features, with sign-offs: 75%"><span class="hb-track"><span class="hb-fill" style="width:75%;background:var(--s1)"></span><span class="hb-chance"></span></span><span class="hb-v">75%</span></div><div class="hb" title="Voiceprint features, sign-offs stripped: 67%"><span class="hb-track"><span class="hb-fill" style="width:67%;background:var(--s2)"></span><span class="hb-chance"></span></span><span class="hb-v">67%</span></div></div><div class="hb-group"><div class="hb-lab">Surface features only (runs in the app)</div><div class="hb" title="Surface features only (runs in the app), with sign-offs: 62%"><span class="hb-track"><span class="hb-fill" style="width:62%;background:var(--s1)"></span><span class="hb-chance"></span></span><span class="hb-v">62%</span></div><div class="hb" title="Surface features only (runs in the app), sign-offs stripped: 52%"><span class="hb-track"><span class="hb-fill" style="width:52%;background:var(--s2)"></span><span class="hb-chance"></span></span><span class="hb-v">52%</span></div></div><div class="hb-group"><div class="hb-lab">Generic style model</div><div class="hb" title="Generic style model, with sign-offs: 62%"><span class="hb-track"><span class="hb-fill" style="width:62%;background:var(--s1)"></span><span class="hb-chance"></span></span><span class="hb-v">62%</span></div><div class="hb" title="Generic style model, sign-offs stripped: 36%"><span class="hb-track"><span class="hb-fill" style="width:36%;background:var(--s2)"></span><span class="hb-chance"></span></span><span class="hb-v">36%</span></div></div><div class="hb-axis"><span>0%</span><span class="hb-axis-chance">chance 10%</span><span>50%</span><span>100%</span></div></div>
+        <p class="fig-foot">Over ten tweets instead of one: 100% with sign-offs and 99% stripped for Voiceprint's features. Without sign-offs, the generic style model loses 26 points and Voiceprint loses 8: it measures how brands write, not how they sign. On eight novelists, the full features reach 47% per passage and 92% over ten passages (chance 12.5%).</p>
+      </div>
+      <div class="fig" id="fig-curve">
+        <div class="fig-cap">How much data does a voice need?</div>
+        <p class="fig-sub">One brand's rule set re-learned from growing samples and compared with the full-data rule set (100% = identical rules).</p>
+        <div class="cols" role="img" aria-label="Agreement with the full-data rule set: 23% at 25 messages, 36% at 50, 64% at 100, 70% at 200, and 100% from 400 messages on."><div class="col" title="25 messages: 23%"><span class="col-v">23%</span><span class="col-bar" style="height:23%"></span><span class="col-x">25</span></div><div class="col" title="50 messages: 36%"><span class="col-v">36%</span><span class="col-bar" style="height:36%"></span><span class="col-x">50</span></div><div class="col" title="100 messages: 64%"><span class="col-v">64%</span><span class="col-bar" style="height:64%"></span><span class="col-x">100</span></div><div class="col" title="200 messages: 70%"><span class="col-v">70%</span><span class="col-bar" style="height:70%"></span><span class="col-x">200</span></div><div class="col" title="400 messages: 100%"><span class="col-v">100%</span><span class="col-bar" style="height:100%"></span><span class="col-x">400</span></div><div class="col" title="800 messages: 100%"><span class="col-v">100%</span><span class="col-bar" style="height:100%"></span><span class="col-x">800</span></div><div class="col" title="1,665 messages: 100%"><span class="col-v">100%</span><span class="col-bar" style="height:100%"></span><span class="col-x">1,665</span></div></div>
+        <p class="fig-foot">Messages from the target brand on a stepped axis. The measured profile is already stable at 25 messages (rank agreement 0.92); the rules need about 400. Kiki's ten thousand conversations are far past that.</p>
+      </div>
+      <div class="fig" id="fig-fid">
+        <div class="fig-cap">Does a model given the pack write in the voice?</div>
+        <p class="fig-sub">Forty held-out incoming messages, answered by the same model without the pack and with it, scored against the brand's real replies.</p>
+        <div class="legend"><span><i style="background:var(--s0)"></i>Without the pack</span><span><i style="background:var(--s1)"></i>With the pack</span><span><i style="background:var(--s2)"></i>The brand's real replies</span></div>
+        <div class="dp" role="img" aria-label="On-voice score: 0.04 without the pack, 0.77 with it, 0.73 for real replies. Style similarity: 0.82 without, 0.96 with, 0.92 real."><div class="dp-row"><div class="dp-lab">On-voice score</div><div class="dp-track"><span class="dot" style="left:4.0%;background:var(--s0)" title="Without the pack: 0.04"></span><span class="dot" style="left:73.0%;background:var(--s2)" title="Real replies: 0.73"></span><span class="dot" style="left:77.0%;background:var(--s1)" title="With the pack: 0.77"></span></div><div class="dp-vals">without 0.04 · real 0.73 · with 0.77</div></div><div class="dp-row"><div class="dp-lab">Style similarity</div><div class="dp-track"><span class="dot" style="left:82.0%;background:var(--s0)" title="Without the pack: 0.82"></span><span class="dot" style="left:92.0%;background:var(--s2)" title="Real replies: 0.92"></span><span class="dot" style="left:96.0%;background:var(--s1)" title="With the pack: 0.96"></span></div><div class="dp-vals">without 0.82 · real 0.92 · with 0.96</div></div><div class="dp-axis"><span>0</span><span>0.5</span><span>1</span></div></div>
+        <p class="fig-foot">With the pack, replies land level with the brand's own. 70% of them say nothing the plain reply didn't. The rest added claims through content-carrying rules, which is why Kiki's pack uses style-only rules (chapter 03).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · SCOPE -->
+<section class="chapter" id="scope">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">05 · Scope</span>What it does for Kiki, and what it will never do.</h2>
+      <p class="body" style="margin-top:18px">The boundary is the product. Members wrote to Kiki to arrange stays, not to train a model, so the line sits where their trust needs it.</p>
+    </div>
+    <div class="scope">
+      <div class="scard"><span class="k">In scope</span><ul>
+        <li><b>Tone:</b> how an introduction or a draft sounds (rhythm, warmth, formality, habits) learned from Kiki's own replies.</li>
+        <li><b>A yardstick:</b> "would Kiki have said it like this?", scored in-app, so the best of several drafts can be picked.</li>
+        <li><b>A voice guide for people:</b> <code>VOICE.md</code>, every rule with its evidence, which the team can read, edit and veto.</li>
+        <li><b>Optional fine-tuning files</b> (style-only pairs) if prompting ever falls short.</li>
+      </ul></div>
+      <div class="scard no"><span class="k">Out of scope, always</span><ul>
+        <li><b>Facts.</b> Who someone is, what they did, and who vouches for whom come only from the trust graph.</li>
+        <li><b>Matching, ranking, search</b> or any decision about a member.</li>
+        <li><b>Quoting members.</b> No output may contain a phrase found in fewer than three conversations; a leak fails the run.</li>
+        <li><b>Acting.</b> The AI still only proposes text, and a person sends it.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · GUIDE -->
+<section class="chapter" id="guide">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">06 · How to run it</span>From Kiki's export to Kiki's voice, on one laptop.</h2>
+      <p class="body" style="margin-top:18px">Seven steps, each reversible. Nothing reaches production until a person has read the voice guide and a held-out test has passed.</p>
+      <div class="note"><b>Before step 1:</b> agree the lawful basis for using the conversations for tone, and keep the export in an access-controlled folder. The default tier sends no raw text anywhere.</div>
+    </div>
+    <div>
+      <ol class="steps">
+        <li><div class="st">Export the conversations</div><p class="sd">Instagram → Settings → Download your information → Messages, JSON format. Voiceprint reads the folder directly and repairs Instagram's broken emoji encoding.</p></li>
+        <li><div class="st">Install and check the machine</div><pre class="code"><span class="c"># Python 3.11+, an NVIDIA GPU if available (CPU works, slower)</span>
+git clone https://github.com/hrbohra/voiceprint && cd voiceprint
+python -m venv .venv && .venv/Scripts/activate
+pip install -e ".[gpu,anthropic]"
+python -m spacy download en_core_web_trf
+voiceprint doctor          <span class="c"># GPU, spaCy, which providers have keys</span></pre></li>
+        <li><div class="st">Look at what it sees</div><pre class="code">voiceprint inspect instagram_export/
+<span class="c"># → turns, conversations, and each speaker's name (the Kiki account's is the target)</span></pre></li>
+        <li><div class="st">Add the reference brands</div><p class="sd">Collect a few hundred public replies each from comparable hospitality, travel and community accounts, as JSON Lines (<code>speaker</code>, <code>doc_id</code>, <code>text</code>), and put them alongside Kiki's conversations in one file.</p></li>
+        <li><div class="st">Extract the voice</div><pre class="code"><span class="k">export</span> ANTHROPIC_API_KEY=…        <span class="c"># Claude does the reading and the blind checking</span>
+<span class="k">export</span> VOICEPRINT_LOW_POWER=1    <span class="c"># idle priority + thermal guard: the laptop stays usable</span>
+voiceprint extract kiki_and_reference.jsonl \
+  -s "Kiki" -r "BrandA" -r "BrandB" -r "BrandC" \
+  -o voice/</pre><p class="sd">Every stage checkpoints, so a restart or a sleeping laptop loses at most a few minutes. The LLM stages need about a dozen calls under a hard spending cap (£20 by default), and every call is cached.</p></li>
+        <li><div class="st">Read and edit the voice guide</div><p class="sd">Open <code>voice/VOICE.md</code>. Every rule shows how often Kiki follows it compared with the reference, and its p-value. Delete any rule that carries content (a promise, a redirect) or that the team doesn't recognise as Kiki.</p></li>
+        <li><div class="st">Plug it in, then gate it</div><pre class="code"><span class="c">// apps/api/src/ai/ai.module.ts</span>
+<span class="k">import</span> { fromVoiceprint } <span class="k">from</span> '@kiki/voice';
+<span class="k">const</span> voice = fromVoiceprint({ tonePack, voiceJson });
+{ provide: VOICE_PROVIDER, useFactory: () =&gt; voice.provider }
+<span class="c">// optional: write 3 drafts, keep voice.pickMostOnVoice(drafts)</span></pre><p class="sd">Then run the fidelity check on held-out conversations. It passes when the on-voice score approaches Kiki's real replies <b>and</b> the voiced drafts still say only what the plain ones said.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · LIMITS -->
+<section class="chapter" id="limits">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">07 · Honest limits</span>What the numbers don't show yet.</h2>
+    </div>
+    <div>
+      <ul class="dec">
+        <li><b>Rare habits need more checking.</b> With 48 judged messages per side, a habit must appear in roughly one Kiki message in ten to prove itself. True habits rarer than that are dropped, not faked. Kiki's volume allows a larger check.</li>
+        <li><b>The style judge in the published tests was not independent.</b> With no API key available during the build, I answered the frontier stages myself inside a Claude Code session, including the style judge. That is labelled everywhere, and the headline numbers come from model-free measures instead.</li>
+        <li><b>English only.</b> Non-English turns are detected and set aside.</li>
+        <li><b>Style-only tagging is next.</b> Rules are currently checked for content by reading <code>VOICE.md</code>. The planned automatic check tests whether applying a rule changes what a reply entails.</li>
+      </ul>
+      <p class="body" style="margin-top:22px">Informed by Anthropic's <i>Building effective agents</i> (workflows before agents), the OWASP Top 10 for LLM applications (2025), and the stylometry literature behind the features: Language Style Matching, the Heylighen–Dewaele formality score, and Monroe et al.'s log-odds keyness.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <p>Built by Harsh Bohra · <a href="https://github.com/hrbohra/voiceprint">github.com/hrbohra/voiceprint</a> · <a href="https://github.com/hrbohra/kiki">github.com/hrbohra/kiki</a> · <a href="/design">the design record</a> · <a href="https://hrbohra.vercel.app">hrbohra.vercel.app</a></p>
+</div></footer>
+
+<script>
+  // highlight the current section in the spine (IntersectionObserver; no layout work on scroll)
+  (function () {
+    var links = {}; document.querySelectorAll('.spine-links a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          Object.values(links).forEach(function (a) { a.classList.remove('on'); });
+          var a = links[e.target.id]; if (a) { a.classList.add('on'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('section.chapter').forEach(function (s) { io.observe(s); });
+  })();
+</script>
+</body>
+</html>
