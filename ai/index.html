@@ -139,6 +139,39 @@
   pre.code .c { color: #5F7A72; }
   pre.code .k { color: var(--gold); }
 
+  /* choice: comparison */
+  .needs { margin: 0; padding: 0; list-style: none; counter-reset: n; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .needs li { counter-increment: n; position: relative; padding: 14px 16px 14px 46px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); font: 400 13.5px/1.5 -apple-system, sans-serif; color: #93A9A2; }
+  .needs li::before { content: counter(n); position: absolute; left: 16px; top: 12px; font: 200 22px/1 'Newsreader', Georgia, serif; color: var(--gold); }
+  .needs li b { display: block; color: var(--ink); font-weight: 600; font-size: 14.5px; margin-bottom: 3px; }
+  .cmp { overflow-x: auto; margin-top: 8px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); }
+  .cmp table { border-collapse: collapse; width: 100%; min-width: 860px; font: 400 12.5px/1.4 -apple-system, sans-serif; color: #BFD6CE; }
+  .cmp th, .cmp td { padding: 11px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); vertical-align: top; text-align: left; }
+  .cmp thead th { font: 700 9.5px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.02); }
+  .cmp tbody th { font: 600 13px/1.35 -apple-system, sans-serif; color: var(--ink-2); min-width: 170px; }
+  .cmp tbody th small { display: block; margin-top: 3px; font: 400 11.5px/1.4 -apple-system, sans-serif; color: var(--faint); }
+  .cmp tr.ours { background: rgba(47,163,138,0.10); }
+  .cmp tr.ours th { color: var(--teal); }
+  .cmp .y, .cmp .p, .cmp .n { display: block; font: 700 11px/1.2 ui-monospace, Menlo, monospace; margin-bottom: 3px; }
+  .cmp .y { color: #6FD1B6; } .cmp .p { color: var(--gold); } .cmp .n { color: #D98C7A; }
+  .cmp td span.why { color: #7F958E; font-size: 11.5px; }
+  .cmp tr:last-child th, .cmp tr:last-child td { border-bottom: 0; }
+  .cmp-key { margin: 10px 0 0; font: 400 12px/1.5 -apple-system, sans-serif; color: var(--faint); }
+  @media (max-width: 900px) { .needs { grid-template-columns: 1fr; } }
+  /* phones: each approach becomes a card; no sideways scrolling */
+  @media (max-width: 760px) {
+    .cmp { border: 0; overflow: visible; }
+    .cmp table { min-width: 0; }
+    .cmp thead { display: none; }
+    .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; }
+    .cmp tr { margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; padding: 6px 0; background: rgba(255,255,255,0.02); }
+    .cmp tr.ours { border-color: rgba(47,163,138,0.55); }
+    .cmp tbody th { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .cmp td { display: grid; grid-template-columns: 42% 1fr; gap: 10px; border-bottom: 0; padding: 7px 12px; }
+    .cmp td::before { content: attr(data-label); font: 600 11.5px/1.4 -apple-system, sans-serif; color: var(--muted); }
+    .cmp td > span { grid-column: 2; }
+  }
+
   /* scope */
   .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .scard { padding: 18px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); }
@@ -185,6 +218,7 @@
   <div class="spine-inner">
     <a class="spine-back" href="/">‹ Kiki</a>
     <div class="spine-links">
+      <a href="#choice">00 · The choice</a>
       <a href="#today">01 · Today</a>
       <a href="#voice">02 · Voice engine</a>
       <a href="#decisions">03 · Decisions</a>
@@ -218,6 +252,43 @@
 </header>
 
 <main>
+<!-- 00 · THE CHOICE -->
+<section class="chapter" id="choice">
+  <div class="wrap">
+    <div>
+      <h2><span class="kicker">00 · The choice</span>What Kiki needs from a voice, and why this way.</h2>
+    </div>
+    <div>
+      <p class="body">Kiki's introductions work because a stranger trusts them. Once the AI writes them, the tone becomes part of that trust. It has to sound like Kiki, not like a chatbot, and it can never say more than the graph can prove. The raw material is about ten thousand conversations between Kiki's team and its members, and those are private.</p>
+      <p class="body">So the question was never "can a model imitate Kiki?". Several methods can. It was <b>which method gives Kiki's voice without costing members' privacy or the product's honesty.</b></p>
+    </div>
+    <div class="wide">
+      <h3 class="sub">What Kiki needs</h3>
+      <ol class="needs">
+        <li><b>Sound like Kiki</b>The habits that set Kiki apart from other hosts and brands, not "friendly".</li>
+        <li><b>Keep to the facts</b>The voice may change how something is said, never what. Content comes only from the trust graph.</li>
+        <li><b>Keep members' words private</b>Conversations are never quoted, never sent raw to a provider, and never turned into model knowledge.</li>
+        <li><b>Let the team see and own it</b>A voice the team can read, argue with and edit, not a black box.</li>
+        <li><b>Be provable</b>A test that shows the voice is really Kiki's, on conversations it has never seen.</li>
+        <li><b>Stay light and portable</b>Cheap to run, and free to switch AI models without redoing the work.</li>
+      </ol>
+    </div>
+    <div class="wide">
+      <h3 class="sub">The options, against those needs</h3>
+      <div class="cmp"><table><thead><tr><th>Approach</th><th>Sounds like Kiki</th><th>Keeps to the facts</th><th>Members' words stay private</th><th>Team can read and edit it</th><th>Provable</th><th>Swap models freely</th><th>Cost to run</th></tr></thead><tbody><tr><th>Hand-written tone prompt<small>“be warm, honest, people-first”: what Kiki runs today</small></th><td data-label="Sounds like Kiki"><span class="p">~ generic</span><span class="why">describes every brand</span></td><td data-label="Keeps to the facts"><span class="y">✓ yes</span><span class="why">adds no content</span></td><td data-label="Members' words stay private"><span class="y">✓ yes</span><span class="why">uses no member data</span></td><td data-label="Team can read and edit it"><span class="y">✓ yes</span><span class="why">it is the text</span></td><td data-label="Provable"><span class="n">✗ no</span><span class="why">nothing to measure against</span></td><td data-label="Swap models freely"><span class="y">✓ yes</span><span class="why">one prompt</span></td><td data-label="Cost to run"><span class="y">✓ yes</span><span class="why">free</span></td></tr><tr><th>Paste real conversations into the prompt<small>many example replies, or the whole corpus in a long context</small></th><td data-label="Sounds like Kiki"><span class="y">✓ close copy</span><span class="why">imitates what it sees</span></td><td data-label="Keeps to the facts"><span class="n">✗ no</span><span class="why">copies facts from examples</span></td><td data-label="Members' words stay private"><span class="n">✗ no</span><span class="why">members' words go to the provider every call</span></td><td data-label="Team can read and edit it"><span class="n">✗ no</span><span class="why">an impression, not a rule</span></td><td data-label="Provable"><span class="n">✗ no</span><span class="why">no held-out check</span></td><td data-label="Swap models freely"><span class="p">~ per call</span><span class="why">rebuilt each time</span></td><td data-label="Cost to run"><span class="n">✗ costly</span><span class="why">thousands of tokens per call</span></td></tr><tr><th>Retrieve similar past replies (RAG)<small>find the closest old message and imitate it</small></th><td data-label="Sounds like Kiki"><span class="y">✓ close copy</span><span class="why"></span></td><td data-label="Keeps to the facts"><span class="n">✗ no</span><span class="why">old replies carry old facts</span></td><td data-label="Members' words stay private"><span class="n">✗ no</span><span class="why">quotes members at runtime</span></td><td data-label="Team can read and edit it"><span class="p">~ partly</span><span class="why">you see what was retrieved</span></td><td data-label="Provable"><span class="p">~ partly</span><span class="why"></span></td><td data-label="Swap models freely"><span class="p">~ index to host</span><span class="why">a vector store</span></td><td data-label="Cost to run"><span class="p">~ moderate</span><span class="why"></span></td></tr><tr><th>Fine-tune a model on the conversations<small>LoRA or SFT on Kiki's replies</small></th><td data-label="Sounds like Kiki"><span class="y">✓ strongest</span><span class="why">the model absorbs the style</span></td><td data-label="Keeps to the facts"><span class="n">✗ no</span><span class="why">learns content along with style</span></td><td data-label="Members' words stay private"><span class="n">✗ no</span><span class="why">members' words become model weights</span></td><td data-label="Team can read and edit it"><span class="n">✗ no</span><span class="why">a black box</span></td><td data-label="Provable"><span class="p">~ possible</span><span class="why">if you build the eval</span></td><td data-label="Swap models freely"><span class="n">✗ locked in</span><span class="why">retrain to switch model</span></td><td data-label="Cost to run"><span class="n">✗ GPU hours</span><span class="why">plus hosting the model</span></td></tr><tr><th>Generic style-transfer model<small>an off-the-shelf “style embedding”</small></th><td data-label="Sounds like Kiki"><span class="p">~ weak</span><span class="why">we measured: it mostly learned sign-offs (62% → 36%)</span></td><td data-label="Keeps to the facts"><span class="y">✓ yes</span><span class="why"></span></td><td data-label="Members' words stay private"><span class="y">✓ yes</span><span class="why">local</span></td><td data-label="Team can read and edit it"><span class="n">✗ no</span><span class="why">a vector, not words</span></td><td data-label="Provable"><span class="p">~ partly</span><span class="why"></span></td><td data-label="Swap models freely"><span class="n">✗ extra model</span><span class="why">in the request path</span></td><td data-label="Cost to run"><span class="p">~ moderate</span><span class="why"></span></td></tr><tr class="ours"><th>Voiceprint: measure, verify, then prompt<small>what this page describes</small></th><td data-label="Sounds like Kiki"><span class="y">✓ distinctive</span><span class="why">only habits that beat comparable brands</span></td><td data-label="Keeps to the facts"><span class="y">✓ style-only</span><span class="why">content-bearing rules are removed</span></td><td data-label="Members' words stay private"><span class="y">✓ yes</span><span class="why">anonymised locally; no quote from fewer than 3 conversations</span></td><td data-label="Team can read and edit it"><span class="y">✓ VOICE.md</span><span class="why">every rule with its evidence, editable</span></td><td data-label="Provable"><span class="y">✓ yes</span><span class="why">blind held-out test, Fisher p-value</span></td><td data-label="Swap models freely"><span class="y">✓ yes</span><span class="why">a text pack: any model, one line</span></td><td data-label="Cost to run"><span class="y">✓ cheap</span><span class="why">~a dozen calls once; in-app scoring free</span></td></tr></tbody></table></div>
+      <p class="cmp-key">✓ meets the need · ~ partly · ✗ does not. The generic style model's number is measured (chapter 04); the rest follow from how each method works.</p>
+    </div>
+    <div class="wide">
+      <h3 class="sub">Why this one</h3>
+      <ul class="dec">
+        <li><b>It is the only option that meets all six needs.</b> Every alternative trades one away: fine-tuning gives up privacy and honesty, retrieval quotes members, the hand-written prompt can't prove anything, and pasting conversations sends members' words out on every call.</li>
+        <li><b>Its one weakness is covered.</b> A prompt imitates less deeply than a fine-tuned model. Voiceprint measures that gap: with the pack, replies score level with the brand's real ones (chapter 04). It also exports style-only fine-tuning files, so if the gap ever matters, the stronger option is one step away, using data already cleaned of facts and names.</li>
+        <li><b>It starts from what Kiki runs today.</b> Kiki already has a voice port holding a hand-written prompt. Voiceprint replaces that prompt with a measured one. Nothing else in the AI layer changes, so the upgrade is one line and reversible.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- 01 · TODAY -->
 <section class="chapter" id="today">
   <div class="wrap">
@@ -457,7 +528,7 @@ voiceprint extract kiki_and_reference.jsonl \
       es.forEach(function (e) {
         if (e.isIntersecting) {
           Object.values(links).forEach(function (a) { a.classList.remove('on'); });
-          var a = links[e.target.id]; if (a) { a.classList.add('on'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+          var a = links[e.target.id]; if (a) { a.classList.add('on'); var bar = a.parentNode; var left = a.offsetLeft - bar.offsetLeft - 24; if (left < bar.scrollLeft || a.offsetLeft - bar.offsetLeft + a.offsetWidth > bar.scrollLeft + bar.clientWidth) { bar.scrollTo({ left: Math.max(0, left), behavior: 'smooth' }); } }
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
